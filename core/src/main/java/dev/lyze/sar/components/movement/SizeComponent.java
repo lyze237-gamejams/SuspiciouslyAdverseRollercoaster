@@ -1,4 +1,4 @@
-package dev.lyze.sar.components;
+package dev.lyze.sar.components.movement;
 
 import com.artemis.Component;
 import com.badlogic.gdx.math.MathUtils;

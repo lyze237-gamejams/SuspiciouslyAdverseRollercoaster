@@ -8,9 +8,9 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
-import dev.lyze.sar.components.PlayerComponent;
-import dev.lyze.sar.components.PositionComponent;
-import dev.lyze.sar.components.SizeComponent;
+import dev.lyze.sar.components.player.PlayerComponent;
+import dev.lyze.sar.components.movement.PositionComponent;
+import dev.lyze.sar.components.movement.SizeComponent;
 import lombok.var;
 
 @All({PlayerComponent.class, PositionComponent.class, SizeComponent.class})
@@ -33,7 +33,7 @@ public class CameraSystem extends IteratingSystem {
         var position = positionMapper.get(entityId);
         var size = sizeMapper.get(entityId);
 
-        viewport.getCamera().position.set(position.getX() + size.getWidth() / 2f, position.getY() + size.getHeight() / 2f, 0);
+        viewport.getCamera().position.set(position.getPosition().x + size.getWidth() / 2f, position.getPosition().y + size.getHeight() / 2f, 0);
 
         // debugMovement();
     }

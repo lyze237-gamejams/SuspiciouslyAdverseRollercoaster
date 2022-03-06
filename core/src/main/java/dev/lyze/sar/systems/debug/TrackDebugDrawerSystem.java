@@ -1,4 +1,4 @@
-package dev.lyze.sar.systems;
+package dev.lyze.sar.systems.debug;
 
 import com.artemis.ComponentMapper;
 import com.artemis.annotations.All;
@@ -29,7 +29,7 @@ public class TrackDebugDrawerSystem extends IteratingSystem {
         drawer.setColor(Color.WHITE);
 
         var track = collisionMapper.get(entityId);
-        drawer.line(track.getStartX(), track.getStartY(), track.getEndX(), track.getEndY(), 8);
+        drawer.path(track.getLine().getTransformedVertices(), 8, JoinType.POINTY, true);
     }
 
     @Override

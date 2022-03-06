@@ -3,7 +3,10 @@ package dev.lyze.sar.systems.spawners;
 import com.artemis.World;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
-import dev.lyze.sar.components.*;
+import com.badlogic.gdx.math.Vector2;
+import dev.lyze.sar.components.movement.*;
+import dev.lyze.sar.components.player.PlayerComponent;
+import dev.lyze.sar.components.player.PlayerFallStateComponent;
 import lombok.var;
 
 public class PlayerSpawner extends Spawner {
@@ -14,10 +17,13 @@ public class PlayerSpawner extends Spawner {
 
         world.edit(world.create())
                 .add(new PlayerComponent())
-                .add(new PositionComponent(rectangle.x, rectangle.y))
+                .add(new PositionComponent(new Vector2(rectangle.x, rectangle.y)))
                 .add(new SizeComponent(128 * 2, 128 * 1.5f))
                 .add(new GravityComponent())
-                .add(new AccelerationComponent());
+                .add(new VelocityComponent())
+                .add(new RotationComponent())
+                .add(new PlayerFallStateComponent())
+                .add(new ConstantAccelerationComponent());
     }
 
     @Override

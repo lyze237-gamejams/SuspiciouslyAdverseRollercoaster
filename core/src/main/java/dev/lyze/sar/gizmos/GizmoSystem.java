@@ -3,6 +3,7 @@ package dev.lyze.sar.gizmos;
 import com.artemis.BaseSystem;
 import com.artemis.annotations.Wire;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.FloatArray;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import lombok.Setter;
@@ -49,6 +50,24 @@ public class GizmoSystem extends BaseSystem {
         lines.add(y);
         lines.add(x1);
         lines.add(y1);
+
+        lines.add(lineWidth);
+
+        lines.add(color.r);
+        lines.add(color.g);
+        lines.add(color.b);
+        lines.add(color.a);
+    }
+
+    private final Vector2 tmp = new Vector2();
+    public void addDirection(float x, float y, float vectorX, float vectorY, float length) {
+        lines.add(x);
+        lines.add(y);
+
+        tmp.set(vectorX, vectorY).nor().scl(length);
+
+        lines.add(x + tmp.x);
+        lines.add(y + tmp.y);
 
         lines.add(lineWidth);
 

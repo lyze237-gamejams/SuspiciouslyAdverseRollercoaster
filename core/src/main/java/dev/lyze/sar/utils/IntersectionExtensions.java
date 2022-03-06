@@ -4,13 +4,27 @@ import com.badlogic.gdx.math.Polyline;
 import com.badlogic.gdx.math.Vector2;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
+import lombok.var;
 
 public class IntersectionExtensions {
-    public static Vector2 lineIntersectsLine(float line1StartX, float line1StartY, float line1EndX, float line1EndY, float line2StartX, float line2StartY, float line2EndX, float line2EndY, float tolerance, Vector2 outPoint) {
-        return polylineIntersectsLine(new Line(line1StartX, line1StartY, line1EndX, line1EndY), new Line(line2StartX, line2StartY, line2EndX, line2EndY), tolerance, outPoint);
+    private static final float tolerance = 0.001f;
+
+    public static Vector2 lineIntersectsLine(Polyline line, float line2StartX, float line2StartY, float line2EndX, float line2EndY, Vector2 outPoint) {
+        var verts = line.getTransformedVertices();
+
+        for (int i = 0; i < verts.length - 2; i += 2) {
+            if (lineIntersectsLine(verts[i], verts[i + 1], verts[i + 2], verts[i + 3], line2StartX, line2StartY, line2EndX, line2EndY, outPoint) != null)
+                return outPoint;
+        }
+
+        return null;
     }
 
-    private static Vector2 polylineIntersectsLine(Line lineA, Line lineB, float tolerance, Vector2 outPoint) {
+    public static Vector2 lineIntersectsLine(float line1StartX, float line1StartY, float line1EndX, float line1EndY, float line2StartX, float line2StartY, float line2EndX, float line2EndY, Vector2 outPoint) {
+        return polylineIntersectsLine(new Line(line1StartX, line1StartY, line1EndX, line1EndY), new Line(line2StartX, line2StartY, line2EndX, line2EndY), outPoint);
+    }
+
+    private static Vector2 polylineIntersectsLine(Line lineA, Line lineB, Vector2 outPoint) {
         float x1 = lineA.x1, y1 = lineA.y1;
         float x2 = lineA.x2, y2 = lineA.y2;
 
