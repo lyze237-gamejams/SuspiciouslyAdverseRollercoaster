@@ -22,8 +22,7 @@ public class PlayerSpawner extends Spawner {
                 .add(new GravityComponent())
                 .add(new VelocityComponent())
                 .add(new RotationComponent())
-                .add(new PlayerFallStateComponent())
-                .add(new ConstantAccelerationComponent());
+                .add(new PlayerFallStateComponent());
     }
 
     @Override

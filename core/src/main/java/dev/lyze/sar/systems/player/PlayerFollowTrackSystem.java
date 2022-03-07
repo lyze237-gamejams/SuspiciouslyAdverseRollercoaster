@@ -14,7 +14,7 @@ import dev.lyze.sar.components.player.PlayerFollowTrackComponent;
 import dev.lyze.sar.gizmos.GizmoSystem;
 import lombok.var;
 
-@All({PlayerComponent.class, PlayerFollowTrackComponent.class, PositionComponent.class, GravityComponent.class, RotationComponent.class, VelocityComponent.class, ConstantAccelerationComponent.class})
+@All({PlayerComponent.class, PlayerFollowTrackComponent.class, PositionComponent.class, GravityComponent.class, RotationComponent.class, VelocityComponent.class})
 
 public class PlayerFollowTrackSystem extends IteratingSystem {
     private final Vector2 intersection = new Vector2();
@@ -26,7 +26,6 @@ public class PlayerFollowTrackSystem extends IteratingSystem {
     private ComponentMapper<VelocityComponent> velocityMapper;
     private ComponentMapper<RotationComponent> rotationMapper;
     private ComponentMapper<GravityComponent> gravityMapper;
-    private ComponentMapper<ConstantAccelerationComponent> constantAccelerationMapper;
 
     private GizmoSystem gizmos;
 
