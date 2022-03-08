@@ -9,8 +9,10 @@ import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.objects.PolygonMapObject;
 import com.badlogic.gdx.maps.objects.PolylineMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
+import com.badlogic.gdx.math.CatmullRomSpline;
 import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Polyline;
+import com.badlogic.gdx.math.Vector2;
 import dev.lyze.sar.Map;
 import dev.lyze.sar.components.TrackComponent;
 import dev.lyze.sar.components.EntitySpawnerComponent;
@@ -48,8 +50,8 @@ public class MapSpawnerSystem extends IteratingSystem {
             MapObject mapObject = layer.getObjects().get(i);
 
             var lineCollisionObject = (PolylineMapObject) mapObject;
-            var line = lineCollisionObject.getPolyline();
-            var verts = line.getTransformedVertices();
+            var verts = lineCollisionObject.getPolyline().getTransformedVertices();
+
             for (int j = 0; j < verts.length; j++)
                 verts[j] /= map.getTrackLayer().getTileWidth();
 
