@@ -64,9 +64,6 @@ public class PlayerFallStateSystem extends IteratingSystem {
                 gizmos.setColor(Color.ORANGE);
                 gizmos.addCircle(intersection.x, intersection.y, 3);
 
-                // todo remove testing
-                velocity.getVelocity().set(10, 10);
-
                 world.edit(entityId)
                         .remove(PlayerFallStateComponent.class)
                         .add(new PlayerFollowTrackComponent(tracks.getEntities().get(i), j));

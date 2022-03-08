@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.5" tiledversion="1.7.2" orientation="orthogonal" renderorder="right-down" width="128" height="72" tilewidth="128" tileheight="128" infinite="0" nextlayerid="4" nextobjectid="23">
+<map version="1.5" tiledversion="1.7.2" orientation="orthogonal" renderorder="right-down" width="128" height="72" tilewidth="128" tileheight="128" infinite="0" nextlayerid="4" nextobjectid="28">
  <tileset firstgid="1" name="DevTiles" tilewidth="128" tileheight="128" tilecount="16" columns="4">
   <image source="DevTiles.png" width="512" height="512"/>
  </tileset>
@@ -14,8 +14,17 @@
   </object>
  </objectgroup>
  <objectgroup id="3" name="TrackCollisions">
-  <object id="22" x="176" y="3648">
-   <polyline points="64,-3264 1342,-2614 2588,1100 6381,-646 7782,-549 9757,727 13034,1129 15584,1840"/>
+  <object id="23" x="256" y="440">
+   <polyline points="0,0 792,456 2016,2928 2864,3768 3704,4016 4826,3896 5586,3578"/>
+  </object>
+  <object id="25" x="5504" y="5024">
+   <polyline points="0,0 1480,224 3288,-184"/>
+  </object>
+  <object id="26" x="8848" y="5704">
+   <polyline points="0,0 2072,1064 3976,1184"/>
+  </object>
+  <object id="27" x="12808" y="7424">
+   <polyline points="0,0 3448,-1592"/>
   </object>
  </objectgroup>
 </map>
