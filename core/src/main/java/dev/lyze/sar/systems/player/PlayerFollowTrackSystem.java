@@ -11,10 +11,11 @@ import dev.lyze.sar.components.movement.*;
 import dev.lyze.sar.components.player.PlayerComponent;
 import dev.lyze.sar.components.player.PlayerFallStateComponent;
 import dev.lyze.sar.components.player.PlayerFollowTrackComponent;
+import dev.lyze.sar.components.player.TrackAccelerationDecelerationComponent;
 import dev.lyze.sar.gizmos.GizmoSystem;
 import lombok.var;
 
-@All({PlayerComponent.class, PlayerFollowTrackComponent.class, PositionComponent.class, GravityComponent.class, RotationComponent.class, VelocityComponent.class})
+@All({PlayerComponent.class, PlayerFollowTrackComponent.class, PositionComponent.class, TrackAccelerationDecelerationComponent.class, RotationComponent.class, VelocityComponent.class})
 
 public class PlayerFollowTrackSystem extends IteratingSystem {
     private final Vector2 intersection = new Vector2();
@@ -25,7 +26,7 @@ public class PlayerFollowTrackSystem extends IteratingSystem {
     private ComponentMapper<PositionComponent> positionMapper;
     private ComponentMapper<VelocityComponent> velocityMapper;
     private ComponentMapper<RotationComponent> rotationMapper;
-    private ComponentMapper<GravityComponent> gravityMapper;
+    private ComponentMapper<TrackAccelerationDecelerationComponent> trackAccDecMapper;
 
     private GizmoSystem gizmos;
 
@@ -35,7 +36,7 @@ public class PlayerFollowTrackSystem extends IteratingSystem {
         var trackToFollow = trackMapper.get(follow.getTrackId());
         var position = positionMapper.get(entityId);
         var rotation = rotationMapper.get(entityId);
-        var gravity = gravityMapper.get(entityId);
+        var accDec = trackAccDecMapper.get(entityId);
         var velocity = velocityMapper.get(entityId);
 
         var verts = trackToFollow.getLine().getTransformedVertices();
@@ -62,12 +63,19 @@ public class PlayerFollowTrackSystem extends IteratingSystem {
 
         if (angle < 0) {
             var multiplier = MathUtils.map(-90, 0, 0.2f, 0, angleDeg);
-            speed = velocity.getVelocity().len();
-            velocity.getVelocity().add(0, gravity.getGravity() * multiplier);
+            var scale = accDec.getAcceleration() * multiplier;
+            var length = velocity.getVelocity().len();
+            velocity.getVelocity().nor().scl(length + scale);
         }
         if (angle > 0) {
             var multiplier = MathUtils.map(0, 90, 0, 0.2f, angleDeg);
-            velocity.getVelocity().add(0, gravity.getGravity() * multiplier);
+            var scale = accDec.getDeceleration() * multiplier;
+            var length = velocity.getVelocity().len();
+            velocity.getVelocity().nor().scl(length + scale);
+
+            if (velocity.getVelocity().len() < accDec.getMinSpeed()) {
+                velocity.getVelocity().nor().scl(accDec.getMinSpeed());
+            }
         }
 
         var distance = Vector2.dst(startPosX, startPosY, targetPosX, targetPosY);
