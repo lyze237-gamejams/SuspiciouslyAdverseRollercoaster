@@ -50,19 +50,19 @@ public class PlayerFallStateSystem extends IteratingSystem {
         for (int i = 0; i < tracks.getEntities().size(); i++) {
             var track = trackMapper.get(tracks.getEntities().get(i));
 
-            gizmos.setLineWidth(8);
+            gizmos.setLineWidth(0.1f);
             gizmos.setColor(Color.RED);
-
-            gizmos.addLine(position.getPosition().x, position.getPosition().y + 12, position.getPosition().x, targetYPosition);
+            var snapWhenCarIsDirectlyUnderTrack = 0.2f;
+            gizmos.addLine(position.getPosition().x, position.getPosition().y + snapWhenCarIsDirectlyUnderTrack, position.getPosition().x, targetYPosition);
 
             var verts = track.getLine().getTransformedVertices();
 
             for (int j = 0; j < verts.length - 2; j += 2) {
-                if (IntersectionExtensions.lineIntersectsLine(verts[j], verts[j + 1], verts[j + 2], verts[j + 3], position.getPosition().x, position.getPosition().y + 12, position.getPosition().x, targetYPosition, intersection) == null)
+                if (IntersectionExtensions.lineIntersectsLine(verts[j], verts[j + 1], verts[j + 2], verts[j + 3], position.getPosition().x, position.getPosition().y + snapWhenCarIsDirectlyUnderTrack, position.getPosition().x, targetYPosition, intersection) == null)
                     continue;
 
                 gizmos.setColor(Color.ORANGE);
-                gizmos.addCircle(intersection.x, intersection.y, 3);
+                gizmos.addCircle(intersection.x, intersection.y, 0.1f);
 
                 world.edit(entityId)
                         .remove(PlayerFallStateComponent.class)

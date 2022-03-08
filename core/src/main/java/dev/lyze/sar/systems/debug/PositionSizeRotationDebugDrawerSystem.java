@@ -35,7 +35,7 @@ public class PositionSizeRotationDebugDrawerSystem extends IteratingSystem {
         var size = sizeMapper.get(entityId);
         var rotation = rotationMapper.get(entityId);
 
-        drawer.rectangle(position.getPosition().x - size.getWidth() / 2f, position.getPosition().y, size.getWidth(), size.getHeight(), 8, rotation.getRotation());
+        drawer.rectangle(position.getPosition().x - size.getWidth() / 2f, position.getPosition().y, size.getWidth(), size.getHeight(), 0.1f, rotation.getRotation());
     }
 
     @Override

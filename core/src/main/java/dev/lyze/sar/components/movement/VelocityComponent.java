@@ -9,8 +9,8 @@ import lombok.*;
 public class VelocityComponent extends Component {
     @Getter private final Vector2 velocity = new Vector2();
 
-    @Getter @Setter private float maxVelocityX = 8 * 128f;
-    @Getter @Setter private float maxVelocityY = 7 * 128f;
+    @Getter @Setter private float maxVelocityX = 8;
+    @Getter @Setter private float maxVelocityY = 7;
 
     public void clamp() {
         velocity.x = MathUtils.clamp(velocity.x, -maxVelocityX, maxVelocityX);

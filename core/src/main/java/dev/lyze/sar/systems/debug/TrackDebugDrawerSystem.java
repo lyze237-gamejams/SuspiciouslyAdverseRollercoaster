@@ -29,7 +29,7 @@ public class TrackDebugDrawerSystem extends IteratingSystem {
         drawer.setColor(Color.WHITE);
 
         var track = collisionMapper.get(entityId);
-        drawer.path(track.getLine().getTransformedVertices(), 8, JoinType.POINTY, true);
+        drawer.path(track.getLine().getTransformedVertices(), 0.05f, JoinType.POINTY, true);
     }
 
     @Override

@@ -44,7 +44,7 @@ public class GameScreen extends ScreenAdapter {
 
 		var batch = new SpriteBatch();
 		builder.register(new Map("Maps/DevMap.tmx"));
-		builder.register(new ExtendViewport(16 * 128, 9 * 128));
+		builder.register(new ExtendViewport(16, 9));
 		builder.register(new EventManager());
 		builder.register(batch);
 		builder.register(new ShapeDrawer(batch, new TextureRegion(new Texture("Pixel.png"))));

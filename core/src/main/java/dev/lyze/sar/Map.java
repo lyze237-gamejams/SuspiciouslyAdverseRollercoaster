@@ -16,7 +16,6 @@ public class Map {
 
     public Map(String path) {
         this.map = new TmxMapLoader().load(path);
-        renderer = new OrthogonalTiledMapRendererBleeding(map, 1f);
 
         trackLayer = (TiledMapTileLayer) map.getLayers().get("Tracks");
         if (trackLayer == null)
@@ -29,5 +28,7 @@ public class Map {
         trackCollisionLayer = map.getLayers().get("TrackCollisions");
         if (trackCollisionLayer == null)
             throw new IllegalArgumentException("TrackCollisions Layer undefined");
+
+        renderer = new OrthogonalTiledMapRendererBleeding(map, 1f / trackLayer.getTileWidth());
     }
 }

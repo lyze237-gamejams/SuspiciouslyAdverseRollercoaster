@@ -48,7 +48,10 @@ public class MapSpawnerSystem extends IteratingSystem {
             MapObject mapObject = layer.getObjects().get(i);
 
             var lineCollisionObject = (PolylineMapObject) mapObject;
-            float[] verts = lineCollisionObject.getPolyline().getTransformedVertices();
+            var line = lineCollisionObject.getPolyline();
+            var verts = line.getTransformedVertices();
+            for (int j = 0; j < verts.length; j++)
+                verts[j] /= map.getTrackLayer().getTileWidth();
 
             world.edit(world.create())
                     .add(new TrackComponent(new Polyline(verts)));

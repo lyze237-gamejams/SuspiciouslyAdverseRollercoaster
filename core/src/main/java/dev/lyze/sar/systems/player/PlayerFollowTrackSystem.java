@@ -102,6 +102,7 @@ public class PlayerFollowTrackSystem extends IteratingSystem {
         direction.sub(position);
         direction.nor();
 
-        gizmos.addDirection(position.x, position.y, direction.x, direction.y, 128f);
+        gizmos.setLineWidth(0.01f);
+        gizmos.addDirection(position.x, position.y, direction.x, direction.y, 0.5f);
     }
 }
