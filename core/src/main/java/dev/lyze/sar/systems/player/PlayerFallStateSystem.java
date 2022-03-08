@@ -14,7 +14,7 @@ import dev.lyze.sar.components.movement.VelocityComponent;
 import dev.lyze.sar.components.player.PlayerComponent;
 import dev.lyze.sar.components.player.PlayerFallStateComponent;
 import dev.lyze.sar.components.player.PlayerFollowTrackComponent;
-import dev.lyze.sar.gizmos.GizmoSystem;
+import dev.lyze.sar.systems.debug.GizmoSystem;
 import dev.lyze.sar.utils.IntersectionExtensions;
 import lombok.var;
 

@@ -1,4 +1,4 @@
-package dev.lyze.sar.gizmos;
+package dev.lyze.sar.systems.debug;
 
 import com.artemis.BaseSystem;
 import com.artemis.annotations.Wire;

@@ -3,7 +3,6 @@ package dev.lyze.sar.systems.player;
 import com.artemis.ComponentMapper;
 import com.artemis.annotations.All;
 import com.artemis.systems.IteratingSystem;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import dev.lyze.sar.components.TrackComponent;
@@ -12,7 +11,7 @@ import dev.lyze.sar.components.player.PlayerComponent;
 import dev.lyze.sar.components.player.PlayerFallStateComponent;
 import dev.lyze.sar.components.player.PlayerFollowTrackComponent;
 import dev.lyze.sar.components.player.TrackAccelerationDecelerationComponent;
-import dev.lyze.sar.gizmos.GizmoSystem;
+import dev.lyze.sar.systems.debug.GizmoSystem;
 import lombok.var;
 
 @All({PlayerComponent.class, PlayerFollowTrackComponent.class, PositionComponent.class, TrackAccelerationDecelerationComponent.class, RotationComponent.class, VelocityComponent.class})

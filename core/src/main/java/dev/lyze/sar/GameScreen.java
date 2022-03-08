@@ -12,7 +12,7 @@ import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import dev.lyze.sar.components.MapSpawnerComponent;
 import dev.lyze.sar.eventsystem.EventManager;
 import dev.lyze.sar.eventsystem.events.ResizeEvent;
-import dev.lyze.sar.gizmos.GizmoSystem;
+import dev.lyze.sar.systems.debug.GizmoSystem;
 import dev.lyze.sar.systems.*;
 import dev.lyze.sar.systems.debug.PlayerDebugDrawerSystem;
 import dev.lyze.sar.systems.debug.PositionSizeRotationDebugDrawerSystem;
