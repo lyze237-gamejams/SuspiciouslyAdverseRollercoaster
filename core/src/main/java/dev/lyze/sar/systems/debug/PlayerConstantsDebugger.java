@@ -6,6 +6,7 @@ import com.artemis.annotations.Wire;
 import com.artemis.systems.IteratingSystem;
 import com.artemis.utils.reflect.ClassReflection;
 import com.artemis.utils.reflect.Field;
+import com.artemis.utils.reflect.ReflectionException;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.math.Vector2;
@@ -16,6 +17,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.kotcrab.vis.ui.util.FloatDigitsOnlyFilter;
 import com.kotcrab.vis.ui.widget.VisLabel;
+import com.kotcrab.vis.ui.widget.VisTable;
 import com.kotcrab.vis.ui.widget.VisTextField;
 import dev.lyze.sar.components.movement.PositionComponent;
 import dev.lyze.sar.components.movement.VelocityComponent;
@@ -26,7 +28,6 @@ import dev.lyze.sar.components.player.PlayerFollowTrackComponent;
 import dev.lyze.sar.eventsystem.EventListener;
 import dev.lyze.sar.eventsystem.EventManager;
 import dev.lyze.sar.eventsystem.events.ResizeEvent;
-import lombok.SneakyThrows;
 import lombok.var;
 
 import java.util.HashMap;
@@ -54,7 +55,6 @@ public class PlayerConstantsDebugger extends IteratingSystem {
         Gdx.input.setInputProcessor(stage);
     }
 
-    @SneakyThrows
     @Override
     protected void process(int entityId) {
         var playerConstants = playerMapper.get(entityId).playerConstants;
@@ -73,16 +73,19 @@ public class PlayerConstantsDebugger extends IteratingSystem {
         if (textFields != null)
             return;
 
-        setupStage(playerConstants);
+        try {
+            setupStage(playerConstants);
+        } catch (IllegalAccessException | ReflectionException e) {
+            e.printStackTrace();
+        }
     }
 
-    @SneakyThrows
-    private void setupStage(PlayerConstants playerConstants) throws IllegalAccessException {
+    private void setupStage(PlayerConstants playerConstants) throws IllegalAccessException, ReflectionException {
         textFields = new HashMap<>();
 
         var constantsClass = PlayerConstants.class;
 
-        var root = new Table();
+        var root = new VisTable();
         root.setFillParent(true);
 
         var table = new Table();
@@ -93,7 +96,6 @@ public class PlayerConstantsDebugger extends IteratingSystem {
                 textField.setTextFieldFilter(new FloatDigitsOnlyFilter(true));
 
             textField.addListener(new ChangeListener() {
-                @SneakyThrows
                 @Override
                 public void changed(ChangeEvent event, Actor actor) {
                     try {
