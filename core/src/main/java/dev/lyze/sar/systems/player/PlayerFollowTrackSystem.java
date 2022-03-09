@@ -40,12 +40,9 @@ public class PlayerFollowTrackSystem extends IteratingSystem {
         var accDec = trackAccDecMapper.get(entityId);
         var velocity = velocityMapper.get(entityId);
 
-
         if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
-            velocity.getVelocity().add(0, 20);
+            velocity.getVelocity().set(10, 50);
             position.getPosition().mulAdd(velocity.getVelocity(), world.getDelta());
-
-            System.out.println("HI");
 
             world.edit(entityId)
                     .remove(PlayerFollowTrackComponent.class)
@@ -53,13 +50,6 @@ public class PlayerFollowTrackSystem extends IteratingSystem {
 
             return;
         }
-
-
-
-
-
-
-
 
         var verts = trackToFollow.getLine().getTransformedVertices();
 

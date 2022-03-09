@@ -10,7 +10,7 @@ public class VelocityComponent extends Component {
     @Getter private final Vector2 velocity = new Vector2();
 
     @Getter @Setter private float maxVelocityX = 14;
-    @Getter @Setter private float maxVelocityY = 13;
+    @Getter @Setter private float maxVelocityY = 24;
 
     public void clamp() {
         velocity.x = MathUtils.clamp(velocity.x, -maxVelocityX, maxVelocityX);
