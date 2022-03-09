@@ -1,42 +1,20 @@
 package dev.lyze.sar.systems;
 
+import com.artemis.BaseSystem;
 import com.artemis.ComponentMapper;
 import com.artemis.annotations.All;
 import com.artemis.annotations.Wire;
-import com.artemis.systems.IteratingSystem;
 import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.MapObject;
-import com.badlogic.gdx.maps.objects.PolygonMapObject;
 import com.badlogic.gdx.maps.objects.PolylineMapObject;
-import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
-import com.badlogic.gdx.math.CatmullRomSpline;
-import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Polyline;
-import com.badlogic.gdx.math.Vector2;
 import dev.lyze.sar.Map;
 import dev.lyze.sar.components.TrackComponent;
 import dev.lyze.sar.components.EntitySpawnerComponent;
-import dev.lyze.sar.components.MapComponent;
-import dev.lyze.sar.components.MapSpawnerComponent;
 import lombok.var;
 
-@All({MapSpawnerComponent.class})
-public class MapSpawnerSystem extends IteratingSystem {
-    private ComponentMapper<MapSpawnerComponent> mapMapper;
-
+public class MapSpawnerSystem extends BaseSystem {
     @Wire private Map map;
-
-    @Override
-    protected void inserted(int entityId) {
-        var entitiesLayer = map.getEntitiesLayer();
-
-        parseTrackCollisions(map.getTrackCollisionLayer());
-        parseEntities(entitiesLayer);
-
-        world.edit(entityId)
-                .remove(MapSpawnerComponent.class)
-                .add(new MapComponent(map));
-    }
 
     private void parseEntities(MapLayer entitiesLayer) {
         for (MapObject object : entitiesLayer.getObjects()) {
@@ -61,7 +39,15 @@ public class MapSpawnerSystem extends IteratingSystem {
     }
 
     @Override
-    protected void process(int entityId) {
+    protected void initialize() {
+        var entitiesLayer = map.getEntitiesLayer();
+
+        parseTrackCollisions(map.getTrackCollisionLayer());
+        parseEntities(entitiesLayer);
+    }
+
+    @Override
+    protected void processSystem() {
 
     }
 }

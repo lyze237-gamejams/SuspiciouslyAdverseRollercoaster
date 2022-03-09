@@ -9,7 +9,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
-import dev.lyze.sar.components.MapSpawnerComponent;
 import dev.lyze.sar.eventsystem.EventManager;
 import dev.lyze.sar.eventsystem.events.ResizeEvent;
 import dev.lyze.sar.systems.debug.GizmoSystem;
@@ -50,9 +49,6 @@ public class GameScreen extends ScreenAdapter {
 		builder.register(new ShapeDrawer(batch, new TextureRegion(new Texture("Pixel.png"))));
 
 		world = new World(builder);
-
-		world.edit(world.create())
-				.add(new MapSpawnerComponent());
 	}
 
 	@Override
