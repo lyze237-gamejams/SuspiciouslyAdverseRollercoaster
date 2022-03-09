@@ -59,8 +59,6 @@ public class GameScreen extends ScreenAdapter {
 	public void render(float delta) {
 		ScreenUtils.clear(Color.BLACK);
 
-		delta = 1 / 60f;
-
 		world.setDelta(delta);
 		world.process();
 	}

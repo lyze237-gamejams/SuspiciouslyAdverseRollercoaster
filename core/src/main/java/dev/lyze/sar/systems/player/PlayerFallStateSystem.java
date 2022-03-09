@@ -41,7 +41,7 @@ public class PlayerFallStateSystem extends IteratingSystem {
         var velocity = velocityMapper.get(entityId);
         var gravity = gravityMapper.get(entityId);
 
-        velocity.getVelocity().add(0, gravity.getGravity());
+        velocity.getVelocity().add(0, gravity.getGravity() * world.getDelta());
         velocity.clamp();
 
         var targetXPosition = position.getPosition().x + velocity.getVelocity().x * world.getDelta();
@@ -53,13 +53,15 @@ public class PlayerFallStateSystem extends IteratingSystem {
             gizmos.setLineWidth(0.1f);
             gizmos.setColor(Color.RED);
             var snapWhenCarIsDirectlyUnderTrack = 0.2f;
-            gizmos.addLine(position.getPosition().x, position.getPosition().y + snapWhenCarIsDirectlyUnderTrack, position.getPosition().x, targetYPosition);
+            gizmos.addLine(position.getPosition().x, position.getPosition().y + snapWhenCarIsDirectlyUnderTrack, position.getPosition().x, targetYPosition - snapWhenCarIsDirectlyUnderTrack);
 
             var verts = track.getLine().getTransformedVertices();
 
             for (int j = 0; j < verts.length - 2; j += 2) {
-                if (IntersectionExtensions.lineIntersectsLine(verts[j], verts[j + 1], verts[j + 2], verts[j + 3], position.getPosition().x, position.getPosition().y + snapWhenCarIsDirectlyUnderTrack, position.getPosition().x, targetYPosition, intersection) == null)
+                if (IntersectionExtensions.lineIntersectsLine(verts[j], verts[j + 1], verts[j + 2], verts[j + 3], position.getPosition().x, position.getPosition().y + snapWhenCarIsDirectlyUnderTrack, position.getPosition().x, targetYPosition - snapWhenCarIsDirectlyUnderTrack, intersection) == null)
                     continue;
+
+                position.getPosition().set(intersection.x, intersection.y);
 
                 gizmos.setColor(Color.ORANGE);
                 gizmos.addCircle(intersection.x, intersection.y, 0.1f);

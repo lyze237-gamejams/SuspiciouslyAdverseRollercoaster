@@ -64,13 +64,13 @@ public class PlayerFollowTrackSystem extends IteratingSystem {
             var multiplier = MathUtils.map(-90, 0, 0.2f, 0, angleDeg);
             var scale = accDec.getAcceleration() * multiplier;
             var length = velocity.getVelocity().len();
-            velocity.getVelocity().nor().scl(length + scale);
+            velocity.getVelocity().nor().scl(length + scale * world.getDelta());
         }
         if (angle > 0) {
             var multiplier = MathUtils.map(0, 90, 0, 0.2f, angleDeg);
             var scale = accDec.getDeceleration() * multiplier;
             var length = velocity.getVelocity().len();
-            velocity.getVelocity().nor().scl(length + scale);
+            velocity.getVelocity().nor().scl(length + scale * world.getDelta());
 
             if (velocity.getVelocity().len() < accDec.getMinSpeed()) {
                 velocity.getVelocity().nor().scl(accDec.getMinSpeed());
