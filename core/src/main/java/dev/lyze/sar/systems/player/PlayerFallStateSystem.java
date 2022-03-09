@@ -6,7 +6,6 @@ import com.artemis.EntitySubscription;
 import com.artemis.annotations.All;
 import com.artemis.systems.IteratingSystem;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import dev.lyze.sar.components.TrackComponent;
 import dev.lyze.sar.components.movement.GravityComponent;
@@ -56,6 +55,13 @@ public class PlayerFallStateSystem extends IteratingSystem {
         var targetXPosition = position.getPosition().x + velocity.getVelocity().x * world.getDelta();
         var targetYPosition = position.getPosition().y + velocity.getVelocity().y * world.getDelta();
 
+        if (targetYPosition < position.getPosition().y && touchTrack(entityId, position, targetYPosition))
+            return;
+
+        position.getPosition().set(targetXPosition, targetYPosition);
+    }
+
+    private boolean touchTrack(int entityId, PositionComponent position, float targetYPosition) {
         for (int i = 0; i < tracks.getEntities().size(); i++) {
             var track = trackMapper.get(tracks.getEntities().get(i));
 
@@ -81,10 +87,9 @@ public class PlayerFallStateSystem extends IteratingSystem {
                         .remove(PlayerFallStateComponent.class)
                         .add(new PlayerFollowTrackComponent(tracks.getEntities().get(i), j));
 
-                return;
+                return true;
             }
         }
-
-        position.getPosition().set(targetXPosition, targetYPosition);
+        return false;
     }
 }
