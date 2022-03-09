@@ -11,11 +11,8 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import dev.lyze.sar.eventsystem.EventManager;
 import dev.lyze.sar.eventsystem.events.ResizeEvent;
-import dev.lyze.sar.systems.debug.GizmoSystem;
+import dev.lyze.sar.systems.debug.*;
 import dev.lyze.sar.systems.*;
-import dev.lyze.sar.systems.debug.PlayerDebugDrawerSystem;
-import dev.lyze.sar.systems.debug.PositionSizeRotationDebugDrawerSystem;
-import dev.lyze.sar.systems.debug.TrackDebugDrawerSystem;
 import dev.lyze.sar.systems.player.PlayerFallStateSystem;
 import dev.lyze.sar.systems.player.PlayerFollowTrackSystem;
 import lombok.var;
@@ -38,6 +35,7 @@ public class GameScreen extends ScreenAdapter {
 				.with(new TrackDebugDrawerSystem())
 				.with(new PositionSizeRotationDebugDrawerSystem())
 				.with(new PlayerDebugDrawerSystem())
+				.with(new PlayerConstantsDebugger())
 				.with(new GizmoSystem())
 				.build();
 
