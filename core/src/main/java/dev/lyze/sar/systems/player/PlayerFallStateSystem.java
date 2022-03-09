@@ -53,13 +53,15 @@ public class PlayerFallStateSystem extends IteratingSystem {
             gizmos.setLineWidth(0.1f);
             gizmos.setColor(Color.RED);
             var snapWhenCarIsDirectlyUnderTrack = 0.2f;
-            gizmos.addLine(position.getPosition().x, position.getPosition().y + snapWhenCarIsDirectlyUnderTrack, position.getPosition().x, targetYPosition - snapWhenCarIsDirectlyUnderTrack);
+            gizmos.addLine(position.getPosition().x, position.getPosition().y + snapWhenCarIsDirectlyUnderTrack, position.getPosition().x, targetYPosition);
 
             var verts = track.getLine().getTransformedVertices();
 
             for (int j = 0; j < verts.length - 2; j += 2) {
-                if (IntersectionExtensions.lineIntersectsLine(verts[j], verts[j + 1], verts[j + 2], verts[j + 3], position.getPosition().x, position.getPosition().y + snapWhenCarIsDirectlyUnderTrack, position.getPosition().x, targetYPosition - snapWhenCarIsDirectlyUnderTrack, intersection) == null)
+                if (IntersectionExtensions.lineIntersectsLine(verts[j], verts[j + 1], verts[j + 2], verts[j + 3], position.getPosition().x, position.getPosition().y + snapWhenCarIsDirectlyUnderTrack, position.getPosition().x, targetYPosition, intersection) == null)
                     continue;
+
+                System.out.println("HO");
 
                 position.getPosition().set(intersection.x, intersection.y);
 

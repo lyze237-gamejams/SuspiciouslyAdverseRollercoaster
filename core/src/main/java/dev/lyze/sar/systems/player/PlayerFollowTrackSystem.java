@@ -3,6 +3,8 @@ package dev.lyze.sar.systems.player;
 import com.artemis.ComponentMapper;
 import com.artemis.annotations.All;
 import com.artemis.systems.IteratingSystem;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import dev.lyze.sar.components.TrackComponent;
@@ -37,6 +39,27 @@ public class PlayerFollowTrackSystem extends IteratingSystem {
         var rotation = rotationMapper.get(entityId);
         var accDec = trackAccDecMapper.get(entityId);
         var velocity = velocityMapper.get(entityId);
+
+
+        if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
+            velocity.getVelocity().add(0, 20);
+            position.getPosition().mulAdd(velocity.getVelocity(), world.getDelta());
+
+            System.out.println("HI");
+
+            world.edit(entityId)
+                    .remove(PlayerFollowTrackComponent.class)
+                    .add(new PlayerFallStateComponent());
+
+            return;
+        }
+
+
+
+
+
+
+
 
         var verts = trackToFollow.getLine().getTransformedVertices();
 
@@ -90,7 +113,6 @@ public class PlayerFollowTrackSystem extends IteratingSystem {
 
                 world.edit(entityId)
                     .remove(PlayerFollowTrackComponent.class)
-                    .add(new GravityComponent())
                     .add(new PlayerFallStateComponent());
             }
         }

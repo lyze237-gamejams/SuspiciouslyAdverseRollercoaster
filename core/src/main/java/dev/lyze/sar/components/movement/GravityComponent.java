@@ -7,7 +7,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 public class GravityComponent extends Component {
-    @Getter private float gravity = -10f;
+    @Getter private float gravity = -30f;
 
     @Override
     public String toString() {
