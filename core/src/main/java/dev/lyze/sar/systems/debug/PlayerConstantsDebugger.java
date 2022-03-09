@@ -4,6 +4,8 @@ import com.artemis.ComponentMapper;
 import com.artemis.annotations.All;
 import com.artemis.annotations.Wire;
 import com.artemis.systems.IteratingSystem;
+import com.artemis.utils.reflect.ClassReflection;
+import com.artemis.utils.reflect.Field;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.math.Vector2;
@@ -27,7 +29,6 @@ import dev.lyze.sar.eventsystem.events.ResizeEvent;
 import lombok.SneakyThrows;
 import lombok.var;
 
-import java.lang.reflect.Field;
 import java.util.HashMap;
 
 @All({PlayerComponent.class, PositionComponent.class})
@@ -75,6 +76,7 @@ public class PlayerConstantsDebugger extends IteratingSystem {
         setupStage(playerConstants);
     }
 
+    @SneakyThrows
     private void setupStage(PlayerConstants playerConstants) throws IllegalAccessException {
         textFields = new HashMap<>();
 
@@ -85,7 +87,7 @@ public class PlayerConstantsDebugger extends IteratingSystem {
 
         var table = new Table();
 
-        for (Field field : constantsClass.getFields()) {
+        for (var field : ClassReflection.getFields(constantsClass)) {
             var textField = new VisTextField(String.valueOf(field.get(playerConstants)));
             if (field.getType() == float.class)
                 textField.setTextFieldFilter(new FloatDigitsOnlyFilter(true));
@@ -96,15 +98,16 @@ public class PlayerConstantsDebugger extends IteratingSystem {
                 public void changed(ChangeEvent event, Actor actor) {
                     try {
                         if (field.getType() == float.class) {
-                            field.setFloat(playerConstants, Float.parseFloat(textField.getText()));
+                            field.set(playerConstants, Float.parseFloat(textField.getText()));
                         }
                         if (field.getType() == Vector2.class) {
                             var text = textField.getText();
                             var splitted = text.replace("(", "").replace(")", "").split(",");
                             field.set(playerConstants, new Vector2(Float.parseFloat(splitted[0]), Float.parseFloat(splitted[1])));
                         }
+                        textField.setInputValid(true);
                     } catch (Exception e) {
-                        e.printStackTrace();
+                        textField.setInputValid(false);
                     }
                 }
             });
