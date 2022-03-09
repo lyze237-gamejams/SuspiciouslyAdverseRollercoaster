@@ -47,6 +47,8 @@ dependencies {
     implementation "net.onedaybeard.artemis:artemis-odb-gwt:$artemisOdbVersion:sources"
     implementation "net.onedaybeard.artemis:artemis-odb:$artemisOdbVersion:sources"
 
+    implementation "com.kotcrab.vis:vis-ui:$visuiVersion:sources"
+
 	implementation project(':core')
 
 //// You can use the lines below instead of the "com.badlogicgames.gdx:gdx-backend-gwt" dependencies.

@@ -24,6 +24,7 @@ public class PlayerFallStateSystem extends IteratingSystem {
     private final Vector2 intersection = new Vector2();
 
     private EntitySubscription tracks;
+    private ComponentMapper<PlayerComponent> playerMapper;
     private ComponentMapper<TrackComponent> trackMapper;
     private ComponentMapper<PositionComponent> positionMapper;
     private ComponentMapper<GravityComponent> gravityMapper;
@@ -38,17 +39,19 @@ public class PlayerFallStateSystem extends IteratingSystem {
 
     @Override
     protected void process(int entityId) {
+        var playerConstants = playerMapper.get(entityId).playerConstants;
         var position = positionMapper.get(entityId);
         var velocity = velocityMapper.get(entityId);
         var gravity = gravityMapper.get(entityId);
 
         velocity.getVelocity().add(0, gravity.getGravity() * world.getDelta());
-        if (velocity.getVelocity().x > gravity.getSlowDownXTo()) {
-            velocity.getVelocity().x -= gravity.getSlowdownXSpeed() * world.getDelta();
-            if (velocity.getVelocity().x < gravity.getSlowdownXSpeed())
-                velocity.getVelocity().x = gravity.getSlowDownXTo();
+        if (velocity.getVelocity().x > playerConstants.slowDownXToGravity) {
+            velocity.getVelocity().x -= playerConstants.slowDownXGravitySpeed * world.getDelta();
+
+            if (velocity.getVelocity().x < playerConstants.slowDownXToGravity)
+                velocity.getVelocity().x = playerConstants.slowDownXToGravity;
         }
-        velocity.clamp();
+        velocity.clamp(playerConstants.maxVelocity);
 
         var targetXPosition = position.getPosition().x + velocity.getVelocity().x * world.getDelta();
         var targetYPosition = position.getPosition().y + velocity.getVelocity().y * world.getDelta();

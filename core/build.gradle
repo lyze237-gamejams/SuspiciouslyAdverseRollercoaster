@@ -15,4 +15,6 @@ dependencies {
 
 	implementation "com.github.aliasifk:HackLights:$hackLightsVersion"
 	implementation "space.earlygrey:shapedrawer:$shapedrawerVersion"
+
+	implementation "com.kotcrab.vis:vis-ui:$visuiVersion"
 }

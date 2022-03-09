@@ -8,7 +8,6 @@ import dev.lyze.sar.Map;
 import dev.lyze.sar.components.movement.*;
 import dev.lyze.sar.components.player.PlayerComponent;
 import dev.lyze.sar.components.player.PlayerFallStateComponent;
-import dev.lyze.sar.components.player.TrackAccelerationDecelerationComponent;
 import lombok.var;
 
 public class PlayerSpawner extends Spawner {
@@ -24,7 +23,6 @@ public class PlayerSpawner extends Spawner {
                 .add(new GravityComponent())
                 .add(new VelocityComponent())
                 .add(new RotationComponent())
-                .add(new TrackAccelerationDecelerationComponent())
                 .add(new PlayerFallStateComponent());
     }
 

@@ -7,8 +7,6 @@ import lombok.*;
 @AllArgsConstructor
 public class GravityComponent extends Component {
     @Getter private float gravity = -75f;
-    @Getter private final float slowDownXTo = 3f;
-    @Getter private final float slowdownXSpeed = 4f;
 
     @Override
     public String toString() {

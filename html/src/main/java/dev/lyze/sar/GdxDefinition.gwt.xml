@@ -9,6 +9,7 @@
 	<inherits name="dev.lyze.sar.Main" />
 	<inherits name="libgdx_screenmanager" />
 	<inherits name="libgdx_screenmanager_gwt" />
+	<inherits name='com.kotcrab.vis.vis-ui' />
 	<inherits name='com.artemis.backends.artemis_backends_gwt' />
 	<inherits name="jsr305" />
 	<inherits name="com.aliasifkhan.hackLights"/>

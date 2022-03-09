@@ -3,26 +3,22 @@ package dev.lyze.sar.components.movement;
 import com.artemis.Component;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
+import dev.lyze.sar.components.player.PlayerConstants;
 import lombok.*;
 
 @NoArgsConstructor
 public class VelocityComponent extends Component {
     @Getter private final Vector2 velocity = new Vector2();
 
-    @Getter @Setter private float maxVelocityX = 14;
-    @Getter @Setter private float maxVelocityY = 24;
-
-    public void clamp() {
-        velocity.x = MathUtils.clamp(velocity.x, -maxVelocityX, maxVelocityX);
-        velocity.y = MathUtils.clamp(velocity.y, -maxVelocityY, maxVelocityY);
+    public void clamp(Vector2 maxVelocity) {
+        velocity.x = MathUtils.clamp(velocity.x, -maxVelocity.x, maxVelocity.x);
+        velocity.y = MathUtils.clamp(velocity.y, -maxVelocity.y, maxVelocity.y);
     }
 
     @Override
     public String toString() {
         return "VelocityComponent{" +
                 "velocity=" + ((int) velocity.x * 100) / 100f + " / " + ((int) velocity.y * 100) / 100f +
-                ", maxXVelocity=" + maxVelocityX +
-                ", maxYVelocity=" + maxVelocityY +
                 '}';
     }
 }

@@ -12,11 +12,10 @@ import dev.lyze.sar.components.movement.*;
 import dev.lyze.sar.components.player.PlayerComponent;
 import dev.lyze.sar.components.player.PlayerFallStateComponent;
 import dev.lyze.sar.components.player.PlayerFollowTrackComponent;
-import dev.lyze.sar.components.player.TrackAccelerationDecelerationComponent;
 import dev.lyze.sar.systems.debug.GizmoSystem;
 import lombok.var;
 
-@All({PlayerComponent.class, PlayerFollowTrackComponent.class, PositionComponent.class, TrackAccelerationDecelerationComponent.class, RotationComponent.class, VelocityComponent.class})
+@All({PlayerComponent.class, PlayerFollowTrackComponent.class, PositionComponent.class, RotationComponent.class, VelocityComponent.class})
 
 public class PlayerFollowTrackSystem extends IteratingSystem {
     private final Vector2 intersection = new Vector2();
@@ -24,20 +23,20 @@ public class PlayerFollowTrackSystem extends IteratingSystem {
 
     private ComponentMapper<TrackComponent> trackMapper;
     private ComponentMapper<PlayerFollowTrackComponent> playerFollowTrackMapper;
+    private ComponentMapper<PlayerComponent> playerMapper;
     private ComponentMapper<PositionComponent> positionMapper;
     private ComponentMapper<VelocityComponent> velocityMapper;
     private ComponentMapper<RotationComponent> rotationMapper;
-    private ComponentMapper<TrackAccelerationDecelerationComponent> trackAccDecMapper;
 
     private GizmoSystem gizmos;
 
     @Override
     protected void process(int entityId) {
         var follow = playerFollowTrackMapper.get(entityId);
+        var playerConstants = playerMapper.get(entityId).playerConstants;
         var trackToFollow = trackMapper.get(follow.getTrackId());
         var position = positionMapper.get(entityId);
         var rotation = rotationMapper.get(entityId);
-        var accDec = trackAccDecMapper.get(entityId);
         var velocity = velocityMapper.get(entityId);
 
         if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
@@ -60,12 +59,12 @@ public class PlayerFollowTrackSystem extends IteratingSystem {
 
         calculateDirection(position.getPosition(), targetPosX, targetPosY);
 
-        velocity.clamp();
+        velocity.clamp(playerConstants.maxVelocity);
         var speed = velocity.getVelocity().len();
         direction.scl(speed);
 
         velocity.getVelocity().set(direction);
-        velocity.clamp();
+        velocity.clamp(playerConstants.maxVelocity);
 
         position.getPosition().mulAdd(velocity.getVelocity(), world.getDelta());
 
@@ -75,18 +74,18 @@ public class PlayerFollowTrackSystem extends IteratingSystem {
 
         if (angle < 0) {
             var multiplier = MathUtils.map(-90, 0, 0.2f, 0, angleDeg);
-            var scale = accDec.getAcceleration() * multiplier;
+            var scale = playerConstants.trackAcceleration * multiplier;
             var length = velocity.getVelocity().len();
             velocity.getVelocity().nor().scl(length + scale * world.getDelta());
         }
         if (angle > 0) {
             var multiplier = MathUtils.map(0, 90, 0, 0.2f, angleDeg);
-            var scale = accDec.getDeceleration() * multiplier;
+            var scale = playerConstants.trackDeceleration * multiplier;
             var length = velocity.getVelocity().len();
             velocity.getVelocity().nor().scl(length + scale * world.getDelta());
 
-            if (velocity.getVelocity().len() < accDec.getMinSpeed()) {
-                velocity.getVelocity().nor().scl(accDec.getMinSpeed());
+            if (velocity.getVelocity().len() < playerConstants.trackMinSpeed) {
+                velocity.getVelocity().nor().scl(playerConstants.trackMinSpeed);
             }
         }
 
