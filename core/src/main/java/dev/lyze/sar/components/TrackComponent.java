@@ -2,8 +2,6 @@ package dev.lyze.sar.components;
 
 import com.artemis.Component;
 import com.badlogic.gdx.math.Polyline;
-import com.badlogic.gdx.math.Vector2;
-import dev.lyze.sar.utils.IntersectionExtensions;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

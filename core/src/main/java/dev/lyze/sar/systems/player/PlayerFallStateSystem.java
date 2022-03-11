@@ -6,6 +6,7 @@ import com.artemis.EntitySubscription;
 import com.artemis.annotations.All;
 import com.artemis.systems.IteratingSystem;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Vector2;
 import dev.lyze.sar.components.TrackComponent;
 import dev.lyze.sar.components.movement.GravityComponent;
@@ -15,7 +16,6 @@ import dev.lyze.sar.components.player.PlayerComponent;
 import dev.lyze.sar.components.player.PlayerFallStateComponent;
 import dev.lyze.sar.components.player.PlayerFollowTrackComponent;
 import dev.lyze.sar.systems.debug.GizmoSystem;
-import dev.lyze.sar.utils.IntersectionExtensions;
 import lombok.var;
 
 @All({PlayerComponent.class, PlayerFallStateComponent.class, GravityComponent.class, PositionComponent.class, VelocityComponent.class})
@@ -73,10 +73,8 @@ public class PlayerFallStateSystem extends IteratingSystem {
             var verts = track.getLine().getTransformedVertices();
 
             for (int j = 0; j < verts.length - 2; j += 2) {
-                if (IntersectionExtensions.lineIntersectsLine(verts[j], verts[j + 1], verts[j + 2], verts[j + 3], position.getPosition().x, position.getPosition().y + snapWhenCarIsDirectlyUnderTrack, position.getPosition().x, targetYPosition, intersection) == null)
+                if (!Intersector.intersectSegments(verts[j], verts[j + 1], verts[j + 2], verts[j + 3], position.getPosition().x, position.getPosition().y + snapWhenCarIsDirectlyUnderTrack, position.getPosition().x, targetYPosition, intersection))
                     continue;
-
-                System.out.println("HO");
 
                 position.getPosition().set(intersection.x, intersection.y);
 
