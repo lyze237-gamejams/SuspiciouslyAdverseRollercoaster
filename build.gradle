@@ -11,6 +11,7 @@ buildscript {
 	dependencies {
 		classpath "com.android.tools.build:gradle:$androidPluginVersion"
 		classpath "org.wisepersist:gwt-gradle-plugin:$gwtPluginVersion"
+		classpath "com.badlogicgames.gdx:gdx-tools:$gdxVersion"
 
 		// This follows advice from https://blog.gradle.org/log4j-vulnerability
 		constraints {
@@ -22,6 +23,13 @@ buildscript {
 				because("CVE-2021-44228, CVE-2021-45046, CVE-2021-45105: Log4j vulnerable to remote code execution and other critical security vulnerabilities")
 			}
 		}
+	}
+}
+
+import com.badlogic.gdx.tools.texturepacker.TexturePacker
+task texturePacker {
+	doLast {
+		TexturePacker.process("${project.rootDir}/sourceAssets/Atlases", "${project.rootDir}/assets/Atlases", "Main")
 	}
 }
 
@@ -49,6 +57,7 @@ configure(subprojects - project(':android')) {
 		}
 	}
 
+	compileJava.dependsOn texturePacker
 }
 
 subprojects {
