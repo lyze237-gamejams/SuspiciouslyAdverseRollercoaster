@@ -13,6 +13,7 @@ import dev.lyze.sar.components.movement.PositionComponent;
 import dev.lyze.sar.components.movement.RotationComponent;
 import dev.lyze.sar.components.movement.SizeComponent;
 import dev.lyze.sar.components.player.PlayerComponent;
+import dev.lyze.sar.components.player.PlayerFallStateComponent;
 import dev.lyze.sar.eventsystem.EventManager;
 import lombok.var;
 
@@ -27,7 +28,7 @@ public class PlayerDrawerSystem extends IteratingSystem {
     private ComponentMapper<RotationComponent> rotationMapper;
     private ComponentMapper<SizeComponent> sizeMapper;
 
-    private Sprite minecartBackSprite, minecartFrontSprite;
+    private Sprite minecartBackSprite, minecartFrontSprite, player;
     private TextureAtlas.AtlasRegion crouch, fall, idle, jump, landing;
 
     @Override
@@ -39,18 +40,17 @@ public class PlayerDrawerSystem extends IteratingSystem {
         idle = mainAtlas.findRegion("Fox/Idle");
         jump = mainAtlas.findRegion("Fox/Jump");
         landing = mainAtlas.findRegion("Fox/Landing");
+
+        player = new Sprite(idle);
+        player.setOrigin(player.getWidth() / 2f, 0);
     }
 
     private void setupMinecart() {
         minecartBackSprite = new Sprite(mainAtlas.findRegion("Misc/Minecart_back"));
         minecartFrontSprite = new Sprite(mainAtlas.findRegion("Misc/Minecart_front"));
 
-        setupMinecartSprite(minecartBackSprite);
-        setupMinecartSprite(minecartFrontSprite);
-    }
-
-    private void setupMinecartSprite(Sprite sprite) {
-        sprite.setOrigin(sprite.getWidth() / 2f, 0);
+        minecartBackSprite.setOrigin(minecartBackSprite.getWidth() / 2f, 0);
+        minecartFrontSprite.setOrigin(minecartFrontSprite.getWidth() / 2f, 0);
     }
 
     @Override
@@ -69,15 +69,19 @@ public class PlayerDrawerSystem extends IteratingSystem {
 
         float scale = 1 / 600f * 3;
         minecartBackSprite.setScale(scale);
+        player.setScale(scale);
         minecartFrontSprite.setScale(scale);
 
         minecartBackSprite.setOriginBasedPosition(position.x, position.y);
+        player.setOriginBasedPosition(position.x, position.y);
         minecartFrontSprite.setOriginBasedPosition(position.x, position.y);
 
         minecartBackSprite.setRotation(rotation * MathUtils.radiansToDegrees);
+        player.setRotation(rotation * MathUtils.radiansToDegrees);
         minecartFrontSprite.setRotation(rotation * MathUtils.radiansToDegrees);
 
         minecartBackSprite.draw(batch);
+        player.draw(batch);
         minecartFrontSprite.draw(batch);
     }
 
