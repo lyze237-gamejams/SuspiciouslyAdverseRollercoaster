@@ -40,7 +40,7 @@ public class PlayerFollowTrackSystem extends IteratingSystem {
         var velocity = velocityMapper.get(entityId);
 
         if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
-            velocity.getVelocity().set(10, 50);
+            velocity.getVelocity().set(playerConstants.jumpVelocity);
             position.getPosition().mulAdd(velocity.getVelocity(), world.getDelta());
 
             world.edit(entityId)

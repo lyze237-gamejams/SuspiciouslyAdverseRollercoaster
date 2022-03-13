@@ -12,4 +12,6 @@ public class PlayerConstants {
     public float trackDeceleration = -100f;
 
     public float trackMinSpeed = 4f;
+
+    public Vector2 jumpVelocity = new Vector2(10f, 50f);
 }

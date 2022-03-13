@@ -32,8 +32,6 @@ public class PlayerDebugDrawerSystem extends IteratingSystem {
     protected void initialize() {
         font = new BitmapFont();
 
-        viewport.setUnitsPerPixel(0.75f);
-
         eventManager.addListener(new EventListener<ResizeEvent>(ResizeEvent.class) {
             @Override
             protected void fire(ResizeEvent event) {

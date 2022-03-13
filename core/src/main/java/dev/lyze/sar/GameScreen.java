@@ -4,8 +4,11 @@ import com.artemis.World;
 import com.artemis.WorldConfigurationBuilder;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.PerspectiveCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
@@ -13,6 +16,7 @@ import dev.lyze.sar.eventsystem.EventManager;
 import dev.lyze.sar.eventsystem.events.ResizeEvent;
 import dev.lyze.sar.systems.debug.*;
 import dev.lyze.sar.systems.*;
+import dev.lyze.sar.systems.player.PlayerDrawerSystem;
 import dev.lyze.sar.systems.player.PlayerFallStateSystem;
 import dev.lyze.sar.systems.player.PlayerFollowTrackSystem;
 import lombok.var;
@@ -37,6 +41,9 @@ public class GameScreen extends ScreenAdapter {
 				.with(new PlayerDebugDrawerSystem())
 				.with(new PlayerConstantsDebugger())
 				.with(new GizmoSystem())
+
+				.with(new PlayerDrawerSystem())
+
 				.build();
 
 		var batch = new SpriteBatch();
@@ -44,6 +51,7 @@ public class GameScreen extends ScreenAdapter {
 		builder.register(new ExtendViewport(24, 13.5f));
 		builder.register(new EventManager());
 		builder.register(batch);
+		builder.register(new TextureAtlas("Atlases/Main.atlas"));
 		builder.register(new ShapeDrawer(batch, new TextureRegion(new Texture("Pixel.png"))));
 
 		world = new World(builder);

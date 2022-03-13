@@ -6,6 +6,8 @@ import com.artemis.annotations.Wire;
 import com.artemis.systems.IteratingSystem;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.graphics.Camera;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import dev.lyze.sar.components.player.PlayerComponent;
@@ -35,11 +37,13 @@ public class CameraSystem extends IteratingSystem {
 
         viewport.getCamera().position.set(position.getPosition().x + size.getWidth() / 2f, position.getPosition().y + size.getHeight() / 2f, 0);
 
-        // debugMovement();
+        //debugMovement();
     }
 
     private void debugMovement() {
-        var position = new Vector2(viewport.getCamera().position.x, viewport.getCamera().position.y);
+        var camera = (OrthographicCamera) viewport.getCamera();
+
+        var position = new Vector2(camera.position.x, camera.position.y);
 
         if (Gdx.input.isKeyPressed(Input.Keys.W))
             position.set(position.x , position.y + MOVEMENT_SPEED * Gdx.graphics.getDeltaTime());
@@ -51,6 +55,11 @@ public class CameraSystem extends IteratingSystem {
         if (Gdx.input.isKeyPressed(Input.Keys.D))
             position.set(position.x + MOVEMENT_SPEED * Gdx.graphics.getDeltaTime(), position.y);
 
-        viewport.getCamera().position.set(position.x, position.y, viewport.getCamera().position.z);
+        if (Gdx.input.isKeyPressed(Input.Keys.UP))
+            camera.zoom += 100f * Gdx.graphics.getDeltaTime();
+        if (Gdx.input.isKeyPressed(Input.Keys.DOWN))
+            camera.zoom -= 100f * Gdx.graphics.getDeltaTime();
+
+        camera.position.set(position.x, position.y, camera.position.z);
     }
 }
