@@ -16,7 +16,7 @@ public class MapEntitySpawner extends IteratingSystem {
     private ComponentMapper<EntitySpawnerComponent> entitySpawnerMapper;
     @Wire private Map map;
 
-    private Array<Spawner> spawners = new Array<>();
+    private final Array<Spawner> spawners = new Array<>();
 
     public MapEntitySpawner() {
         spawners.add(new PlayerSpawner());
