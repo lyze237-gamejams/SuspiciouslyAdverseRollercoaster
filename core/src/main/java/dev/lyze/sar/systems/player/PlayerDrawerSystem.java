@@ -3,39 +3,31 @@ package dev.lyze.sar.systems.player;
 import com.artemis.ComponentMapper;
 import com.artemis.annotations.All;
 import com.artemis.annotations.Wire;
-import com.artemis.systems.IteratingSystem;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.MathUtils;
-import com.badlogic.gdx.utils.viewport.ExtendViewport;
-import dev.lyze.sar.components.movement.PositionComponent;
-import dev.lyze.sar.components.movement.RotationComponent;
-import dev.lyze.sar.components.movement.SizeComponent;
-import dev.lyze.sar.components.movement.VelocityComponent;
+import com.badlogic.gdx.math.Vector2;
+import dev.lyze.sar.components.movement.*;
 import dev.lyze.sar.components.player.PlayerComponent;
+import dev.lyze.sar.components.player.PlayerConstants;
 import dev.lyze.sar.components.player.PlayerFallStateComponent;
 import dev.lyze.sar.components.player.PlayerFollowTrackComponent;
 import dev.lyze.sar.eventsystem.EventManager;
 import dev.lyze.sar.utils.Constants;
 import lombok.var;
 
-@All({PlayerComponent.class, PositionComponent.class, RotationComponent.class, SizeComponent.class, VelocityComponent.class})
-public class PlayerDrawerSystem extends IteratingSystem {
+@All({PlayerComponent.class})
+public class PlayerDrawerSystem extends PlayerAbstractSystem {
     @Wire private SpriteBatch batch;
     @Wire private EventManager eventManager;
     @Wire private Constants constants;
 
-    private ComponentMapper<PositionComponent> positionMapper;
-    private ComponentMapper<RotationComponent> rotationMapper;
-    private ComponentMapper<VelocityComponent> velocityMapper;
-    private ComponentMapper<SizeComponent> sizeMapper;
-
     private ComponentMapper<PlayerFallStateComponent> playerFallStateMapper;
     private ComponentMapper<PlayerFollowTrackComponent> playerFollowTrackMapper;
 
-    private Sprite minecartBackSprite, minecartFrontSprite, player;
+    private Sprite minecartBackSprite, minecartFrontSprite, playerSprite;
     private Animation<TextureAtlas.AtlasRegion> crouch, fall, idle, jump, landing, currentAnimation;
     private float animationTime;
 
@@ -50,8 +42,8 @@ public class PlayerDrawerSystem extends IteratingSystem {
         landing = new Animation<>(0.1f, constants.getMain().findRegions("Fox/Landing"), Animation.PlayMode.NORMAL);
 
         setAnimation(idle);
-        player = new Sprite(currentAnimation.getKeyFrame(0));
-        player.setOrigin(player.getWidth() / 2f, 0);
+        playerSprite = new Sprite(currentAnimation.getKeyFrame(0));
+        playerSprite.setOrigin(playerSprite.getWidth() / 2f, 0);
     }
 
     private void setupMinecart() {
@@ -68,18 +60,17 @@ public class PlayerDrawerSystem extends IteratingSystem {
     }
 
     @Override
-    protected void process(int entityId) {
+    protected void process(int entityId, PlayerComponent player, PlayerConstants playerConstants, PositionComponent position, SizeComponent size, RotationComponent rotation, VelocityComponent velocity, GravityComponent gravity) {
         updatePlayerAnimation(entityId);
-        player.setRegion(currentAnimation.getKeyFrame(animationTime));
-        setSpritePositionAndRotation(entityId);
+        playerSprite.setRegion(currentAnimation.getKeyFrame(animationTime));
+        setSpritePositionAndRotation(entityId, position.getPosition(), rotation.getRotation(), size);
 
         minecartBackSprite.draw(batch);
-        player.draw(batch);
+        playerSprite.draw(batch);
         minecartFrontSprite.draw(batch);
     }
 
     private void updatePlayerAnimation(int entityId) {
-
         if (playerFollowTrackMapper.has(entityId)) {
             setAnimation(idle);
         } else if (playerFallStateMapper.has(entityId)) {
@@ -92,22 +83,18 @@ public class PlayerDrawerSystem extends IteratingSystem {
         }
     }
 
-    private void setSpritePositionAndRotation(int entityId) {
-        var rotation = rotationMapper.get(entityId).getRotation();
-        var position = positionMapper.get(entityId).getPosition();
-        var size = sizeMapper.get(entityId);
-
+    private void setSpritePositionAndRotation(int entityId, Vector2 position, float rotation, SizeComponent size) {
         float scale = 1 / 600f * 3;
         minecartBackSprite.setScale(scale);
-        player.setScale(scale);
+        playerSprite.setScale(scale);
         minecartFrontSprite.setScale(scale);
 
         minecartBackSprite.setOriginBasedPosition(position.x, position.y);
-        player.setOriginBasedPosition(position.x, position.y);
+        playerSprite.setOriginBasedPosition(position.x, position.y);
         minecartFrontSprite.setOriginBasedPosition(position.x, position.y);
 
         minecartBackSprite.setRotation(rotation * MathUtils.radiansToDegrees);
-        player.setRotation(rotation * MathUtils.radiansToDegrees);
+        playerSprite.setRotation(rotation * MathUtils.radiansToDegrees);
         minecartFrontSprite.setRotation(rotation * MathUtils.radiansToDegrees);
     }
 

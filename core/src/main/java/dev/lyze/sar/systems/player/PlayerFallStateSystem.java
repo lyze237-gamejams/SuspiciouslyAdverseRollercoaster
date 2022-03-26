@@ -9,27 +9,20 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Vector2;
 import dev.lyze.sar.components.TrackComponent;
-import dev.lyze.sar.components.movement.GravityComponent;
-import dev.lyze.sar.components.movement.PositionComponent;
-import dev.lyze.sar.components.movement.VelocityComponent;
+import dev.lyze.sar.components.movement.*;
 import dev.lyze.sar.components.player.PlayerComponent;
+import dev.lyze.sar.components.player.PlayerConstants;
 import dev.lyze.sar.components.player.PlayerFallStateComponent;
 import dev.lyze.sar.components.player.PlayerFollowTrackComponent;
 import dev.lyze.sar.systems.debug.GizmoSystem;
 import lombok.var;
 
-@All({PlayerComponent.class, PlayerFallStateComponent.class, GravityComponent.class, PositionComponent.class, VelocityComponent.class})
-public class PlayerFallStateSystem extends IteratingSystem {
+@All({PlayerComponent.class, PlayerFallStateComponent.class})
+public class PlayerFallStateSystem extends PlayerAbstractSystem {
     private final Vector2 intersection = new Vector2();
 
-    private EntitySubscription tracks;
-    private ComponentMapper<PlayerComponent> playerMapper;
     private ComponentMapper<TrackComponent> trackMapper;
-    private ComponentMapper<PositionComponent> positionMapper;
-    private ComponentMapper<GravityComponent> gravityMapper;
-    private ComponentMapper<VelocityComponent> velocityMapper;
-
-    private GizmoSystem gizmos;
+    private EntitySubscription tracks;
 
     @Override
     protected void initialize() {
@@ -37,12 +30,7 @@ public class PlayerFallStateSystem extends IteratingSystem {
     }
 
     @Override
-    protected void process(int entityId) {
-        var playerConstants = playerMapper.get(entityId).playerConstants;
-        var position = positionMapper.get(entityId);
-        var velocity = velocityMapper.get(entityId);
-        var gravity = gravityMapper.get(entityId);
-
+    protected void process(int entityId, PlayerComponent player, PlayerConstants playerConstants, PositionComponent position, SizeComponent size, RotationComponent rotation, VelocityComponent velocity, GravityComponent gravity) {
         velocity.getVelocity().add(0, gravity.getGravity() * world.getDelta());
         if (velocity.getVelocity().x > playerConstants.slowDownXToGravity) {
             velocity.getVelocity().x -= playerConstants.slowDownXGravitySpeed * world.getDelta();

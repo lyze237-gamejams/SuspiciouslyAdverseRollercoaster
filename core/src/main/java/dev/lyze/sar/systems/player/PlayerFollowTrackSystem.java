@@ -10,34 +10,24 @@ import com.badlogic.gdx.math.Vector2;
 import dev.lyze.sar.components.TrackComponent;
 import dev.lyze.sar.components.movement.*;
 import dev.lyze.sar.components.player.PlayerComponent;
+import dev.lyze.sar.components.player.PlayerConstants;
 import dev.lyze.sar.components.player.PlayerFallStateComponent;
 import dev.lyze.sar.components.player.PlayerFollowTrackComponent;
 import dev.lyze.sar.systems.debug.GizmoSystem;
 import lombok.var;
 
-@All({PlayerComponent.class, PlayerFollowTrackComponent.class, PositionComponent.class, RotationComponent.class, VelocityComponent.class})
-
-public class PlayerFollowTrackSystem extends IteratingSystem {
+@All({PlayerComponent.class, PlayerFollowTrackComponent.class})
+public class PlayerFollowTrackSystem extends PlayerAbstractSystem {
     private final Vector2 intersection = new Vector2();
     private final Vector2 direction = new Vector2();
 
     private ComponentMapper<TrackComponent> trackMapper;
     private ComponentMapper<PlayerFollowTrackComponent> playerFollowTrackMapper;
-    private ComponentMapper<PlayerComponent> playerMapper;
-    private ComponentMapper<PositionComponent> positionMapper;
-    private ComponentMapper<VelocityComponent> velocityMapper;
-    private ComponentMapper<RotationComponent> rotationMapper;
-
-    private GizmoSystem gizmos;
 
     @Override
-    protected void process(int entityId) {
+    protected void process(int entityId, PlayerComponent player, PlayerConstants playerConstants, PositionComponent position, SizeComponent size, RotationComponent rotation, VelocityComponent velocity, GravityComponent gravity) {
         var follow = playerFollowTrackMapper.get(entityId);
-        var playerConstants = playerMapper.get(entityId).playerConstants;
         var trackToFollow = trackMapper.get(follow.getTrackId());
-        var position = positionMapper.get(entityId);
-        var rotation = rotationMapper.get(entityId);
-        var velocity = velocityMapper.get(entityId);
 
         if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
             velocity.getVelocity().set(playerConstants.jumpVelocity);
