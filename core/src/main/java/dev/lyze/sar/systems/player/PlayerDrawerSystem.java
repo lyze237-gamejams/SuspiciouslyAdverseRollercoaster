@@ -28,20 +28,14 @@ public class PlayerDrawerSystem extends PlayerAbstractSystem {
     private ComponentMapper<PlayerFollowTrackComponent> playerFollowTrackMapper;
 
     private Sprite minecartBackSprite, minecartFrontSprite, playerSprite;
-    private Animation<TextureAtlas.AtlasRegion> crouch, fall, idle, jump, landing, currentAnimation;
+    private Animation<TextureAtlas.AtlasRegion> currentAnimation;
     private float animationTime;
 
     @Override
     protected void initialize() {
         setupMinecart();
 
-        crouch = new Animation<>(0.1f, constants.getMain().findRegions("Fox/Crouch"), Animation.PlayMode.NORMAL);
-        fall = new Animation<>(0.1f, constants.getMain().findRegions("Fox/Fall"), Animation.PlayMode.NORMAL);
-        idle = new Animation<>(0.1f, constants.getMain().findRegions("Fox/Idle"), Animation.PlayMode.LOOP);
-        jump = new Animation<>(0.1f, constants.getMain().findRegions("Fox/Jump"), Animation.PlayMode.NORMAL);
-        landing = new Animation<>(0.1f, constants.getMain().findRegions("Fox/Landing"), Animation.PlayMode.NORMAL);
-
-        setAnimation(idle);
+        setAnimation(constants.getPlayerIdle());
         playerSprite = new Sprite(currentAnimation.getKeyFrame(0));
         playerSprite.setOrigin(playerSprite.getWidth() / 2f, 0);
     }
@@ -72,13 +66,13 @@ public class PlayerDrawerSystem extends PlayerAbstractSystem {
 
     private void updatePlayerAnimation(int entityId) {
         if (playerFollowTrackMapper.has(entityId)) {
-            setAnimation(idle);
+            setAnimation(constants.getPlayerIdle());
         } else if (playerFallStateMapper.has(entityId)) {
             var velocity = velocityMapper.get(entityId).getVelocity();
             if (velocity.y > 0) {
-                setAnimation(jump);
+                setAnimation(constants.getPlayerJump());
             } else {
-                setAnimation(fall);
+                setAnimation(constants.getPlayerFall());
             }
         }
     }
