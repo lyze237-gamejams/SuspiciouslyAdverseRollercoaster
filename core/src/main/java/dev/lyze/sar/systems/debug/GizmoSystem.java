@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.FloatArray;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
+import dev.lyze.sar.utils.Constants;
 import lombok.Setter;
 import space.earlygrey.shapedrawer.ShapeDrawer;
 
@@ -16,17 +17,14 @@ public class GizmoSystem extends BaseSystem {
     @Setter private float lineWidth = 1f;
     private final Color color = new Color(Color.WHITE);
 
-    @Wire private ExtendViewport viewport;
+    @Wire private Constants constants;
     @Wire private ShapeDrawer drawer;
 
     @Override
-    protected void begin() {
-        drawer.getBatch().setProjectionMatrix(viewport.getCamera().combined);
-        drawer.getBatch().begin();
-    }
-
-    @Override
     protected void processSystem() {
+        if (!constants.isDebug())
+            return;
+
         for (int i = 0; i < lines.size; i += 9) {
             drawer.setColor(lines.get(i + 5), lines.get(i + 6), lines.get(i + 7), lines.get(i + 8));
             drawer.line(lines.get(i), lines.get(i + 1), lines.get(i + 2), lines.get(i + 3), lines.get(i + 4));
@@ -42,7 +40,6 @@ public class GizmoSystem extends BaseSystem {
     protected void end() {
         lines.clear();
         circles.clear();
-        drawer.getBatch().end();
     }
 
     public void addLine(float x, float y, float x1, float y1) {

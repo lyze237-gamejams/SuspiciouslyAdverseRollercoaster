@@ -4,8 +4,6 @@ import com.artemis.World;
 import com.artemis.WorldConfigurationBuilder;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.PerspectiveCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -19,6 +17,7 @@ import dev.lyze.sar.systems.*;
 import dev.lyze.sar.systems.player.PlayerDrawerSystem;
 import dev.lyze.sar.systems.player.PlayerFallStateSystem;
 import dev.lyze.sar.systems.player.PlayerFollowTrackSystem;
+import dev.lyze.sar.utils.Constants;
 import lombok.var;
 import space.earlygrey.shapedrawer.ShapeDrawer;
 
@@ -36,13 +35,15 @@ public class GameScreen extends ScreenAdapter {
 
 				.with(new MapRenderingSystem())
 
+				.with(new BeginBatchSystem())
+
 				.with(new TrackDebugDrawerSystem())
 				.with(new PositionSizeRotationDebugDrawerSystem())
-				.with(new PlayerDebugDrawerSystem())
-				.with(new PlayerConstantsDebugger())
 				.with(new GizmoSystem())
 
 				.with(new PlayerDrawerSystem())
+
+				.with(new EndBatchSystem())
 
 				.build();
 
@@ -51,7 +52,7 @@ public class GameScreen extends ScreenAdapter {
 		builder.register(new ExtendViewport(24, 13.5f));
 		builder.register(new EventManager());
 		builder.register(batch);
-		builder.register(new TextureAtlas("Atlases/Main.atlas"));
+		builder.register(new Constants());
 		builder.register(new ShapeDrawer(batch, new TextureRegion(new Texture("Pixel.png"))));
 
 		world = new World(builder);

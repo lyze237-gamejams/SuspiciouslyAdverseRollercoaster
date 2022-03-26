@@ -18,14 +18,14 @@ import dev.lyze.sar.components.player.PlayerComponent;
 import dev.lyze.sar.components.player.PlayerFallStateComponent;
 import dev.lyze.sar.components.player.PlayerFollowTrackComponent;
 import dev.lyze.sar.eventsystem.EventManager;
+import dev.lyze.sar.utils.Constants;
 import lombok.var;
 
 @All({PlayerComponent.class, PositionComponent.class, RotationComponent.class, SizeComponent.class, VelocityComponent.class})
 public class PlayerDrawerSystem extends IteratingSystem {
     @Wire private SpriteBatch batch;
     @Wire private EventManager eventManager;
-    @Wire private ExtendViewport viewport;
-    @Wire private TextureAtlas mainAtlas;
+    @Wire private Constants constants;
 
     private ComponentMapper<PositionComponent> positionMapper;
     private ComponentMapper<RotationComponent> rotationMapper;
@@ -43,11 +43,11 @@ public class PlayerDrawerSystem extends IteratingSystem {
     protected void initialize() {
         setupMinecart();
 
-        crouch = new Animation<>(0.1f, mainAtlas.findRegions("Fox/Crouch"), Animation.PlayMode.NORMAL);
-        fall = new Animation<>(0.1f, mainAtlas.findRegions("Fox/Fall"), Animation.PlayMode.NORMAL);
-        idle = new Animation<>(0.1f, mainAtlas.findRegions("Fox/Idle"), Animation.PlayMode.LOOP);
-        jump = new Animation<>(0.1f, mainAtlas.findRegions("Fox/Jump"), Animation.PlayMode.NORMAL);
-        landing = new Animation<>(0.1f, mainAtlas.findRegions("Fox/Landing"), Animation.PlayMode.NORMAL);
+        crouch = new Animation<>(0.1f, constants.getMain().findRegions("Fox/Crouch"), Animation.PlayMode.NORMAL);
+        fall = new Animation<>(0.1f, constants.getMain().findRegions("Fox/Fall"), Animation.PlayMode.NORMAL);
+        idle = new Animation<>(0.1f, constants.getMain().findRegions("Fox/Idle"), Animation.PlayMode.LOOP);
+        jump = new Animation<>(0.1f, constants.getMain().findRegions("Fox/Jump"), Animation.PlayMode.NORMAL);
+        landing = new Animation<>(0.1f, constants.getMain().findRegions("Fox/Landing"), Animation.PlayMode.NORMAL);
 
         setAnimation(idle);
         player = new Sprite(currentAnimation.getKeyFrame(0));
@@ -55,8 +55,8 @@ public class PlayerDrawerSystem extends IteratingSystem {
     }
 
     private void setupMinecart() {
-        minecartBackSprite = new Sprite(mainAtlas.findRegion("Misc/Minecart_back"));
-        minecartFrontSprite = new Sprite(mainAtlas.findRegion("Misc/Minecart_front"));
+        minecartBackSprite = new Sprite(constants.getMain().findRegion("Misc/Minecart_back"));
+        minecartFrontSprite = new Sprite(constants.getMain().findRegion("Misc/Minecart_front"));
 
         minecartBackSprite.setOrigin(minecartBackSprite.getWidth() / 2f, 0);
         minecartFrontSprite.setOrigin(minecartFrontSprite.getWidth() / 2f, 0);
@@ -65,11 +65,6 @@ public class PlayerDrawerSystem extends IteratingSystem {
     @Override
     protected void begin() {
         animationTime += world.getDelta();
-
-        viewport.apply();
-
-        batch.setProjectionMatrix(viewport.getCamera().combined);
-        batch.begin();
     }
 
     @Override
@@ -114,11 +109,6 @@ public class PlayerDrawerSystem extends IteratingSystem {
         minecartBackSprite.setRotation(rotation * MathUtils.radiansToDegrees);
         player.setRotation(rotation * MathUtils.radiansToDegrees);
         minecartFrontSprite.setRotation(rotation * MathUtils.radiansToDegrees);
-    }
-
-    @Override
-    protected void end() {
-        batch.end();
     }
 
     protected void setAnimation(Animation<TextureAtlas.AtlasRegion> newAnimation) {

@@ -11,6 +11,7 @@ import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import dev.lyze.sar.components.movement.PositionComponent;
 import dev.lyze.sar.components.movement.RotationComponent;
 import dev.lyze.sar.components.movement.SizeComponent;
+import dev.lyze.sar.utils.Constants;
 import lombok.var;
 import space.earlygrey.shapedrawer.JoinType;
 import space.earlygrey.shapedrawer.ShapeDrawer;
@@ -19,21 +20,18 @@ import space.earlygrey.shapedrawer.ShapeDrawer;
 public class PositionSizeRotationDebugDrawerSystem extends IteratingSystem {
     private final Polygon polygon = new Polygon(new float[8]);
 
-    @Wire private ExtendViewport viewport;
     @Wire private ShapeDrawer drawer;
+    @Wire private Constants constants;
 
     private ComponentMapper<PositionComponent> positionMapper;
     private ComponentMapper<RotationComponent> rotationMapper;
     private ComponentMapper<SizeComponent> sizeMapper;
 
     @Override
-    protected void begin() {
-        drawer.getBatch().setProjectionMatrix(viewport.getCamera().combined);
-        drawer.getBatch().begin();
-    }
-
-    @Override
     protected void process(int entityId) {
+        if (!constants.isDebug())
+            return;
+
         drawer.setColor(Color.TEAL);
 
         var position = positionMapper.get(entityId);
@@ -63,10 +61,5 @@ public class PositionSizeRotationDebugDrawerSystem extends IteratingSystem {
 
         drawer.setColor(Color.GREEN);
         drawer.filledCircle(position.getPosition().x, position.getPosition().y, 0.1f);
-    }
-
-    @Override
-    protected void end() {
-        drawer.getBatch().end();
     }
 }
