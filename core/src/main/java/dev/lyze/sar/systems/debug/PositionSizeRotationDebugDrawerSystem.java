@@ -21,7 +21,7 @@ public class PositionSizeRotationDebugDrawerSystem extends IteratingSystem {
     private final Polygon polygon = new Polygon(new float[8]);
 
     @Wire private ShapeDrawer drawer;
-    @Wire private Constants constants;
+    @Wire(name = "constants") private Constants constants;
 
     private ComponentMapper<PositionComponent> positionMapper;
     private ComponentMapper<RotationComponent> rotationMapper;

@@ -22,6 +22,7 @@
 	<extend-configuration-property name="artemis.reflect.include" value="com.badlogic.gdx.utils.viewport.ExtendViewport" />
 	<extend-configuration-property name="artemis.reflect.include" value="com.badlogic.gdx.graphics.g2d.SpriteBatch" />
 	<extend-configuration-property name="artemis.reflect.include" value="com.badlogic.gdx.math.Vector2" />
+	<extend-configuration-property name="artemis.reflect.include" value="dev.lyze.sar.utils" />
     <entry-point class="dev.lyze.sar.gwt.GwtLauncher" />
     <set-configuration-property name="gdx.assetpath" value="../assets" />
     <set-configuration-property name="xsiframe.failIfScriptTag" value="FALSE"/>

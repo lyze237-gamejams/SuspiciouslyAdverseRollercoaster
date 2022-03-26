@@ -22,7 +22,7 @@ import lombok.var;
 public class PlayerDrawerSystem extends PlayerAbstractSystem {
     @Wire private SpriteBatch batch;
     @Wire private EventManager eventManager;
-    @Wire private Constants constants;
+    @Wire(name = "constants") private Constants constants;
 
     private ComponentMapper<PlayerFallStateComponent> playerFallStateMapper;
     private ComponentMapper<PlayerFollowTrackComponent> playerFollowTrackMapper;

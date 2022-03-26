@@ -14,7 +14,7 @@ import space.earlygrey.shapedrawer.ShapeDrawer;
 
 @All({TrackComponent.class})
 public class TrackDebugDrawerSystem extends IteratingSystem {
-    @Wire private Constants constants;
+    @Wire(name = "constants") private Constants constants;
     @Wire private ShapeDrawer drawer;
 
     private ComponentMapper<TrackComponent> collisionMapper;

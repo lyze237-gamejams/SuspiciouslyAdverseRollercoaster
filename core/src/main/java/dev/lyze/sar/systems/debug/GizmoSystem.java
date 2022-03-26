@@ -17,7 +17,7 @@ public class GizmoSystem extends BaseSystem {
     @Setter private float lineWidth = 1f;
     private final Color color = new Color(Color.WHITE);
 
-    @Wire private Constants constants;
+    @Wire(name = "constants") private Constants constants;
     @Wire private ShapeDrawer drawer;
 
     @Override

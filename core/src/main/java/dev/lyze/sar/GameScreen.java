@@ -52,7 +52,7 @@ public class GameScreen extends ScreenAdapter {
 		builder.register(new ExtendViewport(24, 13.5f));
 		builder.register(new EventManager());
 		builder.register(batch);
-		builder.register(new Constants());
+		builder.register("constants", new Constants());
 		builder.register(new ShapeDrawer(batch, new TextureRegion(new Texture("Pixel.png"))));
 
 		world = new World(builder);

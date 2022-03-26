@@ -7,7 +7,7 @@ import lombok.Getter;
 
 public class Constants extends Component {
     @Getter private final TextureAtlas main;
-    @Getter private final boolean debug = false;
+    @Getter private final boolean debug = true;
 
     @Getter private final Animation<TextureAtlas.AtlasRegion> playerCrouch, playerFall, playerIdle, playerJump, playerLanding;
 
