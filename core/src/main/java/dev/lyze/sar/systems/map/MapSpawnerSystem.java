@@ -55,11 +55,11 @@ public class MapSpawnerSystem extends BaseSystem {
                 var verts= Arrays.copyOf(polygonMapObject.getPolygon().getTransformedVertices(), polygonMapObject.getPolygon().getTransformedVertices().length);
 
                 for (int j = 0; j < verts.length; j++) {
-                    verts[j] /= map.getTrackLayer().getTileWidth();
+                    verts[j] /= obstacles.getTileWidth();
                 }
 
                 var polygon = new Polygon(verts);
-                polygon.setPosition(x, y);
+                polygon.setPosition(x - obstacles.getOffsetX() / obstacles.getTileWidth(), y - obstacles.getOffsetY() / obstacles.getTileHeight());
 
                 world.edit(world.create())
                         .add(new ObstacleComponent(polygon.getTransformedVertices()));
