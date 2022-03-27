@@ -13,7 +13,7 @@ public class Map {
     @Getter private final OrthogonalTiledMapRendererBleeding renderer;
 
     @Getter private final MapLayer entitiesLayer, trackCollisionLayer;
-    @Getter private final TiledMapTileLayer trackLayer, obstaclesLayer;
+    @Getter private final TiledMapTileLayer trackLayer, obstaclesLayer, torchesLayer;
 
     public Map(String path, SpriteBatch batch) {
         this.map = new TmxMapLoader().load(path);
@@ -25,6 +25,10 @@ public class Map {
         obstaclesLayer = (TiledMapTileLayer) map.getLayers().get("Obstacles");
         if (obstaclesLayer == null)
             throw new IllegalArgumentException("Obstacles Layer undefined");
+
+        torchesLayer = (TiledMapTileLayer) map.getLayers().get("Torches");
+        if (torchesLayer == null)
+            throw new IllegalArgumentException("Torches Layer undefined");
 
         entitiesLayer = map.getLayers().get("Entities");
         if (entitiesLayer == null)

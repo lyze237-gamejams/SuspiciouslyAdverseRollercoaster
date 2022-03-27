@@ -1,7 +1,10 @@
 package dev.lyze.sar.systems.map;
 
+import com.aliasifkhan.hackLights.HackLight;
+import com.aliasifkhan.hackLights.HackLightEngine;
 import com.artemis.BaseSystem;
 import com.artemis.annotations.Wire;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.objects.PolygonMapObject;
@@ -12,10 +15,13 @@ import com.badlogic.gdx.math.Polyline;
 import dev.lyze.sar.components.ObstacleComponent;
 import dev.lyze.sar.components.TrackComponent;
 import dev.lyze.sar.components.EntitySpawnerComponent;
+import dev.lyze.sar.utils.Constants;
 import lombok.var;
 import java.util.Arrays;
 
 public class MapSpawnerSystem extends BaseSystem {
+    @Wire private HackLightEngine hackLightEngine;
+    @Wire(name = "constants") private Constants constants;
     @Wire private Map map;
 
     private void parseEntities(MapLayer entitiesLayer) {
@@ -67,12 +73,33 @@ public class MapSpawnerSystem extends BaseSystem {
         }
     }
 
+    private void parseTorches(TiledMapTileLayer torchesLayer) {
+        for (int x = 0; x < torchesLayer.getWidth(); x++) {
+            for (int y = 0; y < torchesLayer.getHeight(); y++) {
+                var cell = torchesLayer.getCell(x, y);
+                if (cell == null)
+                    continue;
+
+                var properties = cell.getTile().getProperties();
+
+                var color = properties.get("color", Color.class);
+                var region = properties.get("region", String.class);
+                var scale = properties.get("scale", float.class);
+
+                var light = new HackLight(constants.getLights().findRegion(region), color.r, color.g, color.b, color.a, scale);
+                light.setOriginBasedPosition(x + 0.5f, y + 0.5f);
+                hackLightEngine.addLight(light);
+            }
+        }
+    }
+
     @Override
     protected void initialize() {
         var entitiesLayer = map.getEntitiesLayer();
 
         parseTrackCollisions(map.getTrackCollisionLayer());
         parseObstaclesLayer(map.getObstaclesLayer());
+        parseTorches(map.getTorchesLayer());
         parseEntities(entitiesLayer);
     }
 
