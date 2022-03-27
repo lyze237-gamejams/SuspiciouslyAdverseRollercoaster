@@ -23,8 +23,10 @@ public class Constants extends Component {
     @Getter private final TextureAtlas lights;
 
     @Getter private final Texture background;
+    @Getter private final CharacterEnum character;
 
     public Constants(CharacterEnum character) {
+        this.character = character;
         main = new TextureAtlas("Atlases/Main.atlas");
 
         lights = new TextureAtlas("lights.atlas");

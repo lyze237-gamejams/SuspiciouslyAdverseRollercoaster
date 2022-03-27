@@ -4,17 +4,20 @@ import com.artemis.Aspect;
 import com.artemis.ComponentMapper;
 import com.artemis.EntitySubscription;
 import com.artemis.annotations.All;
+import com.artemis.annotations.Wire;
 import com.artemis.systems.IteratingSystem;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Polygon;
+import dev.lyze.sar.GameOverScreen;
 import dev.lyze.sar.MainMenuScreen;
 import dev.lyze.sar.components.HitboxComponent;
 import dev.lyze.sar.components.ObstacleComponent;
 import dev.lyze.sar.components.movement.PositionComponent;
 import dev.lyze.sar.components.movement.RotationComponent;
 import dev.lyze.sar.components.player.PlayerOrCartComponent;
+import dev.lyze.sar.utils.Constants;
 import dev.lyze.sar.utils.RectangleUtils;
 import lombok.var;
 
@@ -29,6 +32,8 @@ public class PlayerObstacleHitSystem extends IteratingSystem {
     private ComponentMapper<ObstacleComponent> obstacleMapper;
 
     private EntitySubscription obstalces;
+
+    @Wire(name = "constants") private Constants constants;
 
     @Override
     protected void initialize() {
@@ -47,7 +52,7 @@ public class PlayerObstacleHitSystem extends IteratingSystem {
             var obstaclePolygon = obstacleMapper.get(obstalces.getEntities().get(i)).getPolygon();
 
             if (Intersector.overlapConvexPolygons(playerPolygon, obstaclePolygon)) {
-                ((Game) Gdx.app.getApplicationListener()).setScreen(new MainMenuScreen());
+                ((Game) Gdx.app.getApplicationListener()).setScreen(new GameOverScreen(constants.getCharacter()));
             }
         }
     }
