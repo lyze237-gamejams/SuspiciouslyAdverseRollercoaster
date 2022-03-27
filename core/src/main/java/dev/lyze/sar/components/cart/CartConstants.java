@@ -1,10 +1,8 @@
-package dev.lyze.sar.components.player;
+package dev.lyze.sar.components.cart;
 
 import com.badlogic.gdx.math.Vector2;
 
-public class PlayerConstants {
-    public Vector2 maxVelocity = new Vector2(14, 24);
-
+public class CartConstants {
     public float slowDownXToGravity = 3f;
     public float slowDownXGravitySpeed = 4f;
 

@@ -1,4 +1,4 @@
-package dev.lyze.sar.systems.player;
+package dev.lyze.sar.systems.cart;
 
 import com.artemis.Aspect;
 import com.artemis.ComponentMapper;
@@ -9,13 +9,13 @@ import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Vector2;
 import dev.lyze.sar.components.TrackComponent;
 import dev.lyze.sar.components.movement.*;
-import dev.lyze.sar.components.player.PlayerCartComponent;
-import dev.lyze.sar.components.player.PlayerConstants;
-import dev.lyze.sar.components.player.PlayerCartFallStateComponent;
-import dev.lyze.sar.components.player.PlayerCartFollowTrackComponent;
+import dev.lyze.sar.components.cart.CartComponent;
+import dev.lyze.sar.components.cart.CartConstants;
+import dev.lyze.sar.components.cart.CartFallStateComponent;
+import dev.lyze.sar.components.cart.CartFollowTrackComponent;
 import lombok.var;
 
-@All({PlayerCartComponent.class, PlayerCartFallStateComponent.class})
+@All({CartComponent.class, CartFallStateComponent.class})
 public class PlayerCartFallStateSystem extends PlayerAbstractSystem {
     private final Vector2 intersection = new Vector2();
 
@@ -28,15 +28,15 @@ public class PlayerCartFallStateSystem extends PlayerAbstractSystem {
     }
 
     @Override
-    protected void process(int entityId, PlayerCartComponent player, PlayerConstants playerConstants, PositionComponent position, RotationComponent rotation, VelocityComponent velocity, GravityComponent gravity) {
+    protected void process(int entityId, CartComponent player, CartConstants cartConstants, PositionComponent position, RotationComponent rotation, VelocityComponent velocity, GravityComponent gravity) {
         velocity.getVelocity().add(0, gravity.getGravity() * world.getDelta());
-        if (velocity.getVelocity().x > playerConstants.slowDownXToGravity) {
-            velocity.getVelocity().x -= playerConstants.slowDownXGravitySpeed * world.getDelta();
+        if (velocity.getVelocity().x > cartConstants.slowDownXToGravity) {
+            velocity.getVelocity().x -= cartConstants.slowDownXGravitySpeed * world.getDelta();
 
-            if (velocity.getVelocity().x < playerConstants.slowDownXToGravity)
-                velocity.getVelocity().x = playerConstants.slowDownXToGravity;
+            if (velocity.getVelocity().x < cartConstants.slowDownXToGravity)
+                velocity.getVelocity().x = cartConstants.slowDownXToGravity;
         }
-        velocity.clamp(playerConstants.maxVelocity);
+        velocity.clamp();
 
         var targetXPosition = position.getPosition().x + velocity.getVelocity().x * world.getDelta();
         var targetYPosition = position.getPosition().y + velocity.getVelocity().y * world.getDelta();
@@ -68,8 +68,8 @@ public class PlayerCartFallStateSystem extends PlayerAbstractSystem {
                 gizmos.addCircle(intersection.x, intersection.y, 0.1f);
 
                 world.edit(entityId)
-                        .remove(PlayerCartFallStateComponent.class)
-                        .add(new PlayerCartFollowTrackComponent(tracks.getEntities().get(i), j));
+                        .remove(CartFallStateComponent.class)
+                        .add(new CartFollowTrackComponent(tracks.getEntities().get(i), j));
 
                 return true;
             }

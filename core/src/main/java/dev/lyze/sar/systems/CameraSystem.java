@@ -9,15 +9,15 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
-import dev.lyze.sar.components.player.PlayerCartComponent;
+import dev.lyze.sar.components.cart.CartComponent;
 import dev.lyze.sar.components.movement.PositionComponent;
 import lombok.var;
 
-@All({PlayerCartComponent.class, PositionComponent.class})
+@All({CartComponent.class, PositionComponent.class})
 public class CameraSystem extends IteratingSystem {
     private static final float MOVEMENT_SPEED = 800;
 
-    private ComponentMapper<PlayerCartComponent> playerMapper;
+    private ComponentMapper<CartComponent> playerMapper;
     private ComponentMapper<PositionComponent> positionMapper;
 
     @Wire private ExtendViewport viewport;

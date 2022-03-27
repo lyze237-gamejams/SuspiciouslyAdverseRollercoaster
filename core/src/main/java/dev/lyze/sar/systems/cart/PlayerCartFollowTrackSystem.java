@@ -1,4 +1,4 @@
-package dev.lyze.sar.systems.player;
+package dev.lyze.sar.systems.cart;
 
 import com.artemis.ComponentMapper;
 import com.artemis.annotations.All;
@@ -8,31 +8,31 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import dev.lyze.sar.components.TrackComponent;
 import dev.lyze.sar.components.movement.*;
-import dev.lyze.sar.components.player.PlayerCartComponent;
-import dev.lyze.sar.components.player.PlayerConstants;
-import dev.lyze.sar.components.player.PlayerCartFallStateComponent;
-import dev.lyze.sar.components.player.PlayerCartFollowTrackComponent;
+import dev.lyze.sar.components.cart.CartComponent;
+import dev.lyze.sar.components.cart.CartConstants;
+import dev.lyze.sar.components.cart.CartFallStateComponent;
+import dev.lyze.sar.components.cart.CartFollowTrackComponent;
 import lombok.var;
 
-@All({PlayerCartComponent.class, PlayerCartFollowTrackComponent.class})
+@All({CartComponent.class, CartFollowTrackComponent.class})
 public class PlayerCartFollowTrackSystem extends PlayerAbstractSystem {
     private final Vector2 direction = new Vector2();
 
     private ComponentMapper<TrackComponent> trackMapper;
-    private ComponentMapper<PlayerCartFollowTrackComponent> playerFollowTrackMapper;
+    private ComponentMapper<CartFollowTrackComponent> playerFollowTrackMapper;
 
     @Override
-    protected void process(int entityId, PlayerCartComponent player, PlayerConstants playerConstants, PositionComponent position, RotationComponent rotation, VelocityComponent velocity, GravityComponent gravity) {
+    protected void process(int entityId, CartComponent player, CartConstants cartConstants, PositionComponent position, RotationComponent rotation, VelocityComponent velocity, GravityComponent gravity) {
         var follow = playerFollowTrackMapper.get(entityId);
         var trackToFollow = trackMapper.get(follow.getTrackId());
 
         if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
-            velocity.getVelocity().set(playerConstants.jumpVelocity);
+            velocity.getVelocity().set(cartConstants.jumpVelocity);
             position.getPosition().mulAdd(velocity.getVelocity(), world.getDelta());
 
             world.edit(entityId)
-                    .remove(PlayerCartFollowTrackComponent.class)
-                    .add(new PlayerCartFallStateComponent());
+                    .remove(CartFollowTrackComponent.class)
+                    .add(new CartFallStateComponent());
 
             return;
         }
@@ -46,12 +46,12 @@ public class PlayerCartFollowTrackSystem extends PlayerAbstractSystem {
 
         calculateDirection(position.getPosition(), targetPosX, targetPosY);
 
-        velocity.clamp(playerConstants.maxVelocity);
+        velocity.clamp();
         var speed = velocity.getVelocity().len();
         direction.scl(speed);
 
         velocity.getVelocity().set(direction);
-        velocity.clamp(playerConstants.maxVelocity);
+        velocity.clamp();
 
         position.getPosition().mulAdd(velocity.getVelocity(), world.getDelta());
 
@@ -61,18 +61,18 @@ public class PlayerCartFollowTrackSystem extends PlayerAbstractSystem {
 
         if (angle < 0) {
             var multiplier = MathUtils.map(-90, 0, 0.2f, 0, angleDeg);
-            var scale = playerConstants.trackAcceleration * multiplier;
+            var scale = cartConstants.trackAcceleration * multiplier;
             var length = velocity.getVelocity().len();
             velocity.getVelocity().nor().scl(length + scale * world.getDelta());
         }
         if (angle > 0) {
             var multiplier = MathUtils.map(0, 90, 0, 0.2f, angleDeg);
-            var scale = playerConstants.trackDeceleration * multiplier;
+            var scale = cartConstants.trackDeceleration * multiplier;
             var length = velocity.getVelocity().len();
             velocity.getVelocity().nor().scl(length + scale * world.getDelta());
 
-            if (velocity.getVelocity().len() < playerConstants.trackMinSpeed) {
-                velocity.getVelocity().nor().scl(playerConstants.trackMinSpeed);
+            if (velocity.getVelocity().len() < cartConstants.trackMinSpeed) {
+                velocity.getVelocity().nor().scl(cartConstants.trackMinSpeed);
             }
         }
 
@@ -88,8 +88,8 @@ public class PlayerCartFollowTrackSystem extends PlayerAbstractSystem {
                 position.getPosition().add(1, 0);
 
                 world.edit(entityId)
-                    .remove(PlayerCartFollowTrackComponent.class)
-                    .add(new PlayerCartFallStateComponent());
+                    .remove(CartFollowTrackComponent.class)
+                    .add(new CartFallStateComponent());
             }
         }
     }
