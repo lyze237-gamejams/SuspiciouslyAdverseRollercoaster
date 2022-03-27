@@ -9,14 +9,17 @@ import dev.lyze.sar.Map;
 import dev.lyze.sar.components.EntitySpawnerComponent;
 import dev.lyze.sar.systems.spawners.PlayerSpawner;
 import dev.lyze.sar.systems.spawners.Spawner;
+import dev.lyze.sar.utils.Constants;
 import lombok.var;
 
 @All(EntitySpawnerComponent.class)
 public class MapEntitySpawner extends IteratingSystem {
-    private ComponentMapper<EntitySpawnerComponent> entitySpawnerMapper;
-    @Wire private Map map;
-
     private final Array<Spawner> spawners = new Array<>();
+
+    private ComponentMapper<EntitySpawnerComponent> entitySpawnerMapper;
+
+    @Wire(name = "constants") private Constants constants;
+    @Wire private Map map;
 
     public MapEntitySpawner() {
         spawners.add(new PlayerSpawner());
@@ -29,7 +32,7 @@ public class MapEntitySpawner extends IteratingSystem {
 
         for (Spawner spawner : spawners) {
             if (spawner.getName().equals(type)) {
-                spawner.spawn(world, map, entity.getObject());
+                spawner.spawn(constants, world, map, entity.getObject());
             }
         }
     }
