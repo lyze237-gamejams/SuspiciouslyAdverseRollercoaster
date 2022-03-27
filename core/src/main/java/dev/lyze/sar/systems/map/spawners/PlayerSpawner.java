@@ -1,11 +1,8 @@
-package dev.lyze.sar.systems.spawners;
+package dev.lyze.sar.systems.map.spawners;
 
 import com.artemis.World;
-import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
-import com.badlogic.gdx.math.Vector2;
 import dev.lyze.sar.Map;
 import dev.lyze.sar.components.CopyPositionFromEntityComponent;
 import dev.lyze.sar.components.CopyRotationFromEntityComponent;

@@ -1,4 +1,4 @@
-package dev.lyze.sar.systems.spawners;
+package dev.lyze.sar.systems.map.spawners;
 
 import com.artemis.World;
 import com.badlogic.gdx.maps.MapObject;

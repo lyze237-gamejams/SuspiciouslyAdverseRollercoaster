@@ -1,4 +1,4 @@
-package dev.lyze.sar.systems;
+package dev.lyze.sar.systems.copy;
 
 import com.artemis.ComponentMapper;
 import com.artemis.annotations.All;

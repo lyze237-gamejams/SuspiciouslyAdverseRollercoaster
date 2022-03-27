@@ -1,4 +1,4 @@
-package dev.lyze.sar.systems;
+package dev.lyze.sar.systems.map;
 
 import com.artemis.BaseSystem;
 import com.artemis.ComponentMapper;
