@@ -5,7 +5,6 @@ import com.artemis.annotations.All;
 import com.artemis.annotations.Wire;
 import com.artemis.systems.IteratingSystem;
 import com.badlogic.gdx.utils.Array;
-import dev.lyze.sar.Map;
 import dev.lyze.sar.components.EntitySpawnerComponent;
 import dev.lyze.sar.systems.map.spawners.PlayerSpawner;
 import dev.lyze.sar.systems.map.spawners.Spawner;

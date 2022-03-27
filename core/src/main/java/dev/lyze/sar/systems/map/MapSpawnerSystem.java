@@ -1,14 +1,15 @@
 package dev.lyze.sar.systems.map;
 
 import com.artemis.BaseSystem;
-import com.artemis.ComponentMapper;
-import com.artemis.annotations.All;
 import com.artemis.annotations.Wire;
 import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.MapObject;
+import com.badlogic.gdx.maps.objects.PolygonMapObject;
 import com.badlogic.gdx.maps.objects.PolylineMapObject;
+import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
+import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Polyline;
-import dev.lyze.sar.Map;
+import dev.lyze.sar.components.ObstacleComponent;
 import dev.lyze.sar.components.TrackComponent;
 import dev.lyze.sar.components.EntitySpawnerComponent;
 import lombok.var;
@@ -38,11 +39,39 @@ public class MapSpawnerSystem extends BaseSystem {
         }
     }
 
+    private void parseObstaclesLayer(TiledMapTileLayer obstacles) {
+        for (int x = 0; x < obstacles.getWidth(); x++) {
+            for (int y = 0; y < obstacles.getHeight(); y++) {
+                var cell = obstacles.getCell(x, y);
+                if (cell == null)
+                    continue;
+
+                var objects = cell.getTile().getObjects();
+                if (objects.getCount() != 1)
+                    throw new IllegalArgumentException("Spikes cell " + x + "/" + y + " is wrong count: " + objects.getCount() + " != " + 1);
+
+                var polygonMapObject= ((PolygonMapObject) objects.get(0));
+                var verts= polygonMapObject.getPolygon().getTransformedVertices().clone();
+
+                for (int j = 0; j < verts.length; j++) {
+                    verts[j] /= map.getTrackLayer().getTileWidth();
+                }
+
+                var polygon = new Polygon(verts);
+                polygon.setPosition(x, y);
+
+                world.edit(world.create())
+                        .add(new ObstacleComponent(polygon.getTransformedVertices()));
+            }
+        }
+    }
+
     @Override
     protected void initialize() {
         var entitiesLayer = map.getEntitiesLayer();
 
         parseTrackCollisions(map.getTrackCollisionLayer());
+        parseObstaclesLayer(map.getObstaclesLayer());
         parseEntities(entitiesLayer);
     }
 

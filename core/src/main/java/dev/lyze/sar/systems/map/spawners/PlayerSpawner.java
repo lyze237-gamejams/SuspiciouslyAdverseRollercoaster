@@ -3,7 +3,7 @@ package dev.lyze.sar.systems.map.spawners;
 import com.artemis.World;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
-import dev.lyze.sar.Map;
+import dev.lyze.sar.systems.map.Map;
 import dev.lyze.sar.components.CopyPositionFromEntityComponent;
 import dev.lyze.sar.components.CopyRotationFromEntityComponent;
 import dev.lyze.sar.components.AnimatableSpriteComponent;

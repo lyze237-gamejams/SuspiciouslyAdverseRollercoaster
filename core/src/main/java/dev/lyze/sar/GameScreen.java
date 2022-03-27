@@ -15,6 +15,7 @@ import dev.lyze.sar.systems.copy.CopyPositionFromEntitySystem;
 import dev.lyze.sar.systems.copy.CopyRotationFromEntitySystem;
 import dev.lyze.sar.systems.debug.*;
 import dev.lyze.sar.systems.*;
+import dev.lyze.sar.systems.map.Map;
 import dev.lyze.sar.systems.map.MapEntitySpawner;
 import dev.lyze.sar.systems.map.MapRenderingSystem;
 import dev.lyze.sar.systems.map.MapSpawnerSystem;
@@ -58,6 +59,7 @@ public class GameScreen extends ScreenAdapter {
 				.with(new SpriteDrawerSystem())
 
 				.with(new TrackDebugDrawerSystem())
+				.with(new ObstaclesDebugDrawerSystem())
 				.with(new PositionHitboxDrawerSystem())
 				.with(new GizmoSystem())
 

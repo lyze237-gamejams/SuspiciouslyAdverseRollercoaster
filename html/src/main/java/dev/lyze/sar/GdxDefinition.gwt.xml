@@ -16,7 +16,7 @@
 	<inherits name="space.earlygrey.shapedrawer"/>
 	<extend-configuration-property name="artemis.reflect.include" value="dev.lyze.sar.components" />
 	<extend-configuration-property name="artemis.reflect.include" value="dev.lyze.sar.systems" />
-	<extend-configuration-property name="artemis.reflect.include" value="dev.lyze.sar.Map" />
+	<extend-configuration-property name="artemis.reflect.include" value="dev.lyze.sar.systems.map.Map" />
 	<extend-configuration-property name="artemis.reflect.include" value="dev.lyze.sar.eventsystem" />
 	<extend-configuration-property name="artemis.reflect.include" value="space.earlygrey.shapedrawer.ShapeDrawer" />
 	<extend-configuration-property name="artemis.reflect.include" value="com.badlogic.gdx.utils.viewport.ExtendViewport" />

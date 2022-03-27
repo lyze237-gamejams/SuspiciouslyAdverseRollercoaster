@@ -1,4 +1,4 @@
-package dev.lyze.sar;
+package dev.lyze.sar.systems.map;
 
 import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.tiled.TiledMap;
@@ -12,7 +12,7 @@ public class Map {
     @Getter private final OrthogonalTiledMapRendererBleeding renderer;
 
     @Getter private final MapLayer entitiesLayer, trackCollisionLayer;
-    @Getter private final TiledMapTileLayer trackLayer;
+    @Getter private final TiledMapTileLayer trackLayer, obstaclesLayer;
 
     public Map(String path) {
         this.map = new TmxMapLoader().load(path);
@@ -20,6 +20,10 @@ public class Map {
         trackLayer = (TiledMapTileLayer) map.getLayers().get("Tracks");
         if (trackLayer == null)
             throw new IllegalArgumentException("Tracks Layer undefined");
+
+        obstaclesLayer = (TiledMapTileLayer) map.getLayers().get("Obstacles");
+        if (obstaclesLayer == null)
+            throw new IllegalArgumentException("Obstacles Layer undefined");
 
         entitiesLayer = map.getLayers().get("Entities");
         if (entitiesLayer == null)
