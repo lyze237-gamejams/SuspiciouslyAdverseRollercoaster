@@ -39,7 +39,7 @@ public class GameOverScreen extends HorribleMenuScreen {
         root.add(new Label("(Ran out of time to make a proper menu)", subSubTitleStyle)).colspan(CharacterEnum.values().length).padBottom(12).row();
 
         var table = new Table();
-        var image = new ImageButton(new TextureRegionDrawable(textureAtlas.findRegion(character.getPath() + "/Landing", 1)));
+        var image = new ImageButton(new TextureRegionDrawable(textureAtlas.findRegion(character.getPath() + "/" + character.getGameOver(), character.getGameOverIndex())));
         table.add(image).colspan(3).row();
 
         var retry = new TextButton("Retry", buttonStyle);
