@@ -14,12 +14,17 @@ public class BackgroundDrawerSystem extends BaseSystem {
 
     @Override
     protected void processSystem() {
-        float x = viewport.getCamera().position.x;
-        float y = viewport.getCamera().position.y;
+        float camX = viewport.getCamera().position.x;
+        float camY = viewport.getCamera().position.y;
 
         var width = viewport.getWorldWidth();
         var height = viewport.getWorldHeight();
 
-        batch.draw(constants.getBackground(), x - width / 2f, y - height / 2f, width, height);
+        float x = camX - width / 2f;
+        float y = camY - height / 2f;
+
+        for (var region : constants.getBackground()) {
+            batch.draw(region, x, y, width, height);
+        }
     }
 }

@@ -28,7 +28,8 @@ buildscript {
 import com.badlogic.gdx.tools.texturepacker.TexturePacker
 task texturePacker {
 	doLast {
-		TexturePacker.process("${project.rootDir}/sourceAssets/Atlases", "${project.rootDir}/assets/Atlases", "Main")
+		TexturePacker.process("${project.rootDir}/sourceAssets/Atlases/Bg", "${project.rootDir}/assets/Atlases", "Bg")
+		TexturePacker.process("${project.rootDir}/sourceAssets/Atlases/Main", "${project.rootDir}/assets/Atlases", "Main")
 	}
 }
 

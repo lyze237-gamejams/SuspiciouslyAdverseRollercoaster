@@ -62,6 +62,7 @@ public class PlayerSpawner extends Spawner {
                 .add(new CopyRotationFromEntityComponent(cartId))
                 .add(new AnimatableSpriteComponent(constants.getMinecartFront(), SpriteOrder.INFRONT_PLAYER));
 
+        /*
         var properties = object.getProperties();
         var lightColor = properties.get("lightColor", Color.class);
         var lightScale = properties.get("lightScale", float.class);
@@ -72,7 +73,8 @@ public class PlayerSpawner extends Spawner {
         world.edit(world.create())
                 .add(new HackLightComponent(light))
                 .add(new PositionComponent(0, 0))
-                .add(new CopyPositionFromEntityComponent(cartId));
+                .add(new CopyPositionFromEntityComponent(cartId, 0, 0.5f));
+         */
     }
 
     @Override

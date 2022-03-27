@@ -106,7 +106,7 @@ public class GameScreen extends ScreenAdapter {
 		builder.register(new Map("Maps/DevMap.tmx", batch));
 		builder.register(new ExtendViewport(24, 13.5f));
 		builder.register(new EventManager());
-		builder.register(new HackLightEngine());
+		builder.register(new HackLightEngine(0.2f, 0.2f, 0.2f, 1f));
 		builder.register(batch);
 		builder.register("constants", new Constants(character));
 		builder.register(new ShapeDrawer(batch, new TextureRegion(new Texture("Pixel.png"))));
@@ -127,6 +127,8 @@ public class GameScreen extends ScreenAdapter {
 
 	@Override
 	public void show() {
+		if (MusicStuff.getTown().isPlaying())
+			MusicStuff.getTown().stop();
 		MusicStuff.getClouds().play();
 	}
 

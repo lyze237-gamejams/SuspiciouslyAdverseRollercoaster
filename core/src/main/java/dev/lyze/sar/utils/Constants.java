@@ -8,7 +8,9 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.utils.Array;
 import dev.lyze.sar.CharacterEnum;
+import dev.lyze.sar.components.movement.GravityComponent;
 import lombok.Getter;
 import lombok.var;
 
@@ -16,7 +18,9 @@ public class Constants extends Component {
     @Getter private final boolean debug = false;
     @Getter private final int maxHealth = 3;
 
-    @Getter private final TextureAtlas main;
+    @Getter private final TextureAtlas main, bg;
+
+    @Getter private final Array<TextureAtlas.AtlasRegion> background;
 
     @Getter private final Animation<TextureAtlas.AtlasRegion> playerCrouchIn, playerCrouchOut, playerFall, playerIdle, playerJump, playerAir, playerLanding;
     @Getter private final TextureAtlas.AtlasRegion playerProfile;
@@ -28,16 +32,15 @@ public class Constants extends Component {
 
     @Getter private final TextureAtlas lights;
 
-    @Getter private final Texture background;
     @Getter private final CharacterEnum character;
 
     public Constants(CharacterEnum character) {
         this.character = character;
         main = new TextureAtlas("Atlases/Main.atlas");
+        bg = new TextureAtlas("Atlases/Bg.atlas");
+        background = bg.findRegions("Background");
 
         lights = new TextureAtlas("lights.atlas");
-
-        background = new Texture("Backgrounds/Purple Nebula 2 - 1024x1024.png");
 
         float speed = 0.05f;
         playerCrouchIn = new Animation<>(speed, main.findRegions(character.getPath() + "/CrouchIn"), Animation.PlayMode.NORMAL);
@@ -61,6 +64,6 @@ public class Constants extends Component {
     public void dispose() {
         main.dispose();
         lights.dispose();
-        background.dispose();
+        bg.dispose();
     }
 }

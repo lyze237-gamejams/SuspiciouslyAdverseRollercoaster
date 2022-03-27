@@ -8,8 +8,8 @@ public class Main extends Game {
 	public void create() {
 		MusicStuff.init();
 		VisUI.load();
-		MusicStuff.getTown().play();
-
-		setScreen(new IntroScreen());
+		setScreen(new GameScreen(CharacterEnum.LYZE));
+		//MusicStuff.getTown().play();
+		//setScreen(new IntroScreen());
 	}
 }

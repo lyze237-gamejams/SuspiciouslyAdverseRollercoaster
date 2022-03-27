@@ -7,9 +7,9 @@
   <image source="Torches.png" width="1800" height="600"/>
   <tile id="0">
    <properties>
-    <property name="color" type="color" value="#c8ffc26c"/>
+    <property name="color" type="color" value="#64ffc26c"/>
     <property name="region" value="light7"/>
-    <property name="scale" type="float" value="0.1"/>
+    <property name="scale" type="float" value="0.05"/>
    </properties>
    <animation>
     <frame tileid="0" duration="200"/>
@@ -95,9 +95,9 @@
  <objectgroup id="2" name="Entities">
   <object id="2" name="Player" type="Player" x="327" y="996">
    <properties>
-    <property name="lightColor" type="color" value="#9622e7e7"/>
-    <property name="lightRegion" value="light1"/>
-    <property name="lightScale" type="float" value="0.2"/>
+    <property name="lightColor" type="color" value="#96e7e7e7"/>
+    <property name="lightRegion" value="light5"/>
+    <property name="lightScale" type="float" value="0.05"/>
    </properties>
    <point/>
   </object>
@@ -115,8 +115,8 @@
     <property name="Green" type="int" value="255"/>
     <property name="Red" type="int" value="255"/>
     <property name="lightColor" type="color" value="#96ffffff"/>
-    <property name="lightRegion" value="light2"/>
-    <property name="lightScale" type="float" value="0.2"/>
+    <property name="lightRegion" value="light1"/>
+    <property name="lightScale" type="float" value="0.04"/>
    </properties>
    <point/>
   </object>
@@ -126,8 +126,8 @@
     <property name="Green" type="int" value="255"/>
     <property name="Red" type="int" value="255"/>
     <property name="lightColor" type="color" value="#96ffffff"/>
-    <property name="lightRegion" value="light2"/>
-    <property name="lightScale" type="float" value="0.2"/>
+    <property name="lightRegion" value="light1"/>
+    <property name="lightScale" type="float" value="0.04"/>
    </properties>
    <point/>
   </object>
@@ -137,8 +137,8 @@
     <property name="Green" type="int" value="255"/>
     <property name="Red" type="int" value="255"/>
     <property name="lightColor" type="color" value="#96ffffff"/>
-    <property name="lightRegion" value="light2"/>
-    <property name="lightScale" type="float" value="0.2"/>
+    <property name="lightRegion" value="light1"/>
+    <property name="lightScale" type="float" value="0.04"/>
    </properties>
    <point/>
   </object>
@@ -148,8 +148,8 @@
     <property name="Green" type="int" value="255"/>
     <property name="Red" type="int" value="255"/>
     <property name="lightColor" type="color" value="#96ffffff"/>
-    <property name="lightRegion" value="light2"/>
-    <property name="lightScale" type="float" value="0.2"/>
+    <property name="lightRegion" value="light1"/>
+    <property name="lightScale" type="float" value="0.04"/>
    </properties>
    <point/>
   </object>
@@ -159,8 +159,8 @@
     <property name="Green" type="int" value="255"/>
     <property name="Red" type="int" value="255"/>
     <property name="lightColor" type="color" value="#96ffffff"/>
-    <property name="lightRegion" value="light2"/>
-    <property name="lightScale" type="float" value="0.2"/>
+    <property name="lightRegion" value="light1"/>
+    <property name="lightScale" type="float" value="0.04"/>
    </properties>
    <point/>
   </object>

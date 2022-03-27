@@ -40,7 +40,7 @@ public class BattoSpawner extends Spawner {
         world.edit(world.create())
                 .add(new HackLightComponent(light))
                 .add(new PositionComponent(0, 0))
-                .add(new CopyPositionFromEntityComponent(batId));
+                .add(new CopyPositionFromEntityComponent(batId, 0, 0.6f));
     }
 
     @Override
