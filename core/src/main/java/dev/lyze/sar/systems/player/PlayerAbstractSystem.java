@@ -1,16 +1,15 @@
 package dev.lyze.sar.systems.player;
 
 import com.artemis.ComponentMapper;
-import com.artemis.annotations.All;
 import com.artemis.systems.IteratingSystem;
 import dev.lyze.sar.components.movement.*;
-import dev.lyze.sar.components.player.PlayerComponent;
+import dev.lyze.sar.components.player.PlayerCartComponent;
 import dev.lyze.sar.components.player.PlayerConstants;
 import dev.lyze.sar.systems.debug.GizmoSystem;
 import lombok.var;
 
 public abstract class PlayerAbstractSystem extends IteratingSystem {
-    protected ComponentMapper<PlayerComponent> playerMapper;
+    protected ComponentMapper<PlayerCartComponent> playerMapper;
     protected ComponentMapper<PositionComponent> positionMapper;
     protected ComponentMapper<RotationComponent> rotationMapper;
     protected ComponentMapper<VelocityComponent> velocityMapper;
@@ -31,5 +30,5 @@ public abstract class PlayerAbstractSystem extends IteratingSystem {
         process(entityId, player, player.playerConstants, position, size, rotation, velocity, gravity);
     }
 
-    protected abstract void process(int entityId, PlayerComponent player, PlayerConstants playerConstants, PositionComponent position, SizeComponent size, RotationComponent rotation, VelocityComponent velocity, GravityComponent gravity);
+    protected abstract void process(int entityId, PlayerCartComponent player, PlayerConstants playerConstants, PositionComponent position, SizeComponent size, RotationComponent rotation, VelocityComponent velocity, GravityComponent gravity);
 }

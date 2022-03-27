@@ -6,7 +6,6 @@ import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
@@ -15,8 +14,8 @@ import dev.lyze.sar.eventsystem.events.ResizeEvent;
 import dev.lyze.sar.systems.debug.*;
 import dev.lyze.sar.systems.*;
 import dev.lyze.sar.systems.player.PlayerDrawerSystem;
-import dev.lyze.sar.systems.player.PlayerFallStateSystem;
-import dev.lyze.sar.systems.player.PlayerFollowTrackSystem;
+import dev.lyze.sar.systems.player.PlayerCartFallStateSystem;
+import dev.lyze.sar.systems.player.PlayerCartFollowTrackSystem;
 import dev.lyze.sar.utils.Constants;
 import lombok.var;
 import space.earlygrey.shapedrawer.ShapeDrawer;
@@ -28,8 +27,8 @@ public class GameScreen extends ScreenAdapter {
 				.with(new MapSpawnerSystem())
 				.with(new MapEntitySpawner())
 
-				.with(new PlayerFallStateSystem())
-				.with(new PlayerFollowTrackSystem())
+				.with(new PlayerCartFallStateSystem())
+				.with(new PlayerCartFollowTrackSystem())
 
 				.with(new CameraSystem())
 

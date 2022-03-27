@@ -6,20 +6,19 @@ import com.artemis.annotations.Wire;
 import com.artemis.systems.IteratingSystem;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
-import dev.lyze.sar.components.player.PlayerComponent;
+import dev.lyze.sar.components.player.PlayerCartComponent;
 import dev.lyze.sar.components.movement.PositionComponent;
 import dev.lyze.sar.components.movement.SizeComponent;
 import lombok.var;
 
-@All({PlayerComponent.class, PositionComponent.class, SizeComponent.class})
+@All({PlayerCartComponent.class, PositionComponent.class, SizeComponent.class})
 public class CameraSystem extends IteratingSystem {
     private static final float MOVEMENT_SPEED = 800;
 
-    private ComponentMapper<PlayerComponent> playerMapper;
+    private ComponentMapper<PlayerCartComponent> playerMapper;
     private ComponentMapper<PositionComponent> positionMapper;
     private ComponentMapper<SizeComponent> sizeMapper;
 

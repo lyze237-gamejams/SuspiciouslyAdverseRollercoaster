@@ -2,30 +2,27 @@ package dev.lyze.sar.systems.player;
 
 import com.artemis.ComponentMapper;
 import com.artemis.annotations.All;
-import com.artemis.systems.IteratingSystem;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import dev.lyze.sar.components.TrackComponent;
 import dev.lyze.sar.components.movement.*;
-import dev.lyze.sar.components.player.PlayerComponent;
+import dev.lyze.sar.components.player.PlayerCartComponent;
 import dev.lyze.sar.components.player.PlayerConstants;
-import dev.lyze.sar.components.player.PlayerFallStateComponent;
-import dev.lyze.sar.components.player.PlayerFollowTrackComponent;
-import dev.lyze.sar.systems.debug.GizmoSystem;
+import dev.lyze.sar.components.player.PlayerCartFallStateComponent;
+import dev.lyze.sar.components.player.PlayerCartFollowTrackComponent;
 import lombok.var;
 
-@All({PlayerComponent.class, PlayerFollowTrackComponent.class})
-public class PlayerFollowTrackSystem extends PlayerAbstractSystem {
-    private final Vector2 intersection = new Vector2();
+@All({PlayerCartComponent.class, PlayerCartFollowTrackComponent.class})
+public class PlayerCartFollowTrackSystem extends PlayerAbstractSystem {
     private final Vector2 direction = new Vector2();
 
     private ComponentMapper<TrackComponent> trackMapper;
-    private ComponentMapper<PlayerFollowTrackComponent> playerFollowTrackMapper;
+    private ComponentMapper<PlayerCartFollowTrackComponent> playerFollowTrackMapper;
 
     @Override
-    protected void process(int entityId, PlayerComponent player, PlayerConstants playerConstants, PositionComponent position, SizeComponent size, RotationComponent rotation, VelocityComponent velocity, GravityComponent gravity) {
+    protected void process(int entityId, PlayerCartComponent player, PlayerConstants playerConstants, PositionComponent position, SizeComponent size, RotationComponent rotation, VelocityComponent velocity, GravityComponent gravity) {
         var follow = playerFollowTrackMapper.get(entityId);
         var trackToFollow = trackMapper.get(follow.getTrackId());
 
@@ -34,8 +31,8 @@ public class PlayerFollowTrackSystem extends PlayerAbstractSystem {
             position.getPosition().mulAdd(velocity.getVelocity(), world.getDelta());
 
             world.edit(entityId)
-                    .remove(PlayerFollowTrackComponent.class)
-                    .add(new PlayerFallStateComponent());
+                    .remove(PlayerCartFollowTrackComponent.class)
+                    .add(new PlayerCartFallStateComponent());
 
             return;
         }
@@ -91,8 +88,8 @@ public class PlayerFollowTrackSystem extends PlayerAbstractSystem {
                 position.getPosition().add(1, 0);
 
                 world.edit(entityId)
-                    .remove(PlayerFollowTrackComponent.class)
-                    .add(new PlayerFallStateComponent());
+                    .remove(PlayerCartFollowTrackComponent.class)
+                    .add(new PlayerCartFallStateComponent());
             }
         }
     }

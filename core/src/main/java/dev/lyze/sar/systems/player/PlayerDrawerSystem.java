@@ -10,22 +10,22 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import dev.lyze.sar.components.movement.*;
-import dev.lyze.sar.components.player.PlayerComponent;
+import dev.lyze.sar.components.player.PlayerCartComponent;
 import dev.lyze.sar.components.player.PlayerConstants;
-import dev.lyze.sar.components.player.PlayerFallStateComponent;
-import dev.lyze.sar.components.player.PlayerFollowTrackComponent;
+import dev.lyze.sar.components.player.PlayerCartFallStateComponent;
+import dev.lyze.sar.components.player.PlayerCartFollowTrackComponent;
 import dev.lyze.sar.eventsystem.EventManager;
 import dev.lyze.sar.utils.Constants;
 import lombok.var;
 
-@All({PlayerComponent.class})
+@All({PlayerCartComponent.class})
 public class PlayerDrawerSystem extends PlayerAbstractSystem {
     @Wire private SpriteBatch batch;
     @Wire private EventManager eventManager;
     @Wire(name = "constants") private Constants constants;
 
-    private ComponentMapper<PlayerFallStateComponent> playerFallStateMapper;
-    private ComponentMapper<PlayerFollowTrackComponent> playerFollowTrackMapper;
+    private ComponentMapper<PlayerCartFallStateComponent> playerFallStateMapper;
+    private ComponentMapper<PlayerCartFollowTrackComponent> playerFollowTrackMapper;
 
     private Sprite minecartBackSprite, minecartFrontSprite, playerSprite;
     private Animation<TextureAtlas.AtlasRegion> currentAnimation;
@@ -54,7 +54,7 @@ public class PlayerDrawerSystem extends PlayerAbstractSystem {
     }
 
     @Override
-    protected void process(int entityId, PlayerComponent player, PlayerConstants playerConstants, PositionComponent position, SizeComponent size, RotationComponent rotation, VelocityComponent velocity, GravityComponent gravity) {
+    protected void process(int entityId, PlayerCartComponent player, PlayerConstants playerConstants, PositionComponent position, SizeComponent size, RotationComponent rotation, VelocityComponent velocity, GravityComponent gravity) {
         updatePlayerAnimation(entityId);
         playerSprite.setRegion(currentAnimation.getKeyFrame(animationTime));
         setSpritePositionAndRotation(entityId, position.getPosition(), rotation.getRotation(), size);

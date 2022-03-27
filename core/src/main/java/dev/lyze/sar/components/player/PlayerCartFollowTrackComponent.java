@@ -6,7 +6,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-public class PlayerFollowTrackComponent extends Component {
+public class PlayerCartFollowTrackComponent extends Component {
     @Getter @Setter private int trackId;
     @Getter @Setter private int section;
 }
