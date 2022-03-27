@@ -31,7 +31,6 @@ public class PlayerSpawner extends Spawner {
                 .add(new CartComponent())
                 .add(new PlayerOrCartComponent())
                 .add(new PositionComponent(rectangle.x / map.getTrackLayer().getTileWidth(), rectangle.y / map.getTrackLayer().getTileHeight()))
-                .add(new HitboxComponent(1.5f, 1f))
                 .add(new GravityComponent())
                 .add(new VelocityComponent())
                 .add(new RotationComponent())

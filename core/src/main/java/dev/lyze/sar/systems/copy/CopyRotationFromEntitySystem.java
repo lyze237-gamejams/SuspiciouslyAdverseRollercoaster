@@ -16,8 +16,15 @@ public class CopyRotationFromEntitySystem extends IteratingSystem {
     protected void process(int entityId) {
         var copyRotation = copyRotationMapper.get(entityId);
 
+        var target = copyRotation.getTarget();
+
+        if (!rotationMapper.has(target)) {
+            world.delete(entityId);
+            return;
+        }
+
         var rotation = rotationMapper.get(entityId);
-        var targetRotation = rotationMapper.get(copyRotation.getTarget());
+        var targetRotation = rotationMapper.get(target);
 
         rotation.setRotation(targetRotation.getRotation());
     }

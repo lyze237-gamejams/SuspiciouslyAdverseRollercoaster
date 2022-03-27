@@ -11,8 +11,10 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import dev.lyze.sar.components.BackgroundDrawerSystem;
+import dev.lyze.sar.components.ObstaclePositionUpdateSystem;
 import dev.lyze.sar.eventsystem.EventManager;
 import dev.lyze.sar.eventsystem.events.ResizeEvent;
+import dev.lyze.sar.systems.batto.*;
 import dev.lyze.sar.systems.copy.CopyPositionFromEntitySystem;
 import dev.lyze.sar.systems.copy.CopyRotationFromEntitySystem;
 import dev.lyze.sar.systems.debug.*;
@@ -28,6 +30,8 @@ import dev.lyze.sar.systems.player.PlayerDuckStateSystem;
 import dev.lyze.sar.systems.player.PlayerIdleStateSystem;
 import dev.lyze.sar.systems.player.PlayerJumpStateSystem;
 import dev.lyze.sar.systems.sprites.*;
+import dev.lyze.sar.systems.wait.WaitForAnimationFinishSystem;
+import dev.lyze.sar.systems.wait.WaitTimeSystem;
 import dev.lyze.sar.utils.Constants;
 import lombok.var;
 import space.earlygrey.shapedrawer.ShapeDrawer;
@@ -38,6 +42,12 @@ public class GameScreen extends ScreenAdapter {
 		var builder = new WorldConfigurationBuilder()
 				.with(new MapSpawnerSystem())
 				.with(new MapEntitySpawner())
+
+				.with(new BattoWaitTillPlayerIsInScreenStateSystem())
+				.with(new BattoAttackAnimationStateSystem())
+				.with(new BattoAttackActualHitStateSystem())
+				.with(new BattoIdleSystem())
+				.with(new BattoFlyFromRightToLeftSystem())
 
 				.with(new PlayerCartFallStateSystem())
 				.with(new PlayerCartFollowTrackSystem())
@@ -51,10 +61,12 @@ public class GameScreen extends ScreenAdapter {
 
 				.with(new ApplyJumpStateOffsetSystem())
 
+				.with(new ObstaclePositionUpdateSystem())
 				.with(new PlayerObstacleHitSystem())
 
 				.with(new AnimatableSpriteSystem())
 				.with(new WaitForAnimationFinishSystem())
+				.with(new WaitTimeSystem())
 
 				.with(new CameraSystem())
 
@@ -62,6 +74,8 @@ public class GameScreen extends ScreenAdapter {
 
 				.with(new BackgroundDrawerSystem())
 				.with(new MapRenderingSystem())
+
+				.with(new DrawLineToPlayerSystem())
 
 				.with(new SpritePositionUpdaterSystem())
 				.with(new SpriteRotationUpdaterSystem())

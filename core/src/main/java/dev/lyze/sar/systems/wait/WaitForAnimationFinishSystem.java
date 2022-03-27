@@ -1,10 +1,10 @@
-package dev.lyze.sar.systems;
+package dev.lyze.sar.systems.wait;
 
 import com.artemis.ComponentMapper;
 import com.artemis.annotations.All;
 import com.artemis.systems.IteratingSystem;
 import dev.lyze.sar.components.AnimatableSpriteComponent;
-import dev.lyze.sar.components.WaitForAnimationFinishComponent;
+import dev.lyze.sar.components.wait.WaitForAnimationFinishComponent;
 import lombok.var;
 
 @All({WaitForAnimationFinishComponent.class, AnimatableSpriteComponent.class})

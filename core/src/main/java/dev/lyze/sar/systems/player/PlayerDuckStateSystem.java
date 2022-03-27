@@ -8,7 +8,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import dev.lyze.sar.components.AnimatableSpriteComponent;
 import dev.lyze.sar.components.HitboxComponent;
-import dev.lyze.sar.components.WaitForAnimationFinishComponent;
+import dev.lyze.sar.components.wait.WaitForAnimationFinishComponent;
 import dev.lyze.sar.components.player.PlayerComponent;
 import dev.lyze.sar.components.player.PlayerDuckStateComponent;
 import dev.lyze.sar.components.player.PlayerIdleComponent;

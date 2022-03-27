@@ -16,8 +16,15 @@ public class CopyPositionFromEntitySystem extends IteratingSystem {
     protected void process(int entityId) {
         var copyPosition = copyPositionMapper.get(entityId);
 
+        var target = copyPosition.getTarget();
+
+        if (!positionMapper.has(target)) {
+            world.delete(entityId);
+            return;
+        }
+
         var position = positionMapper.get(entityId).getPosition();
-        var targetPosition = positionMapper.get(copyPosition.getTarget()).getPosition();
+        var targetPosition = positionMapper.get(target).getPosition();
 
         position.set(targetPosition.x + copyPosition.getOffsetX(), targetPosition.y + copyPosition.getOffsetY());
     }
