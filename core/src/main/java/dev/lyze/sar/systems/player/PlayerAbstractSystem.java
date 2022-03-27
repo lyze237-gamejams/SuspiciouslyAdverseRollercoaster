@@ -14,7 +14,6 @@ public abstract class PlayerAbstractSystem extends IteratingSystem {
     protected ComponentMapper<RotationComponent> rotationMapper;
     protected ComponentMapper<VelocityComponent> velocityMapper;
     protected ComponentMapper<GravityComponent> gravityMapper;
-    protected ComponentMapper<SizeComponent> sizeMapper;
 
     protected GizmoSystem gizmos;
 
@@ -22,13 +21,12 @@ public abstract class PlayerAbstractSystem extends IteratingSystem {
     protected void process(int entityId) {
         var player = playerMapper.get(entityId);
         var position = positionMapper.get(entityId);
-        var size = sizeMapper.get(entityId);
         var rotation = rotationMapper.get(entityId);
         var velocity = velocityMapper.get(entityId);
         var gravity = gravityMapper.get(entityId);
 
-        process(entityId, player, player.playerConstants, position, size, rotation, velocity, gravity);
+        process(entityId, player, player.playerConstants, position, rotation, velocity, gravity);
     }
 
-    protected abstract void process(int entityId, PlayerCartComponent player, PlayerConstants playerConstants, PositionComponent position, SizeComponent size, RotationComponent rotation, VelocityComponent velocity, GravityComponent gravity);
+    protected abstract void process(int entityId, PlayerCartComponent player, PlayerConstants playerConstants, PositionComponent position, RotationComponent rotation, VelocityComponent velocity, GravityComponent gravity);
 }

@@ -13,7 +13,6 @@ import dev.lyze.sar.eventsystem.EventManager;
 import dev.lyze.sar.eventsystem.events.ResizeEvent;
 import dev.lyze.sar.systems.debug.*;
 import dev.lyze.sar.systems.*;
-import dev.lyze.sar.systems.player.PlayerDrawerSystem;
 import dev.lyze.sar.systems.player.PlayerCartFallStateSystem;
 import dev.lyze.sar.systems.player.PlayerCartFollowTrackSystem;
 import dev.lyze.sar.systems.sprites.SpriteDrawerSystem;
@@ -47,7 +46,7 @@ public class GameScreen extends ScreenAdapter {
 				.with(new SpriteDrawerSystem())
 
 				.with(new TrackDebugDrawerSystem())
-				.with(new PositionSizeRotationDebugDrawerSystem())
+				.with(new PositionDebugDrawerSystem())
 				.with(new GizmoSystem())
 
 				.with(new EndBatchSystem())

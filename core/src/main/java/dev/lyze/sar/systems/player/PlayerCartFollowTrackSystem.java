@@ -22,7 +22,7 @@ public class PlayerCartFollowTrackSystem extends PlayerAbstractSystem {
     private ComponentMapper<PlayerCartFollowTrackComponent> playerFollowTrackMapper;
 
     @Override
-    protected void process(int entityId, PlayerCartComponent player, PlayerConstants playerConstants, PositionComponent position, SizeComponent size, RotationComponent rotation, VelocityComponent velocity, GravityComponent gravity) {
+    protected void process(int entityId, PlayerCartComponent player, PlayerConstants playerConstants, PositionComponent position, RotationComponent rotation, VelocityComponent velocity, GravityComponent gravity) {
         var follow = playerFollowTrackMapper.get(entityId);
         var trackToFollow = trackMapper.get(follow.getTrackId());
 

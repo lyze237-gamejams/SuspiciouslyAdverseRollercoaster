@@ -11,16 +11,14 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import dev.lyze.sar.components.player.PlayerCartComponent;
 import dev.lyze.sar.components.movement.PositionComponent;
-import dev.lyze.sar.components.movement.SizeComponent;
 import lombok.var;
 
-@All({PlayerCartComponent.class, PositionComponent.class, SizeComponent.class})
+@All({PlayerCartComponent.class, PositionComponent.class})
 public class CameraSystem extends IteratingSystem {
     private static final float MOVEMENT_SPEED = 800;
 
     private ComponentMapper<PlayerCartComponent> playerMapper;
     private ComponentMapper<PositionComponent> positionMapper;
-    private ComponentMapper<SizeComponent> sizeMapper;
 
     @Wire private ExtendViewport viewport;
 
@@ -32,9 +30,8 @@ public class CameraSystem extends IteratingSystem {
     @Override
     protected void process(int entityId) {
         var position = positionMapper.get(entityId);
-        var size = sizeMapper.get(entityId);
 
-        viewport.getCamera().position.set(position.getPosition().x + size.getWidth() / 2f, position.getPosition().y + size.getHeight() / 2f, 0);
+        viewport.getCamera().position.set(position.getPosition().x, position.getPosition().y, 0);
 
         //debugMovement();
     }

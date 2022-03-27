@@ -27,7 +27,6 @@ public class PlayerSpawner extends Spawner {
         world.edit(playerId)
                 .add(new PlayerCartComponent())
                 .add(new PositionComponent(rectangle.x / map.getTrackLayer().getTileWidth(), rectangle.y / map.getTrackLayer().getTileHeight()))
-                .add(new SizeComponent(2, 1.5f))
                 .add(new GravityComponent())
                 .add(new VelocityComponent())
                 .add(new RotationComponent())
@@ -35,7 +34,6 @@ public class PlayerSpawner extends Spawner {
 
         world.edit(world.create())
                 .add(new PositionComponent(0, 0))
-                .add(new SizeComponent(2, 1.5f))
                 .add(new RotationComponent())
                 .add(new CopyPositionFromEntityComponent(playerId))
                 .add(new CopyRotationFromEntityComponent(playerId))
@@ -43,7 +41,6 @@ public class PlayerSpawner extends Spawner {
 
         world.edit(world.create())
                 .add(new PositionComponent(0, 0))
-                .add(new SizeComponent(2, 1.5f))
                 .add(new RotationComponent())
                 .add(new CopyPositionFromEntityComponent(playerId))
                 .add(new CopyRotationFromEntityComponent(playerId))
@@ -51,7 +48,6 @@ public class PlayerSpawner extends Spawner {
 
         world.edit(world.create())
                 .add(new PositionComponent(0, 0))
-                .add(new SizeComponent(2, 1.5f))
                 .add(new RotationComponent())
                 .add(new CopyPositionFromEntityComponent(playerId))
                 .add(new CopyRotationFromEntityComponent(playerId))

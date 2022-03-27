@@ -54,10 +54,10 @@ public class PlayerDrawerSystem extends PlayerAbstractSystem {
     }
 
     @Override
-    protected void process(int entityId, PlayerCartComponent player, PlayerConstants playerConstants, PositionComponent position, SizeComponent size, RotationComponent rotation, VelocityComponent velocity, GravityComponent gravity) {
+    protected void process(int entityId, PlayerCartComponent player, PlayerConstants playerConstants, PositionComponent position, RotationComponent rotation, VelocityComponent velocity, GravityComponent gravity) {
         updatePlayerAnimation(entityId);
         playerSprite.setRegion(currentAnimation.getKeyFrame(animationTime));
-        setSpritePositionAndRotation(entityId, position.getPosition(), rotation.getRotation(), size);
+        setSpritePositionAndRotation(entityId, position.getPosition(), rotation.getRotation());
 
         minecartBackSprite.draw(batch);
         playerSprite.draw(batch);
@@ -77,7 +77,7 @@ public class PlayerDrawerSystem extends PlayerAbstractSystem {
         }
     }
 
-    private void setSpritePositionAndRotation(int entityId, Vector2 position, float rotation, SizeComponent size) {
+    private void setSpritePositionAndRotation(int entityId, Vector2 position, float rotation) {
         float scale = 1 / 600f * 3;
         minecartBackSprite.setScale(scale);
         playerSprite.setScale(scale);

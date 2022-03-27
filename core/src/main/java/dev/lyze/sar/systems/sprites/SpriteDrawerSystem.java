@@ -8,7 +8,6 @@ import com.artemis.annotations.Wire;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Array;
 import dev.lyze.sar.components.SpriteComponent;
-import lombok.var;
 
 import java.util.Comparator;
 

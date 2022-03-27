@@ -28,7 +28,7 @@ public class PlayerCartFallStateSystem extends PlayerAbstractSystem {
     }
 
     @Override
-    protected void process(int entityId, PlayerCartComponent player, PlayerConstants playerConstants, PositionComponent position, SizeComponent size, RotationComponent rotation, VelocityComponent velocity, GravityComponent gravity) {
+    protected void process(int entityId, PlayerCartComponent player, PlayerConstants playerConstants, PositionComponent position, RotationComponent rotation, VelocityComponent velocity, GravityComponent gravity) {
         velocity.getVelocity().add(0, gravity.getGravity() * world.getDelta());
         if (velocity.getVelocity().x > playerConstants.slowDownXToGravity) {
             velocity.getVelocity().x -= playerConstants.slowDownXGravitySpeed * world.getDelta();
