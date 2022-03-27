@@ -9,7 +9,6 @@ buildscript {
 		maven { url 'https://s01.oss.sonatype.org/content/repositories/snapshots/' }
 	}
 	dependencies {
-		classpath "com.android.tools.build:gradle:$androidPluginVersion"
 		classpath "org.wisepersist:gwt-gradle-plugin:$gwtPluginVersion"
 		classpath "com.badlogicgames.gdx:gdx-tools:$gdxVersion"
 
@@ -38,7 +37,7 @@ allprojects {
 	apply plugin: 'idea'
 }
 
-configure(subprojects - project(':android')) {
+configure(subprojects) {
 	apply plugin: 'java-library'
 	sourceCompatibility = 1.8
 	compileJava {
