@@ -60,6 +60,7 @@ public class PlayerObstacleHitSystem extends IteratingSystem {
             var obstaclePolygon = obstacleComponent.getPolygon();
 
             if (!obstacleComponent.isAlreadyHit() && !flashMapper.has(entityId) && Intersector.overlapConvexPolygons(playerPolygon, obstaclePolygon)) {
+                constants.getHitSound().play(0.8f);
                 obstacleComponent.setAlreadyHit(true);
                 eventManager.fire(new HitEvent());
             }

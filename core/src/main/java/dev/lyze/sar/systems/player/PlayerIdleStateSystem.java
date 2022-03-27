@@ -33,6 +33,7 @@ public class PlayerIdleStateSystem extends IteratingSystem {
         sprite.setAnimation(constants.getPlayerIdle());
 
         if (Gdx.input.isKeyPressed(Input.Keys.W)) {
+            constants.getJumpSound().play(0.6f);
             sprite.setAnimation(constants.getPlayerJump());
 
             world.edit(entityId)

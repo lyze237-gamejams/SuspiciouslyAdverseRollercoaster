@@ -3,6 +3,7 @@ package dev.lyze.sar.utils;
 import com.artemis.Component;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -34,6 +35,8 @@ public class Constants extends Component {
 
     @Getter private final CharacterEnum character;
 
+    @Getter private final Sound hitSound, jumpSound, jumpCartSound, thudSound;
+
     public Constants(CharacterEnum character) {
         this.character = character;
         main = new TextureAtlas("Atlases/Main.atlas");
@@ -59,6 +62,11 @@ public class Constants extends Component {
 
         battoFlight = new Animation<>(speed, main.findRegions("Batto/Flight"), Animation.PlayMode.LOOP);
         battoShoot = new Animation<>(speed, main.findRegions("Batto/Shoot"), Animation.PlayMode.NORMAL);
+
+        hitSound = Gdx.audio.newSound(Gdx.files.internal("Sounds/hitHurt.ogg"));
+        jumpSound = Gdx.audio.newSound(Gdx.files.internal("Sounds/jumpCart.ogg"));
+        jumpCartSound = Gdx.audio.newSound(Gdx.files.internal("Sounds/jump.ogg"));
+        thudSound = Gdx.audio.newSound(Gdx.files.internal("Sounds/thud.ogg"));
     }
 
     public void dispose() {

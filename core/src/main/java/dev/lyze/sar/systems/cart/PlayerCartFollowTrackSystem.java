@@ -2,6 +2,7 @@ package dev.lyze.sar.systems.cart;
 
 import com.artemis.ComponentMapper;
 import com.artemis.annotations.All;
+import com.artemis.annotations.Wire;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.math.MathUtils;
@@ -12,11 +13,14 @@ import dev.lyze.sar.components.cart.CartComponent;
 import dev.lyze.sar.components.cart.CartConstants;
 import dev.lyze.sar.components.cart.CartFallStateComponent;
 import dev.lyze.sar.components.cart.CartFollowTrackComponent;
+import dev.lyze.sar.utils.Constants;
 import lombok.var;
 
 @All({CartComponent.class, CartFollowTrackComponent.class})
 public class PlayerCartFollowTrackSystem extends PlayerAbstractSystem {
     private final Vector2 direction = new Vector2();
+
+    @Wire(name = "constants") private Constants constants;
 
     private ComponentMapper<TrackComponent> trackMapper;
     private ComponentMapper<CartFollowTrackComponent> playerFollowTrackMapper;
@@ -29,6 +33,8 @@ public class PlayerCartFollowTrackSystem extends PlayerAbstractSystem {
         if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
             velocity.getVelocity().set(cartConstants.jumpVelocity);
             position.getPosition().mulAdd(velocity.getVelocity(), world.getDelta());
+
+            constants.getJumpCartSound().play(0.6f);
 
             world.edit(entityId)
                     .remove(CartFollowTrackComponent.class)

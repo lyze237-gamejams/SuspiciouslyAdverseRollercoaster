@@ -4,6 +4,7 @@ import com.artemis.Aspect;
 import com.artemis.ComponentMapper;
 import com.artemis.EntitySubscription;
 import com.artemis.annotations.All;
+import com.artemis.annotations.Wire;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Vector2;
@@ -13,11 +14,14 @@ import dev.lyze.sar.components.cart.CartComponent;
 import dev.lyze.sar.components.cart.CartConstants;
 import dev.lyze.sar.components.cart.CartFallStateComponent;
 import dev.lyze.sar.components.cart.CartFollowTrackComponent;
+import dev.lyze.sar.utils.Constants;
 import lombok.var;
 
 @All({CartComponent.class, CartFallStateComponent.class})
 public class PlayerCartFallStateSystem extends PlayerAbstractSystem {
     private final Vector2 intersection = new Vector2();
+
+    @Wire(name = "constants") private Constants constants;
 
     private ComponentMapper<TrackComponent> trackMapper;
     private EntitySubscription tracks;
@@ -66,6 +70,8 @@ public class PlayerCartFallStateSystem extends PlayerAbstractSystem {
 
                 gizmos.setColor(Color.ORANGE);
                 gizmos.addCircle(intersection.x, intersection.y, 0.1f);
+
+                constants.getThudSound().play(0.6f);
 
                 world.edit(entityId)
                         .remove(CartFallStateComponent.class)
