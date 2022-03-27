@@ -1,6 +1,8 @@
 package dev.lyze.sar;
 
 import com.badlogic.gdx.Game;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.kotcrab.vis.ui.VisUI;
 
 public class Main extends Game {
@@ -8,8 +10,13 @@ public class Main extends Game {
 	public void create() {
 		MusicStuff.init();
 		VisUI.load();
-		setScreen(new GameScreen(CharacterEnum.LYZE));
-		//MusicStuff.getTown().play();
-		//setScreen(new IntroScreen());
+
+		if (Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
+			setScreen(new GameScreen(CharacterEnum.LYZE));
+			return;
+		}
+
+		MusicStuff.getTown().play();
+		setScreen(new IntroScreen());
 	}
 }
