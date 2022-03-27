@@ -6,7 +6,10 @@ import com.kotcrab.vis.ui.VisUI;
 public class Main extends Game {
 	@Override
 	public void create() {
+		MusicStuff.init();
 		VisUI.load();
-		setScreen(new MainMenuScreen());
+		MusicStuff.getTown().play();
+
+		setScreen(new IntroScreen());
 	}
 }

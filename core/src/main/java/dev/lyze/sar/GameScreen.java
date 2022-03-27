@@ -126,6 +126,11 @@ public class GameScreen extends ScreenAdapter {
 	}
 
 	@Override
+	public void show() {
+		MusicStuff.getClouds().play();
+	}
+
+	@Override
 	public void render(float delta) {
 		ScreenUtils.clear(Color.BLACK);
 
@@ -140,6 +145,7 @@ public class GameScreen extends ScreenAdapter {
 
 	@Override
 	public void hide() {
+		MusicStuff.getClouds().stop();
 		world.getInjector().getRegistered(Map.class).dispose();
 		((Constants) world.getInjector().getRegistered("constants")).dispose();
 		world.dispose();

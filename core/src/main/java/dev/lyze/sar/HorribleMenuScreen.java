@@ -33,7 +33,9 @@ public abstract class HorribleMenuScreen extends ScreenAdapter {
         buttonStyle = new TextButton.TextButtonStyle();
         buttonStyle.font = subTitleStyle.font;
         buttonStyle.fontColor = Color.WHITE;
+    }
 
+    protected void addBackground() {
         var table = new Table();
         table.setFillParent(true);
         table.setBackground(new TextureRegionDrawable(mainMenuBackground));
@@ -76,6 +78,7 @@ public abstract class HorribleMenuScreen extends ScreenAdapter {
         titleStyle.font.dispose();
         subTitleStyle.font.dispose();
         subSubTitleStyle.font.dispose();
+        mainMenuBackground.dispose();
         fontGen.dispose();
         Gdx.input.setInputProcessor(null);
     }

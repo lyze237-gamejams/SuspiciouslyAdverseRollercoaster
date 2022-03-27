@@ -27,7 +27,14 @@ public class GameOverScreen extends HorribleMenuScreen {
         super();
 
         this.character = character;
+        addBackground();
         setupStage();
+    }
+
+    @Override
+    public void show() {
+        super.show();
+        MusicStuff.getTown().play();
     }
 
     @Override

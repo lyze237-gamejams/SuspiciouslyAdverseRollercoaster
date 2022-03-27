@@ -4,6 +4,7 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
@@ -15,7 +16,15 @@ import lombok.var;
 public class MainMenuScreen extends HorribleMenuScreen {
     public MainMenuScreen() {
         super();
+        addBackground();
         setupStage();
+    }
+
+    @Override
+    public void show() {
+        super.show();
+
+        stage.addAction(Actions.sequence(Actions.fadeOut(0f), Actions.fadeIn(1f)));
     }
 
     @Override
@@ -33,7 +42,8 @@ public class MainMenuScreen extends HorribleMenuScreen {
             image.addListener(new ChangeListener() {
                 @Override
                 public void changed(ChangeEvent event, Actor actor) {
-                    ((Game) Gdx.app.getApplicationListener()).setScreen(new GameScreen(c));
+                    MusicStuff.getTown().stop();
+                    stage.addAction(Actions.sequence(Actions.fadeOut(1f), Actions.run(() -> ((Game) Gdx.app.getApplicationListener()).setScreen(new GameScreen(c)))));
                 }
             });
             table.add(image).row();
@@ -41,7 +51,10 @@ public class MainMenuScreen extends HorribleMenuScreen {
             text.addListener(new ClickListener() {
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
-                    ((Game) Gdx.app.getApplicationListener()).setScreen(new GameScreen(c));
+                    stage.addAction(Actions.sequence(Actions.fadeOut(1f), Actions.run(() -> {
+                        MusicStuff.getTown().stop();
+                        ((Game) Gdx.app.getApplicationListener()).setScreen(new GameScreen(c));
+                    })));
                 }
             });
             table.add(text);
