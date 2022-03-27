@@ -14,11 +14,11 @@ public class CopyPositionFromEntitySystem extends IteratingSystem {
 
     @Override
     protected void process(int entityId) {
-        var copyRotation = copyPositionMapper.get(entityId);
+        var copyPosition = copyPositionMapper.get(entityId);
 
-        var position = positionMapper.get(entityId);
-        var targetPosition = positionMapper.get(copyRotation.getTarget());
+        var position = positionMapper.get(entityId).getPosition();
+        var targetPosition = positionMapper.get(copyPosition.getTarget()).getPosition();
 
-        position.getPosition().set(targetPosition.getPosition());
+        position.set(targetPosition.x + copyPosition.getOffsetX(), targetPosition.y + copyPosition.getOffsetY());
     }
 }

@@ -7,6 +7,7 @@ import com.artemis.systems.IteratingSystem;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import dev.lyze.sar.components.AnimatableSpriteComponent;
+import dev.lyze.sar.components.HitboxComponent;
 import dev.lyze.sar.components.WaitForAnimationFinishComponent;
 import dev.lyze.sar.components.player.PlayerComponent;
 import dev.lyze.sar.components.player.PlayerDuckStateComponent;
@@ -17,11 +18,17 @@ import lombok.var;
 @All({PlayerComponent.class, PlayerIdleComponent.class, AnimatableSpriteComponent.class})
 public class PlayerIdleStateSystem extends IteratingSystem {
     @Wire(name = "constants") private Constants constants;
+    private ComponentMapper<PlayerIdleComponent> idleStateMapper;
     private ComponentMapper<AnimatableSpriteComponent> spriteMapper;
+    private ComponentMapper<HitboxComponent> hitboxMapper;
 
     @Override
     protected void process(int entityId) {
+        var idleState = idleStateMapper.get(entityId);
         var sprite = spriteMapper.get(entityId).getSprite();
+        var hitbox = hitboxMapper.get(entityId);
+
+        hitbox.setHeight(idleState.getHitboxHeight());
         sprite.setAnimation(constants.getPlayerIdle());
 
         if (Gdx.input.isKeyPressed(Input.Keys.S)) {

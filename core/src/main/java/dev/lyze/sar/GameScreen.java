@@ -58,7 +58,7 @@ public class GameScreen extends ScreenAdapter {
 				.with(new SpriteDrawerSystem())
 
 				.with(new TrackDebugDrawerSystem())
-				.with(new PositionDebugDrawerSystem())
+				.with(new PositionHitboxDrawerSystem())
 				.with(new GizmoSystem())
 
 				.with(new EndBatchSystem())
