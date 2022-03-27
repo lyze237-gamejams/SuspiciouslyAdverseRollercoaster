@@ -35,7 +35,15 @@ public class PlayerJumpStateSystem extends IteratingSystem {
         var sprite = spriteMapper.get(entityId).getSprite();
         var hitbox = hitboxMapper.get(entityId);
 
-        jumpState.setTime(jumpState.getTime() + world.getDelta());
+        if (constants.getCharacter().isHoverInAir() && jumpState.getPercent() > 0.5f && jumpState.getHoverTime() > 0) {
+            if (Gdx.input.isKeyPressed(Input.Keys.S))
+                jumpState.setHoverTime(0);
+
+            jumpState.setHoverTime(jumpState.getHoverTime() - world.getDelta());
+        } else {
+            jumpState.setTime(jumpState.getTime() + (Gdx.input.isKeyPressed(Input.Keys.S) ? 2 : 1) * world.getDelta());
+        }
+
         sprite.setAnimation(constants.getPlayerAir());
         hitbox.setHeight(1.5f);
 
