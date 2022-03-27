@@ -41,16 +41,17 @@ public class GameScreen extends ScreenAdapter {
 				.with(new PlayerIdleStateSystem())
 				.with(new PlayerDuckStateSystem())
 
+				.with(new CopyPositionFromEntitySystem())
+				.with(new CopyRotationFromEntitySystem())
+
+				.with(new PlayerObstacleHitSystem())
+
+				.with(new AnimatableSpriteSystem())
 				.with(new WaitForAnimationFinishSystem())
 
 				.with(new CameraSystem())
 
 				.with(new MapRenderingSystem())
-
-				.with(new CopyPositionFromEntitySystem())
-				.with(new CopyRotationFromEntitySystem())
-
-				.with(new AnimatableSpriteSystem())
 
 				.with(new BeginBatchSystem())
 

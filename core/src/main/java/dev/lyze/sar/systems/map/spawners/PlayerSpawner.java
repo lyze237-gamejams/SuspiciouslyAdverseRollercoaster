@@ -3,6 +3,7 @@ package dev.lyze.sar.systems.map.spawners;
 import com.artemis.World;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
+import dev.lyze.sar.components.player.PlayerOrCartComponent;
 import dev.lyze.sar.systems.map.Map;
 import dev.lyze.sar.components.CopyPositionFromEntityComponent;
 import dev.lyze.sar.components.CopyRotationFromEntityComponent;
@@ -27,6 +28,7 @@ public class PlayerSpawner extends Spawner {
         // minecart
         world.edit(cartId)
                 .add(new CartComponent())
+                .add(new PlayerOrCartComponent())
                 .add(new PositionComponent(rectangle.x / map.getTrackLayer().getTileWidth(), rectangle.y / map.getTrackLayer().getTileHeight()))
                 .add(new HitboxComponent(1.5f, 1f))
                 .add(new GravityComponent())
@@ -37,10 +39,11 @@ public class PlayerSpawner extends Spawner {
         // player
         world.edit(world.create())
                 .add(new PlayerComponent())
+                .add(new PlayerOrCartComponent())
                 .add(new PositionComponent(0, 0))
                 .add(new RotationComponent())
                 .add(new PlayerIdleComponent())
-                .add(new HitboxComponent(1f, 2.5f))
+                .add(new HitboxComponent(0.7f, 2.5f))
                 .add(new CopyPositionFromEntityComponent(cartId))
                 .add(new CopyRotationFromEntityComponent(cartId))
                 .add(new AnimatableSpriteComponent(constants.getPlayerIdle().getKeyFrame(0), SpriteOrder.PLAYER));

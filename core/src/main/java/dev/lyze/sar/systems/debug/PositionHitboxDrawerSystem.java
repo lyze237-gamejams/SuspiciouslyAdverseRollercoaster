@@ -11,6 +11,7 @@ import dev.lyze.sar.components.HitboxComponent;
 import dev.lyze.sar.components.movement.PositionComponent;
 import dev.lyze.sar.components.movement.RotationComponent;
 import dev.lyze.sar.utils.Constants;
+import dev.lyze.sar.utils.RectangleUtils;
 import lombok.var;
 import space.earlygrey.shapedrawer.JoinType;
 import space.earlygrey.shapedrawer.ShapeDrawer;
@@ -33,32 +34,15 @@ public class PositionHitboxDrawerSystem extends IteratingSystem {
 
         drawer.setColor(Color.TEAL);
 
-        var position = positionMapper.get(entityId);
+        var position = positionMapper.get(entityId).getPosition();
         var hitbox = hitboxMapper.get(entityId);
-        var rotation = rotationMapper.get(entityId);
+        var rotation = rotationMapper.get(entityId).getRotation();
 
-        var verts = polygon.getVertices();
-        var x = -hitbox.getWidth() / 2f;
-        var y = 0;
+        RectangleUtils.toPolygon(position.x, position.y, hitbox.getWidth(), hitbox.getHeight(), rotation, polygon);
 
-        verts[0] = x;
-        verts[1] = y;
-
-        verts[2] = x + hitbox.getWidth();
-        verts[3] = y;
-
-        verts[4] = x + hitbox.getWidth();
-        verts[5] = y + hitbox.getHeight();
-
-        verts[6] = x;
-        verts[7] = y + hitbox.getHeight();
-
-        polygon.setVertices(verts);
-        polygon.setPosition(position.getPosition().x, position.getPosition().y);
-        polygon.setRotation(rotation.getRotation() * MathUtils.radiansToDegrees);
         drawer.polygon(polygon.getTransformedVertices(), 0.1f, JoinType.SMOOTH);
 
         drawer.setColor(Color.GREEN);
-        drawer.filledCircle(position.getPosition().x, position.getPosition().y, 0.1f);
+        drawer.filledCircle(position.x, position.y, 0.1f);
     }
 }
