@@ -3,11 +3,14 @@ package dev.lyze.sar;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import lombok.var;
@@ -17,12 +20,12 @@ public abstract class HorribleMenuScreen extends ScreenAdapter {
     protected final Label.LabelStyle titleStyle, subTitleStyle, subSubTitleStyle;
     protected final TextButton.TextButtonStyle buttonStyle;
 
-    protected final FreeTypeFontGenerator fontGen = new FreeTypeFontGenerator(Gdx.files.internal("Fonts/LiberationSans-Bold.ttf"));
-    protected final TextureAtlas textureAtlas;
+    protected final FreeTypeFontGenerator fontGen = new FreeTypeFontGenerator(Gdx.files.internal("Fonts/EvilEmpire-4BBVK.ttf"));
+    protected final TextureAtlas textureAtlas = new TextureAtlas("Atlases/Main.atlas");
+
+    protected final Texture mainMenuBackground = new Texture("Backgrounds/MenuBackground.png");
 
     public HorribleMenuScreen() {
-        textureAtlas = new TextureAtlas("Atlases/Main.atlas");
-
         titleStyle = setupFont(72, Color.WHITE);
         subTitleStyle = setupFont(42, Color.WHITE);
         subSubTitleStyle = setupFont(18, Color.WHITE);
@@ -30,6 +33,11 @@ public abstract class HorribleMenuScreen extends ScreenAdapter {
         buttonStyle = new TextButton.TextButtonStyle();
         buttonStyle.font = subTitleStyle.font;
         buttonStyle.fontColor = Color.WHITE;
+
+        var table = new Table();
+        table.setFillParent(true);
+        table.setBackground(new TextureRegionDrawable(mainMenuBackground));
+        stage.addActor(table);
     }
 
     private Label.LabelStyle setupFont(int size, Color color) {

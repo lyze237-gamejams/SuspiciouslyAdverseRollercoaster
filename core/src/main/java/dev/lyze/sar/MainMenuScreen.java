@@ -3,10 +3,12 @@ package dev.lyze.sar;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import lombok.var;
 
@@ -35,7 +37,14 @@ public class MainMenuScreen extends HorribleMenuScreen {
                 }
             });
             table.add(image).row();
-            table.add(new Label(c.toString(), subTitleStyle));
+            var text = new Label(c.toString(), subTitleStyle);
+            text.addListener(new ClickListener() {
+                @Override
+                public void clicked(InputEvent event, float x, float y) {
+                    ((Game) Gdx.app.getApplicationListener()).setScreen(new GameScreen(c));
+                }
+            });
+            table.add(text);
             root.add(table);
         }
 
