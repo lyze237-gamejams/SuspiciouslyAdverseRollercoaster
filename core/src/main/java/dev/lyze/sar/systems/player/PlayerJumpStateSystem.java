@@ -34,9 +34,9 @@ public class PlayerJumpStateSystem extends IteratingSystem {
 
         jumpState.setTime(jumpState.getTime() + world.getDelta());
         sprite.setAnimation(constants.getPlayerAir());
+        hitbox.setHeight(1.5f);
 
         if (jumpState.isFinished()) {
-            System.out.println("HI");
             sprite.setAnimation(constants.getPlayerLanding());
 
             world.edit(entityId)

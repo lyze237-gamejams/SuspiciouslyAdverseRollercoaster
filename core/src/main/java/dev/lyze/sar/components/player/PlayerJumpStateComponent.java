@@ -9,7 +9,7 @@ import lombok.var;
 
 public class PlayerJumpStateComponent extends Component {
     @Getter private final float scale = 8f;
-    @Getter private final float maxTime = 0.5f;
+    @Getter private final float maxTime = 0.8f;
 
     @Getter @Setter private float time;
 
@@ -21,10 +21,7 @@ public class PlayerJumpStateComponent extends Component {
     };
 
     public float calculateOffset() {
-        var mapped = MathUtils.map(0, maxTime, 0, 1, time);
-        float v = interpolation.apply(mapped) * scale;
-        System.out.println(time + ": " + v);
-        return v;
+        return interpolation.apply(MathUtils.map(0, maxTime, 0, 1, time)) * scale;
     }
 
     public boolean isFinished() {

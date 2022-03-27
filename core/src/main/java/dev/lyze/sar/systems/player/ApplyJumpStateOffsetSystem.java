@@ -20,6 +20,15 @@ public class ApplyJumpStateOffsetSystem extends IteratingSystem {
         var position = positionMapper.get(entityId).getPosition();
         var rotation = rotationMapper.get(entityId).getRotation();
 
-        position.add(0, (float) (jumpState.calculateOffset() * Math.cos(rotation)));
+        float cos = (float)Math.cos(rotation);
+        float sin = (float)Math.sin(rotation);
+
+        var x = 0;
+        var y = jumpState.calculateOffset();
+
+        float newX = x * cos - y * sin;
+        float newY = x * sin + y * cos;
+
+        position.add(newX, newY);
     }
 }
