@@ -17,6 +17,8 @@ import dev.lyze.sar.components.ObstacleComponent;
 import dev.lyze.sar.components.movement.PositionComponent;
 import dev.lyze.sar.components.movement.RotationComponent;
 import dev.lyze.sar.components.player.PlayerOrCartComponent;
+import dev.lyze.sar.eventsystem.EventManager;
+import dev.lyze.sar.eventsystem.events.HitEvent;
 import dev.lyze.sar.utils.Constants;
 import dev.lyze.sar.utils.RectangleUtils;
 import lombok.var;
@@ -33,6 +35,7 @@ public class PlayerObstacleHitSystem extends IteratingSystem {
 
     private EntitySubscription obstalces;
 
+    @Wire private EventManager eventManager;
     @Wire(name = "constants") private Constants constants;
 
     @Override
@@ -49,10 +52,12 @@ public class PlayerObstacleHitSystem extends IteratingSystem {
         RectangleUtils.toPolygon(position.x, position.y, hitbox.getWidth(), hitbox.getHeight(), rotation, playerPolygon);
 
         for (int i = 0; i < obstalces.getEntities().size(); i++) {
-            var obstaclePolygon = obstacleMapper.get(obstalces.getEntities().get(i)).getPolygon();
+            var obstacleComponent = obstacleMapper.get(obstalces.getEntities().get(i));
+            var obstaclePolygon = obstacleComponent.getPolygon();
 
-            if (Intersector.overlapConvexPolygons(playerPolygon, obstaclePolygon)) {
-                ((Game) Gdx.app.getApplicationListener()).setScreen(new GameOverScreen(constants.getCharacter()));
+            if (!obstacleComponent.isAlreadyHit() && Intersector.overlapConvexPolygons(playerPolygon, obstaclePolygon)) {
+                obstacleComponent.setAlreadyHit(true);
+                eventManager.fire(new HitEvent());
             }
         }
     }

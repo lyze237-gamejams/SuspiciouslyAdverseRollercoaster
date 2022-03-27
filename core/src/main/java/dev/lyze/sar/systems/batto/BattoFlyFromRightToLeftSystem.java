@@ -27,7 +27,6 @@ public class BattoFlyFromRightToLeftSystem extends IteratingSystem {
         var sprite = spriteMapper.get(entityId).getSprite();
         var batto = battoMapper.get(entityId);
 
-        System.out.println(position);
 
         position.x -= batto.getSpeed() * world.getDelta();
 

@@ -12,10 +12,13 @@ import lombok.var;
 
 public class Constants extends Component {
     @Getter private final boolean debug = false;
+    @Getter private final int maxHealth = 3;
 
     @Getter private final TextureAtlas main;
 
     @Getter private final Animation<TextureAtlas.AtlasRegion> playerCrouchIn, playerCrouchOut, playerFall, playerIdle, playerJump, playerAir, playerLanding;
+    @Getter private final TextureAtlas.AtlasRegion playerProfile;
+    @Getter private final TextureAtlas.AtlasRegion health;
 
     @Getter private final TextureAtlas.AtlasRegion minecartBack, minecartFront;
 
@@ -42,6 +45,9 @@ public class Constants extends Component {
         playerJump = new Animation<>(speed, main.findRegions(character.getPath() + "/Jump"), Animation.PlayMode.NORMAL);
         playerAir = new Animation<>(speed, main.findRegions(character.getPath() + "/Air"), Animation.PlayMode.NORMAL);
         playerLanding = new Animation<>(speed, main.findRegions(character.getPath() + "/Landing"), Animation.PlayMode.NORMAL);
+
+        playerProfile = main.findRegion(character.getPath() + "/Headshot");
+        health = main.findRegion("Misc/Health");
 
         minecartBack = main.findRegion("Misc/Minecart_back");
         minecartFront = main.findRegion("Misc/Minecart_front");

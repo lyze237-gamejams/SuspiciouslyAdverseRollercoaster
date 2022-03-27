@@ -83,8 +83,6 @@ public class PlayerCartFollowTrackSystem extends PlayerAbstractSystem {
             follow.setSection(follow.getSection() + 2);
 
             if (follow.getSection() >= verts.length - 2) {
-                System.out.println("Done!~");
-
                 position.getPosition().add(1, 0);
 
                 world.edit(entityId)

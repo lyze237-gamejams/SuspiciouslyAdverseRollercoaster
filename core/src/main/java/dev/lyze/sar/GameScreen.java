@@ -3,16 +3,22 @@ package dev.lyze.sar;
 import com.aliasifkhan.hackLights.HackLightEngine;
 import com.artemis.World;
 import com.artemis.WorldConfigurationBuilder;
+import com.badlogic.gdx.Game;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import dev.lyze.sar.components.BackgroundDrawerSystem;
 import dev.lyze.sar.components.ObstaclePositionUpdateSystem;
+import dev.lyze.sar.eventsystem.EventListener;
 import dev.lyze.sar.eventsystem.EventManager;
+import dev.lyze.sar.eventsystem.events.Event;
+import dev.lyze.sar.eventsystem.events.HitEvent;
 import dev.lyze.sar.eventsystem.events.ResizeEvent;
 import dev.lyze.sar.systems.batto.*;
 import dev.lyze.sar.systems.copy.CopyPositionFromEntitySystem;
@@ -38,6 +44,7 @@ import space.earlygrey.shapedrawer.ShapeDrawer;
 
 public class GameScreen extends ScreenAdapter {
 	private final World world;
+
 	public GameScreen(CharacterEnum character) {
 		var builder = new WorldConfigurationBuilder()
 				.with(new MapSpawnerSystem())
@@ -91,6 +98,8 @@ public class GameScreen extends ScreenAdapter {
 				.with(new HackLightPositionUpdateSystem())
 				.with(new HackLightSystem())
 
+				.with(new UiSystem())
+
 				.build();
 
 		var batch = new SpriteBatch();
@@ -103,6 +112,17 @@ public class GameScreen extends ScreenAdapter {
 		builder.register(new ShapeDrawer(batch, new TextureRegion(new Texture("Pixel.png"))));
 
 		world = new World(builder);
+
+		world.getInjector().getRegistered(EventManager.class).addListener(new EventListener<HitEvent>(HitEvent.class) {
+			private int health = ((Constants) world.getInjector().getRegistered("constants")).getMaxHealth();
+
+			@Override
+			protected void fire(HitEvent event) {
+				if (--health == 0) {
+					((Game) Gdx.app.getApplicationListener()).setScreen(new GameOverScreen(character));
+				}
+			}
+		});
 	}
 
 	@Override
