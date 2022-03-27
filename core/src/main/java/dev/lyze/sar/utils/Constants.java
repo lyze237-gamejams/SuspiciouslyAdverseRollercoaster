@@ -11,7 +11,7 @@ import lombok.Getter;
 import lombok.var;
 
 public class Constants extends Component {
-    @Getter private final boolean debug = true;
+    @Getter private final boolean debug = false;
 
     @Getter private final TextureAtlas main;
 
