@@ -13,7 +13,7 @@ public class Constants extends Component {
     @Getter private final TextureAtlas main;
     @Getter private final boolean debug = false;
 
-    @Getter private final Animation<TextureAtlas.AtlasRegion> playerCrouchIn, playerCrouchOut, playerFall, playerIdle, playerJump, playerLanding;
+    @Getter private final Animation<TextureAtlas.AtlasRegion> playerCrouchIn, playerCrouchOut, playerFall, playerIdle, playerJump, playerAir, playerLanding;
 
     @Getter private final TextureAtlas.AtlasRegion minecartBack, minecartFront;
 
@@ -34,6 +34,7 @@ public class Constants extends Component {
         playerFall = new Animation<>(speed, main.findRegions("Fox/Fall"), Animation.PlayMode.NORMAL);
         playerIdle = new Animation<>(speed, main.findRegions("Fox/Idle"), Animation.PlayMode.LOOP);
         playerJump = new Animation<>(speed, main.findRegions("Fox/Jump"), Animation.PlayMode.NORMAL);
+        playerAir = new Animation<>(speed, main.findRegions("Fox/Air"), Animation.PlayMode.NORMAL);
         playerLanding = new Animation<>(speed, main.findRegions("Fox/Landing"), Animation.PlayMode.NORMAL);
 
         minecartBack = main.findRegion("Misc/Minecart_back");

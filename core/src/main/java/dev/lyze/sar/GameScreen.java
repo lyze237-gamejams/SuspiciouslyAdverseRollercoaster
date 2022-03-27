@@ -23,8 +23,10 @@ import dev.lyze.sar.systems.map.MapRenderingSystem;
 import dev.lyze.sar.systems.map.MapSpawnerSystem;
 import dev.lyze.sar.systems.cart.PlayerCartFallStateSystem;
 import dev.lyze.sar.systems.cart.PlayerCartFollowTrackSystem;
+import dev.lyze.sar.systems.player.ApplyJumpStateOffsetSystem;
 import dev.lyze.sar.systems.player.PlayerDuckStateSystem;
 import dev.lyze.sar.systems.player.PlayerIdleStateSystem;
+import dev.lyze.sar.systems.player.PlayerJumpStateSystem;
 import dev.lyze.sar.systems.sprites.*;
 import dev.lyze.sar.utils.Constants;
 import lombok.var;
@@ -41,10 +43,13 @@ public class GameScreen extends ScreenAdapter {
 				.with(new PlayerCartFollowTrackSystem())
 
 				.with(new PlayerIdleStateSystem())
+				.with(new PlayerJumpStateSystem())
 				.with(new PlayerDuckStateSystem())
 
 				.with(new CopyPositionFromEntitySystem())
 				.with(new CopyRotationFromEntitySystem())
+
+				.with(new ApplyJumpStateOffsetSystem())
 
 				.with(new PlayerObstacleHitSystem())
 
@@ -78,7 +83,7 @@ public class GameScreen extends ScreenAdapter {
 		builder.register(new Map("Maps/DevMap.tmx", batch));
 		builder.register(new ExtendViewport(24, 13.5f));
 		builder.register(new EventManager());
-		builder.register("hackLightEngine", new HackLightEngine());
+		builder.register(new HackLightEngine());
 		builder.register(batch);
 		builder.register("constants", new Constants());
 		builder.register(new ShapeDrawer(batch, new TextureRegion(new Texture("Pixel.png"))));

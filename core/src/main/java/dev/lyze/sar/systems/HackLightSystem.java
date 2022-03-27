@@ -11,7 +11,7 @@ import dev.lyze.sar.eventsystem.events.ResizeEvent;
 public class HackLightSystem extends BaseSystem {
     @Wire private ExtendViewport viewport;
     @Wire private EventManager eventManager;
-    @Wire(name = "hackLightEngine") private HackLightEngine hackLightEngine;
+    @Wire private HackLightEngine hackLightEngine;
 
     @Override
     protected void initialize() {

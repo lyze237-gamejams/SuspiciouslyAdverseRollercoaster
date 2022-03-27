@@ -12,6 +12,7 @@ import dev.lyze.sar.components.WaitForAnimationFinishComponent;
 import dev.lyze.sar.components.player.PlayerComponent;
 import dev.lyze.sar.components.player.PlayerDuckStateComponent;
 import dev.lyze.sar.components.player.PlayerIdleComponent;
+import dev.lyze.sar.components.player.PlayerJumpStateComponent;
 import dev.lyze.sar.utils.Constants;
 import lombok.var;
 
@@ -30,6 +31,14 @@ public class PlayerIdleStateSystem extends IteratingSystem {
 
         hitbox.setHeight(idleState.getHitboxHeight());
         sprite.setAnimation(constants.getPlayerIdle());
+
+        if (Gdx.input.isKeyPressed(Input.Keys.W)) {
+            sprite.setAnimation(constants.getPlayerJump());
+
+            world.edit(entityId)
+                    .remove(PlayerIdleComponent.class)
+                    .add(new WaitForAnimationFinishComponent(new PlayerJumpStateComponent()));
+        }
 
         if (Gdx.input.isKeyPressed(Input.Keys.S)) {
             sprite.setAnimation(constants.getPlayerCrouchIn());
