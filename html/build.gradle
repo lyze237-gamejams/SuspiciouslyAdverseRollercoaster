@@ -40,6 +40,9 @@ dependencies {
 	implementation "com.github.crykn:libgdx-screenmanager-gwt:0.6.6:sources"
 	implementation "com.github.crykn:libgdx-screenmanager:$screenManagerVersion:sources"
 
+    implementation "com.github.intrigus.gdx-freetype-gwt:gdx-freetype-gwt:$gwtFreetypeVersion"
+    implementation "com.github.intrigus.gdx-freetype-gwt:gdx-freetype-gwt:$gwtFreetypeVersion:sources"
+
     implementation "com.github.aliasifk:HackLights:$hackLightsVersion:sources"
     implementation "space.earlygrey:shapedrawer:$shapedrawerVersion:sources"
 

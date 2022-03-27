@@ -36,4 +36,8 @@ public class Map {
 
         renderer = new OrthogonalTiledMapRendererBleeding(map, 1f / trackLayer.getTileWidth(), batch);
     }
+
+    public void dispose() {
+        map.dispose();
+    }
 }

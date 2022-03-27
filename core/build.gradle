@@ -17,4 +17,6 @@ dependencies {
 	implementation "space.earlygrey:shapedrawer:$shapedrawerVersion"
 
 	implementation "com.kotcrab.vis:vis-ui:$visuiVersion"
+
+	api "com.badlogicgames.gdx:gdx-freetype:$gdxVersion"
 }

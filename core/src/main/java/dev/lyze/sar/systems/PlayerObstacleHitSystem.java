@@ -9,7 +9,7 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Polygon;
-import dev.lyze.sar.GameScreen;
+import dev.lyze.sar.MainMenuScreen;
 import dev.lyze.sar.components.HitboxComponent;
 import dev.lyze.sar.components.ObstacleComponent;
 import dev.lyze.sar.components.movement.PositionComponent;
@@ -47,7 +47,7 @@ public class PlayerObstacleHitSystem extends IteratingSystem {
             var obstaclePolygon = obstacleMapper.get(obstalces.getEntities().get(i)).getPolygon();
 
             if (Intersector.overlapConvexPolygons(playerPolygon, obstaclePolygon)) {
-                ((Game) Gdx.app.getApplicationListener()).setScreen(new GameScreen());
+                ((Game) Gdx.app.getApplicationListener()).setScreen(new MainMenuScreen());
             }
         }
     }

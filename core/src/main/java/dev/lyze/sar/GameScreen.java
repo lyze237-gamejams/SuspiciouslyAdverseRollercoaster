@@ -34,7 +34,7 @@ import space.earlygrey.shapedrawer.ShapeDrawer;
 
 public class GameScreen extends ScreenAdapter {
 	private final World world;
-	public GameScreen() {
+	public GameScreen(CharacterEnum character) {
 		var builder = new WorldConfigurationBuilder()
 				.with(new MapSpawnerSystem())
 				.with(new MapEntitySpawner())
@@ -85,7 +85,7 @@ public class GameScreen extends ScreenAdapter {
 		builder.register(new EventManager());
 		builder.register(new HackLightEngine());
 		builder.register(batch);
-		builder.register("constants", new Constants());
+		builder.register("constants", new Constants(character));
 		builder.register(new ShapeDrawer(batch, new TextureRegion(new Texture("Pixel.png"))));
 
 		world = new World(builder);
@@ -102,5 +102,12 @@ public class GameScreen extends ScreenAdapter {
 	@Override
 	public void resize(int width, int height) {
 		world.getInjector().getRegistered(EventManager.class).fire(new ResizeEvent(width, height));
+	}
+
+	@Override
+	public void hide() {
+		world.getInjector().getRegistered(Map.class).dispose();
+		((Constants) world.getInjector().getRegistered("constants")).dispose();
+		world.dispose();
 	}
 }
