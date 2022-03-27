@@ -1,5 +1,6 @@
 package dev.lyze.sar.systems.map;
 
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
@@ -14,7 +15,7 @@ public class Map {
     @Getter private final MapLayer entitiesLayer, trackCollisionLayer;
     @Getter private final TiledMapTileLayer trackLayer, obstaclesLayer;
 
-    public Map(String path) {
+    public Map(String path, SpriteBatch batch) {
         this.map = new TmxMapLoader().load(path);
 
         trackLayer = (TiledMapTileLayer) map.getLayers().get("Tracks");
@@ -33,6 +34,6 @@ public class Map {
         if (trackCollisionLayer == null)
             throw new IllegalArgumentException("TrackCollisions Layer undefined");
 
-        renderer = new OrthogonalTiledMapRendererBleeding(map, 1f / trackLayer.getTileWidth());
+        renderer = new OrthogonalTiledMapRendererBleeding(map, 1f / trackLayer.getTileWidth(), batch);
     }
 }

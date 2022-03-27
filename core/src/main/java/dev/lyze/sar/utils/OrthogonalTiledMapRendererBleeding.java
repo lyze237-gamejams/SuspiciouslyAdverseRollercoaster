@@ -2,7 +2,9 @@ package dev.lyze.sar.utils;
 
 
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTile;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
@@ -13,8 +15,15 @@ import static com.badlogic.gdx.graphics.g2d.Batch.*;
 // https://www.badlogicgames.com/forum/viewtopic.php?t=16368#p74103
 // better solution: render to framebuffer and scale that one?
 public class OrthogonalTiledMapRendererBleeding extends OrthogonalTiledMapRenderer  {
-    public OrthogonalTiledMapRendererBleeding(TiledMap map, float unitScale) {
-        super(map, unitScale);
+    public OrthogonalTiledMapRendererBleeding(TiledMap map, float unitScale, SpriteBatch batch) {
+        super(map, unitScale, batch);
+    }
+
+    @Override
+    public void render() {
+        for (MapLayer layer : map.getLayers()) {
+            renderMapLayer(layer);
+        }
     }
 
     @Override

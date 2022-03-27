@@ -13,6 +13,7 @@ import dev.lyze.sar.components.ObstacleComponent;
 import dev.lyze.sar.components.TrackComponent;
 import dev.lyze.sar.components.EntitySpawnerComponent;
 import lombok.var;
+import java.util.Arrays;
 
 public class MapSpawnerSystem extends BaseSystem {
     @Wire private Map map;
@@ -51,7 +52,7 @@ public class MapSpawnerSystem extends BaseSystem {
                     throw new IllegalArgumentException("Spikes cell " + x + "/" + y + " is wrong count: " + objects.getCount() + " != " + 1);
 
                 var polygonMapObject= ((PolygonMapObject) objects.get(0));
-                var verts= polygonMapObject.getPolygon().getTransformedVertices().clone();
+                var verts= Arrays.copyOf(polygonMapObject.getPolygon().getTransformedVertices(), polygonMapObject.getPolygon().getTransformedVertices().length);
 
                 for (int j = 0; j < verts.length; j++) {
                     verts[j] /= map.getTrackLayer().getTileWidth();

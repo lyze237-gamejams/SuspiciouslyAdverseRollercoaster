@@ -3,6 +3,7 @@ package dev.lyze.sar.systems.map;
 import com.artemis.BaseSystem;
 import com.artemis.annotations.Wire;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import dev.lyze.sar.eventsystem.EventListener;
 import dev.lyze.sar.eventsystem.EventManager;
@@ -12,6 +13,7 @@ public class MapRenderingSystem extends BaseSystem {
     @Wire private ExtendViewport viewport;
     @Wire private EventManager eventManager;
     @Wire private Map map;
+    @Wire private SpriteBatch batch;
 
     @Override
     protected void initialize() {
