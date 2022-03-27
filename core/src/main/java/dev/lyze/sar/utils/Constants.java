@@ -1,6 +1,7 @@
 package dev.lyze.sar.utils;
 
 import com.artemis.Component;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -16,8 +17,16 @@ public class Constants extends Component {
 
     @Getter private final TextureAtlas.AtlasRegion minecartBack, minecartFront;
 
+    @Getter private final TextureAtlas lights;
+
+    @Getter private final Texture background;
+
     public Constants() {
         main = new TextureAtlas("Atlases/Main.atlas");
+
+        lights = new TextureAtlas("lights.atlas");
+
+        background = new Texture("Backgrounds/Purple Nebula 2 - 1024x1024.png");
 
         float speed = 0.05f;
         playerCrouchIn = new Animation<>(speed, main.findRegions("Fox/CrouchIn"), Animation.PlayMode.NORMAL);

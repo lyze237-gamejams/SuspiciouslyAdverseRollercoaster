@@ -1,5 +1,6 @@
 package dev.lyze.sar;
 
+import com.aliasifkhan.hackLights.HackLightEngine;
 import com.artemis.World;
 import com.artemis.WorldConfigurationBuilder;
 import com.badlogic.gdx.ScreenAdapter;
@@ -9,6 +10,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
+import dev.lyze.sar.components.BackgroundDrawerSystem;
 import dev.lyze.sar.eventsystem.EventManager;
 import dev.lyze.sar.eventsystem.events.ResizeEvent;
 import dev.lyze.sar.systems.copy.CopyPositionFromEntitySystem;
@@ -55,6 +57,8 @@ public class GameScreen extends ScreenAdapter {
 
 				.with(new BeginBatchSystem())
 
+				.with(new BackgroundDrawerSystem())
+
 				.with(new SpritePositionUpdaterSystem())
 				.with(new SpriteRotationUpdaterSystem())
 				.with(new SpriteDrawerSystem())
@@ -66,12 +70,16 @@ public class GameScreen extends ScreenAdapter {
 
 				.with(new EndBatchSystem())
 
+				.with(new HackLightPositionUpdateSystem())
+				.with(new HackLightSystem())
+
 				.build();
 
 		var batch = new SpriteBatch();
 		builder.register(new Map("Maps/DevMap.tmx"));
 		builder.register(new ExtendViewport(24, 13.5f));
 		builder.register(new EventManager());
+		builder.register(new HackLightEngine());
 		builder.register(batch);
 		builder.register("constants", new Constants());
 		builder.register(new ShapeDrawer(batch, new TextureRegion(new Texture("Pixel.png"))));

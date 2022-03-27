@@ -1,14 +1,15 @@
 package dev.lyze.sar.systems.map.spawners;
 
+import com.aliasifkhan.hackLights.HackLight;
+import com.aliasifkhan.hackLights.HackLightEngine;
 import com.artemis.World;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
+import dev.lyze.sar.AnimatableSprite;
+import dev.lyze.sar.components.*;
 import dev.lyze.sar.components.player.PlayerOrCartComponent;
 import dev.lyze.sar.systems.map.Map;
-import dev.lyze.sar.components.CopyPositionFromEntityComponent;
-import dev.lyze.sar.components.CopyRotationFromEntityComponent;
-import dev.lyze.sar.components.AnimatableSpriteComponent;
-import dev.lyze.sar.components.HitboxComponent;
 import dev.lyze.sar.components.movement.*;
 import dev.lyze.sar.components.cart.CartComponent;
 import dev.lyze.sar.components.cart.CartFallStateComponent;
@@ -61,10 +62,22 @@ public class PlayerSpawner extends Spawner {
                 .add(new CopyPositionFromEntityComponent(cartId))
                 .add(new CopyRotationFromEntityComponent(cartId))
                 .add(new AnimatableSpriteComponent(constants.getMinecartFront(), SpriteOrder.INFRONT_PLAYER));
+
+        var properties = object.getProperties();
+        var lightColor = properties.get("lightColor", Color.class);
+        var lightScale = properties.get("lightScale", float.class);
+        var lightRegion = properties.get("lightRegion", String.class);
+
+        var light = new HackLight(constants.getLights().findRegion(lightRegion), lightColor.r, lightColor.g, lightColor.b, lightColor.a, lightScale);
+        world.getInjector().getRegistered(HackLightEngine.class).addLight(light);
+        world.edit(world.create())
+                .add(new HackLightComponent(light))
+                .add(new PositionComponent(0, 0))
+                .add(new CopyPositionFromEntityComponent(cartId));
     }
 
     @Override
     public String getName() {
-        return "PlayerSpawner";
+        return "Player";
     }
 }

@@ -1,9 +1,7 @@
 package dev.lyze.sar.components;
 
 import com.artemis.Component;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import dev.lyze.sar.AnimatableSprite;
 import dev.lyze.sar.systems.sprites.SpriteOrder;
 import lombok.Getter;
