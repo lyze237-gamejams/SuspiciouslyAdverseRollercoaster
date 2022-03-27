@@ -4,6 +4,7 @@ import com.artemis.Aspect;
 import com.artemis.ComponentMapper;
 import com.artemis.EntitySubscription;
 import com.artemis.annotations.All;
+import com.artemis.annotations.Exclude;
 import com.artemis.annotations.Wire;
 import com.artemis.systems.IteratingSystem;
 import com.badlogic.gdx.Game;
@@ -16,6 +17,7 @@ import dev.lyze.sar.components.HitboxComponent;
 import dev.lyze.sar.components.ObstacleComponent;
 import dev.lyze.sar.components.movement.PositionComponent;
 import dev.lyze.sar.components.movement.RotationComponent;
+import dev.lyze.sar.components.player.FlashSpriteComponent;
 import dev.lyze.sar.components.player.PlayerOrCartComponent;
 import dev.lyze.sar.eventsystem.EventManager;
 import dev.lyze.sar.eventsystem.events.HitEvent;
@@ -32,6 +34,8 @@ public class PlayerObstacleHitSystem extends IteratingSystem {
     private ComponentMapper<HitboxComponent> hitboxMapper;
 
     private ComponentMapper<ObstacleComponent> obstacleMapper;
+
+    private ComponentMapper<FlashSpriteComponent> flashMapper;
 
     private EntitySubscription obstalces;
 
@@ -55,7 +59,7 @@ public class PlayerObstacleHitSystem extends IteratingSystem {
             var obstacleComponent = obstacleMapper.get(obstalces.getEntities().get(i));
             var obstaclePolygon = obstacleComponent.getPolygon();
 
-            if (!obstacleComponent.isAlreadyHit() && Intersector.overlapConvexPolygons(playerPolygon, obstaclePolygon)) {
+            if (!obstacleComponent.isAlreadyHit() && !flashMapper.has(entityId) && Intersector.overlapConvexPolygons(playerPolygon, obstaclePolygon)) {
                 obstacleComponent.setAlreadyHit(true);
                 eventManager.fire(new HitEvent());
             }

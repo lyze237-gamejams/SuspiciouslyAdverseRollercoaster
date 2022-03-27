@@ -31,10 +31,7 @@ import dev.lyze.sar.systems.map.MapRenderingSystem;
 import dev.lyze.sar.systems.map.MapSpawnerSystem;
 import dev.lyze.sar.systems.cart.PlayerCartFallStateSystem;
 import dev.lyze.sar.systems.cart.PlayerCartFollowTrackSystem;
-import dev.lyze.sar.systems.player.ApplyJumpStateOffsetSystem;
-import dev.lyze.sar.systems.player.PlayerDuckStateSystem;
-import dev.lyze.sar.systems.player.PlayerIdleStateSystem;
-import dev.lyze.sar.systems.player.PlayerJumpStateSystem;
+import dev.lyze.sar.systems.player.*;
 import dev.lyze.sar.systems.sprites.*;
 import dev.lyze.sar.systems.wait.WaitForAnimationFinishSystem;
 import dev.lyze.sar.systems.wait.WaitTimeSystem;
@@ -63,6 +60,7 @@ public class GameScreen extends ScreenAdapter {
 				.with(new PlayerJumpStateSystem())
 				.with(new PlayerDuckStateSystem())
 				.with(new KillPlayerOutOfMapSystem())
+				.with(new FlashPlayerSpriteOnHitSystem())
 
 				.with(new CopyPositionFromEntitySystem())
 				.with(new CopyRotationFromEntitySystem())
@@ -72,6 +70,7 @@ public class GameScreen extends ScreenAdapter {
 				.with(new ObstaclePositionUpdateSystem())
 				.with(new PlayerObstacleHitSystem())
 
+				.with(new FlashSpriteSystem())
 				.with(new AnimatableSpriteSystem())
 				.with(new WaitForAnimationFinishSystem())
 				.with(new WaitTimeSystem())
