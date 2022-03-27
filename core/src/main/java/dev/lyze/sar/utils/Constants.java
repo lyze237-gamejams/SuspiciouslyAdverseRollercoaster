@@ -12,18 +12,20 @@ public class Constants extends Component {
     @Getter private final TextureAtlas main;
     @Getter private final boolean debug = true;
 
-    @Getter private final Animation<TextureAtlas.AtlasRegion> playerCrouch, playerFall, playerIdle, playerJump, playerLanding;
+    @Getter private final Animation<TextureAtlas.AtlasRegion> playerCrouchIn, playerCrouchOut, playerFall, playerIdle, playerJump, playerLanding;
 
     @Getter private final TextureAtlas.AtlasRegion minecartBack, minecartFront;
 
     public Constants() {
         main = new TextureAtlas("Atlases/Main.atlas");
 
-        playerCrouch = new Animation<>(0.1f, main.findRegions("Fox/Crouch"), Animation.PlayMode.NORMAL);
-        playerFall = new Animation<>(0.1f, main.findRegions("Fox/Fall"), Animation.PlayMode.NORMAL);
-        playerIdle = new Animation<>(0.1f, main.findRegions("Fox/Idle"), Animation.PlayMode.LOOP);
-        playerJump = new Animation<>(0.1f, main.findRegions("Fox/Jump"), Animation.PlayMode.NORMAL);
-        playerLanding = new Animation<>(0.1f, main.findRegions("Fox/Landing"), Animation.PlayMode.NORMAL);
+        float speed = 0.05f;
+        playerCrouchIn = new Animation<>(speed, main.findRegions("Fox/CrouchIn"), Animation.PlayMode.NORMAL);
+        playerCrouchOut = new Animation<>(speed, main.findRegions("Fox/CrouchOut"), Animation.PlayMode.NORMAL);
+        playerFall = new Animation<>(speed, main.findRegions("Fox/Fall"), Animation.PlayMode.NORMAL);
+        playerIdle = new Animation<>(speed, main.findRegions("Fox/Idle"), Animation.PlayMode.LOOP);
+        playerJump = new Animation<>(speed, main.findRegions("Fox/Jump"), Animation.PlayMode.NORMAL);
+        playerLanding = new Animation<>(speed, main.findRegions("Fox/Landing"), Animation.PlayMode.NORMAL);
 
         minecartBack = main.findRegion("Misc/Minecart_back");
         minecartFront = main.findRegion("Misc/Minecart_front");

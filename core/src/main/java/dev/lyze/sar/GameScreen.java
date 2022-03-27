@@ -20,6 +20,8 @@ import dev.lyze.sar.systems.map.MapRenderingSystem;
 import dev.lyze.sar.systems.map.MapSpawnerSystem;
 import dev.lyze.sar.systems.cart.PlayerCartFallStateSystem;
 import dev.lyze.sar.systems.cart.PlayerCartFollowTrackSystem;
+import dev.lyze.sar.systems.player.PlayerDuckStateSystem;
+import dev.lyze.sar.systems.player.PlayerIdleStateSystem;
 import dev.lyze.sar.systems.sprites.*;
 import dev.lyze.sar.utils.Constants;
 import lombok.var;
@@ -35,12 +37,19 @@ public class GameScreen extends ScreenAdapter {
 				.with(new PlayerCartFallStateSystem())
 				.with(new PlayerCartFollowTrackSystem())
 
+				.with(new PlayerIdleStateSystem())
+				.with(new PlayerDuckStateSystem())
+
+				.with(new WaitForAnimationFinishSystem())
+
 				.with(new CameraSystem())
 
 				.with(new MapRenderingSystem())
 
 				.with(new CopyPositionFromEntitySystem())
 				.with(new CopyRotationFromEntitySystem())
+
+				.with(new AnimatableSpriteSystem())
 
 				.with(new BeginBatchSystem())
 

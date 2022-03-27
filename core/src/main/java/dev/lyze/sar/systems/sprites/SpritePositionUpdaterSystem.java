@@ -3,13 +3,13 @@ package dev.lyze.sar.systems.sprites;
 import com.artemis.ComponentMapper;
 import com.artemis.annotations.All;
 import com.artemis.systems.IteratingSystem;
-import dev.lyze.sar.components.SpriteComponent;
+import dev.lyze.sar.components.AnimatableSpriteComponent;
 import dev.lyze.sar.components.movement.PositionComponent;
 import lombok.var;
 
-@All({SpriteComponent.class, PositionComponent.class})
+@All({AnimatableSpriteComponent.class, PositionComponent.class})
 public class SpritePositionUpdaterSystem extends IteratingSystem {
-    private ComponentMapper<SpriteComponent> spriteMapper;
+    private ComponentMapper<AnimatableSpriteComponent> spriteMapper;
     private ComponentMapper<PositionComponent> positionMapper;
 
     @Override

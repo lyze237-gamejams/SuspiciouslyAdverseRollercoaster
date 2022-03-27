@@ -7,14 +7,14 @@ import com.artemis.EntitySubscription;
 import com.artemis.annotations.Wire;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Array;
-import dev.lyze.sar.components.SpriteComponent;
+import dev.lyze.sar.components.AnimatableSpriteComponent;
 
 import java.util.Comparator;
 
 public class SpriteDrawerSystem extends BaseSystem {
-    private final Array<SpriteComponent> orderArray = new Array<>();
+    private final Array<AnimatableSpriteComponent> orderArray = new Array<>();
 
-    private ComponentMapper<SpriteComponent> spriteMapper;
+    private ComponentMapper<AnimatableSpriteComponent> spriteMapper;
     private EntitySubscription sprites;
 
     @Wire private SpriteBatch batch;
@@ -23,7 +23,7 @@ public class SpriteDrawerSystem extends BaseSystem {
     protected void initialize() {
         super.initialize();
 
-        sprites = world.getAspectSubscriptionManager().get(Aspect.all(SpriteComponent.class));
+        sprites = world.getAspectSubscriptionManager().get(Aspect.all(AnimatableSpriteComponent.class));
     }
 
     @Override
@@ -34,12 +34,12 @@ public class SpriteDrawerSystem extends BaseSystem {
             orderArray.add(spriteMapper.get(sprites.getEntities().get(i)));
         }
 
-        orderArray.sort(Comparator.comparingInt(SpriteComponent::getOrder));
+        orderArray.sort(Comparator.comparingInt(AnimatableSpriteComponent::getOrder));
 
         orderArray.forEach(this::processEntity);
     }
 
-    private void processEntity(SpriteComponent sprite) {
+    private void processEntity(AnimatableSpriteComponent sprite) {
         sprite.getSprite().draw(batch);
     }
 }
