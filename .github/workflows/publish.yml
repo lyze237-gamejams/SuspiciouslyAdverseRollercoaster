@@ -32,7 +32,7 @@ jobs:
         run: ./gradlew lwjgl3:jar
         
       - name: Fix file names
-        run: mv lwjgl3/build/lib/*.jar SuspiciouslyAdverseRollercoaster.jar
+        run: mv lwjgl3/build/libs/*.jar SuspiciouslyAdverseRollercoaster.jar
 
       - run: ./butler push SuspiciouslyAdverseRollercoaster.jar lyze237/suspiciously-adverse-rollercoaster:jar
 
