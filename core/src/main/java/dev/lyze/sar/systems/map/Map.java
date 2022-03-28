@@ -5,6 +5,7 @@ import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
+import com.badlogic.gdx.math.Rectangle;
 import dev.lyze.sar.utils.OrthogonalTiledMapRendererBleeding;
 import lombok.Getter;
 
@@ -14,6 +15,8 @@ public class Map {
 
     @Getter private final MapLayer entitiesLayer, trackCollisionLayer;
     @Getter private final TiledMapTileLayer trackLayer, obstaclesLayer, torchesLayer;
+
+    @Getter private final Rectangle victoryRectangle = new Rectangle();
 
     public Map(String path, SpriteBatch batch) {
         this.map = new TmxMapLoader().load(path);

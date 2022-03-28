@@ -34,6 +34,7 @@ public class GameOverScreen extends HorribleMenuScreen {
     @Override
     public void show() {
         super.show();
+        MusicStuff.getClouds().stop();
         MusicStuff.getTown().play();
     }
 

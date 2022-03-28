@@ -6,10 +6,7 @@ import com.artemis.annotations.Wire;
 import com.artemis.systems.IteratingSystem;
 import com.badlogic.gdx.utils.Array;
 import dev.lyze.sar.components.EntitySpawnerComponent;
-import dev.lyze.sar.systems.map.spawners.BattoSpawner;
-import dev.lyze.sar.systems.map.spawners.LightSpawner;
-import dev.lyze.sar.systems.map.spawners.PlayerSpawner;
-import dev.lyze.sar.systems.map.spawners.Spawner;
+import dev.lyze.sar.systems.map.spawners.*;
 import dev.lyze.sar.utils.Constants;
 import lombok.var;
 
@@ -26,6 +23,7 @@ public class MapEntitySpawner extends IteratingSystem {
         spawners.add(new PlayerSpawner());
         spawners.add(new LightSpawner());
         spawners.add(new BattoSpawner());
+        spawners.add(new VictorySpawner());
     }
 
     @Override

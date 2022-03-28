@@ -93,6 +93,9 @@ public class GameScreen extends ScreenAdapter {
 				.with(new PositionHitboxDrawerSystem())
 				.with(new GizmoSystem())
 
+				.with(new FadeInSystem())
+				.with(new VictorySystem())
+
 				.with(new EndBatchSystem())
 
 				.with(new HackLightPositionUpdateSystem())
@@ -103,7 +106,7 @@ public class GameScreen extends ScreenAdapter {
 				.build();
 
 		var batch = new SpriteBatch();
-		builder.register(new Map("Maps/StraightAhead.tmx", batch));
+		builder.register(new Map("Maps/Level1.tmx", batch));
 		builder.register(new ExtendViewport(24, 13.5f));
 		builder.register(new EventManager());
 		builder.register(new HackLightEngine(0.2f, 0.2f, 0.2f, 1f));
@@ -129,7 +132,9 @@ public class GameScreen extends ScreenAdapter {
 	public void show() {
 		if (MusicStuff.getTown().isPlaying())
 			MusicStuff.getTown().stop();
-		MusicStuff.getClouds().play();
+
+		if (!MusicStuff.getClouds().isPlaying())
+			MusicStuff.getClouds().play();
 	}
 
 	@Override
@@ -147,7 +152,6 @@ public class GameScreen extends ScreenAdapter {
 
 	@Override
 	public void hide() {
-		MusicStuff.getClouds().stop();
 		world.getInjector().getRegistered(Map.class).dispose();
 		((Constants) world.getInjector().getRegistered("constants")).dispose();
 		world.dispose();
