@@ -42,7 +42,7 @@ import space.earlygrey.shapedrawer.ShapeDrawer;
 public class GameScreen extends ScreenAdapter {
 	private final World world;
 
-	public GameScreen(CharacterEnum character) {
+	public GameScreen(CharacterEnum character, int levelIndex) {
 		var builder = new WorldConfigurationBuilder()
 				.with(new MapSpawnerSystem())
 				.with(new MapEntitySpawner())
@@ -106,12 +106,12 @@ public class GameScreen extends ScreenAdapter {
 				.build();
 
 		var batch = new SpriteBatch();
-		builder.register(new Map("Maps/Level1.tmx", batch));
+		builder.register(new Map(Constants.getLevels()[levelIndex], batch));
 		builder.register(new ExtendViewport(24, 13.5f));
 		builder.register(new EventManager());
 		builder.register(new HackLightEngine(0.2f, 0.2f, 0.2f, 1f));
 		builder.register(batch);
-		builder.register("constants", new Constants(character));
+		builder.register("constants", new Constants(character, levelIndex));
 		builder.register(new ShapeDrawer(batch, new TextureRegion(new Texture("Pixel.png"))));
 
 		world = new World(builder);
@@ -122,7 +122,7 @@ public class GameScreen extends ScreenAdapter {
 			@Override
 			protected void fire(HitEvent event) {
 				if (--health == 0) {
-					((Game) Gdx.app.getApplicationListener()).setScreen(new GameOverScreen(character));
+					((Game) Gdx.app.getApplicationListener()).setScreen(new GameOverScreen(character, levelIndex));
 				}
 			}
 		});

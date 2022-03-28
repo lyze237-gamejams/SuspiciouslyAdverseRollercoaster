@@ -51,6 +51,6 @@ public class VictorySystem extends IteratingSystem {
         if (time < winTime)
             return;
 
-        ((Game) Gdx.app.getApplicationListener()).setScreen(new GameScreen(constants.getCharacter()));
+        ((Game) Gdx.app.getApplicationListener()).setScreen(new GameScreen(constants.getCharacter(), constants.getLevelIndex() + 1));
     }
 }

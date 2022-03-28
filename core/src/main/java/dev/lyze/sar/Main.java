@@ -12,7 +12,7 @@ public class Main extends Game {
 		VisUI.load();
 
 		if (Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
-			setScreen(new GameScreen(CharacterEnum.LYZE));
+			setScreen(new GameScreen(CharacterEnum.LYZE, 0));
 			return;
 		}
 

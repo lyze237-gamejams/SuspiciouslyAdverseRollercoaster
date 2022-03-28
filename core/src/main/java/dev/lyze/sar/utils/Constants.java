@@ -37,7 +37,11 @@ public class Constants extends Component {
 
     @Getter private final Sound hitSound, jumpSound, jumpCartSound, thudSound;
 
-    public Constants(CharacterEnum character) {
+    @Getter private static final String[] levels = new String[] { "Maps/Level1.tmx", "Maps/StraightAhead.tmx", "Maps/Zealot.tmx", "Maps/DevMap.tmx" };
+    @Getter private int levelIndex;
+
+    public Constants(CharacterEnum character, int levelIndex) {
+        this.levelIndex = levelIndex;
         this.character = character;
         main = new TextureAtlas("Atlases/Main.atlas");
         bg = new TextureAtlas("Atlases/Bg.atlas");

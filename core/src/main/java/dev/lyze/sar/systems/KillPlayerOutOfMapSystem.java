@@ -23,6 +23,6 @@ public class KillPlayerOutOfMapSystem extends IteratingSystem {
         var position = positionMapper.get(entityId).getPosition();
 
         if (position.y < 0)
-            ((Game) Gdx.app.getApplicationListener()).setScreen(new GameOverScreen(constants.getCharacter()));
+            ((Game) Gdx.app.getApplicationListener()).setScreen(new GameOverScreen(constants.getCharacter(), constants.getLevelIndex()));
     }
 }

@@ -22,11 +22,14 @@ import lombok.var;
 
 public class GameOverScreen extends HorribleMenuScreen {
     private final CharacterEnum character;
+    private final int levelIndex;
 
-    public GameOverScreen(CharacterEnum character) {
+    public GameOverScreen(CharacterEnum character, int levelIndex) {
         super();
 
+        this.levelIndex = levelIndex;
         this.character = character;
+
         addBackground();
         setupStage();
     }
@@ -54,7 +57,7 @@ public class GameOverScreen extends HorribleMenuScreen {
         retry.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                ((Game) Gdx.app.getApplicationListener()).setScreen(new GameScreen(character));
+                ((Game) Gdx.app.getApplicationListener()).setScreen(new GameScreen(character, levelIndex));
             }
         });
         var mainMenu = new TextButton("Main Menu", buttonStyle);

@@ -43,7 +43,7 @@ public class MainMenuScreen extends HorribleMenuScreen {
                 @Override
                 public void changed(ChangeEvent event, Actor actor) {
                     MusicStuff.getTown().stop();
-                    stage.addAction(Actions.sequence(Actions.fadeOut(1f), Actions.run(() -> ((Game) Gdx.app.getApplicationListener()).setScreen(new GameScreen(c)))));
+                    stage.addAction(Actions.sequence(Actions.fadeOut(1f), Actions.run(() -> ((Game) Gdx.app.getApplicationListener()).setScreen(new GameScreen(c, 0)))));
                 }
             });
             table.add(image).row();
@@ -53,7 +53,7 @@ public class MainMenuScreen extends HorribleMenuScreen {
                 public void clicked(InputEvent event, float x, float y) {
                     stage.addAction(Actions.sequence(Actions.fadeOut(1f), Actions.run(() -> {
                         MusicStuff.getTown().stop();
-                        ((Game) Gdx.app.getApplicationListener()).setScreen(new GameScreen(c));
+                        ((Game) Gdx.app.getApplicationListener()).setScreen(new GameScreen(c, 0));
                     })));
                 }
             });
