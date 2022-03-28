@@ -73,7 +73,6 @@ public abstract class HorribleMenuScreen extends ScreenAdapter {
 
     @Override
     public void hide() {
-        stage.dispose();
         textureAtlas.dispose();
         titleStyle.font.dispose();
         subTitleStyle.font.dispose();
