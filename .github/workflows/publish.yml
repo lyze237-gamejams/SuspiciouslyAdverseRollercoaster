@@ -1,9 +1,12 @@
-name: Deploy to github pages
+name: Build SuspiciouslyAdverseRollercoaster and upload it to itch.io
 
 on:
   push:
     branches:
       - main
+
+env:
+  BUTLER_API_KEY: ${{ secrets.BUTLER_API_KEY }}
 
 jobs:
   linux:
@@ -11,18 +14,53 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - uses: actions/setup-java@v1
+      - name: Set up JDK 11
+        uses: actions/setup-java@v1
         with:
           java-version: 11
 
-      - run: chmod +x gradlew
+      - name: Download butler
+        run: wget https://broth.itch.ovh/butler/linux-amd64/LATEST/archive/default -O butler.zip
+
+      - name: Unzip buttler
+        run: unzip butler.zip
+
+      - name: Fix permissions
+        run: chmod +x butler && chmod +x gradlew
+
+      - name: Build jar
+        run: ./gradlew lwjgl3:jar
+        
+      - name: Fix file names
+        run: mv lwjgl3/build/lib/*.jar SuspiciouslyAdverseRollercoaster.jar
+
+      - run: ./butler push SuspiciouslyAdverseRollercoaster.jar lyze237/suspiciously-adverse-rollercoaster:jar
+
+
+
+  linux-gwt:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Set up JDK 11
+        uses: actions/setup-java@v1
+        with:
+          java-version: 11
+
+      - name: Download butler
+        run: wget https://broth.itch.ovh/butler/linux-amd64/LATEST/archive/default -O butler.zip
+
+      - name: Unzip buttler
+        run: unzip butler.zip
+
+
+      - name: Fix permissions
+        run: chmod +x butler && chmod +x gradlew
+
 
       - name: Build gwt
         run: ./gradlew html:dist
 
-      - uses: crazy-max/ghaction-github-pages@v2
-        with:
-          target_branch: gh-pages
-          build_dir: html/build/dist
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - run: ./butler push html/build/dist lyze237/suspiciously-adverse-rollercoaster:html
