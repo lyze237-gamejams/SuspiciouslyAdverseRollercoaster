@@ -57,7 +57,7 @@ public class PlayerCartFallStateSystem extends PlayerAbstractSystem {
 
             gizmos.setLineWidth(0.1f);
             gizmos.setColor(Color.RED);
-            var snapWhenCarIsDirectlyUnderTrack = 0.2f;
+            var snapWhenCarIsDirectlyUnderTrack = 0.3f;
             gizmos.addLine(position.getPosition().x, position.getPosition().y + snapWhenCarIsDirectlyUnderTrack, position.getPosition().x, targetYPosition);
 
             var verts = track.getLine().getTransformedVertices();
