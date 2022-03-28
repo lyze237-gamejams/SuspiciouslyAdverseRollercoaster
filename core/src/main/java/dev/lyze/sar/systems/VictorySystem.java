@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import dev.lyze.sar.GameScreen;
+import dev.lyze.sar.VictoryScreen;
 import dev.lyze.sar.components.movement.PositionComponent;
 import dev.lyze.sar.components.player.PlayerComponent;
 import dev.lyze.sar.systems.map.Map;
@@ -51,6 +52,10 @@ public class VictorySystem extends IteratingSystem {
         if (time < winTime)
             return;
 
-        ((Game) Gdx.app.getApplicationListener()).setScreen(new GameScreen(constants.getCharacter(), constants.getLevelIndex() + 1));
+        if (constants.getLevelIndex() >= Constants.getLevels().length - 1) {
+            ((Game) Gdx.app.getApplicationListener()).setScreen(new VictoryScreen(constants.getCharacter()));
+        } else {
+            ((Game) Gdx.app.getApplicationListener()).setScreen(new GameScreen(constants.getCharacter(), constants.getLevelIndex() + 1));
+        }
     }
 }
