@@ -35,7 +35,7 @@ public class Constants extends Component {
 
     @Getter private final CharacterEnum character;
 
-    @Getter private final Sound hitSound, jumpSound, jumpCartSound, thudSound;
+    @Getter private final Sound hitSound, jumpSound, jumpCartSound, thudSound, duckSound;
 
     @Getter private static final String[] levels = new String[] { "Maps/Level1.tmx", "Maps/StraightAhead.tmx", "Maps/Zealot.tmx", "Maps/DevMap.tmx" };
     @Getter private int levelIndex;
@@ -71,6 +71,7 @@ public class Constants extends Component {
         jumpSound = Gdx.audio.newSound(Gdx.files.internal("Sounds/jumpCart.ogg"));
         jumpCartSound = Gdx.audio.newSound(Gdx.files.internal("Sounds/jump.ogg"));
         thudSound = Gdx.audio.newSound(Gdx.files.internal("Sounds/thud.ogg"));
+        duckSound = Gdx.audio.newSound(Gdx.files.internal("Sounds/duck.ogg"));
     }
 
     public void dispose() {

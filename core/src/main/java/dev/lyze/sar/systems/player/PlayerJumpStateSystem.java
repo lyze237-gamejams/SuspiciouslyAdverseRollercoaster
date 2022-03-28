@@ -49,6 +49,8 @@ public class PlayerJumpStateSystem extends IteratingSystem {
 
         if (jumpState.isFinished()) {
             if (Gdx.input.isKeyPressed(Input.Keys.S)) {
+                constants.getDuckSound().play(0.6f);
+
                 world.edit(entityId)
                         .remove(PlayerJumpStateComponent.class)
                         .add(new PlayerDuckStateComponent());

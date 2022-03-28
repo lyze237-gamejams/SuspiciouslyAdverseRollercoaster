@@ -42,6 +42,7 @@ public class PlayerIdleStateSystem extends IteratingSystem {
         }
 
         if (Gdx.input.isKeyPressed(Input.Keys.S)) {
+            constants.getDuckSound().play(0.6f);
             sprite.setAnimation(constants.getPlayerCrouchIn());
 
             world.edit(entityId)
