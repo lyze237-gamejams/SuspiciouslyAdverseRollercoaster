@@ -103,7 +103,7 @@ public class GameScreen extends ScreenAdapter {
 				.build();
 
 		var batch = new SpriteBatch();
-		builder.register(new Map("Maps/DevMap.tmx", batch));
+		builder.register(new Map("Maps/StraightAhead.tmx", batch));
 		builder.register(new ExtendViewport(24, 13.5f));
 		builder.register(new EventManager());
 		builder.register(new HackLightEngine(0.2f, 0.2f, 0.2f, 1f));

@@ -33,15 +33,6 @@ public class PlayerCartFollowTrackSystem extends PlayerAbstractSystem {
         var follow = playerFollowTrackMapper.get(entityId);
         var trackToFollow = trackMapper.get(follow.getTrackId());
 
-        var verts = trackToFollow.getLine().getTransformedVertices();
-
-        var startPosX = position.getPosition().x;
-        var startPosY = position.getPosition().y;
-        var targetPosX = verts[follow.getSection() + 2];
-        var targetPosY = verts[follow.getSection() + 3];
-
-        calculateDirection(position.getPosition(), targetPosX, targetPosY);
-
         if (Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
             velocity.getVelocity().set(velocity.getVelocity().x + cartConstants.jumpVelocity.x, cartConstants.jumpVelocity.y);
             velocity.clamp();
@@ -56,8 +47,15 @@ public class PlayerCartFollowTrackSystem extends PlayerAbstractSystem {
             return;
         }
 
+        var verts = trackToFollow.getLine().getTransformedVertices();
 
-        velocity.clamp();
+        var startPosX = position.getPosition().x;
+        var startPosY = position.getPosition().y;
+        var targetPosX = verts[follow.getSection() + 2];
+        var targetPosY = verts[follow.getSection() + 3];
+
+        calculateDirection(position.getPosition(), targetPosX, targetPosY);
+
         direction.scl(currentSpeed);
 
         velocity.getVelocity().set(direction);
@@ -104,7 +102,12 @@ public class PlayerCartFollowTrackSystem extends PlayerAbstractSystem {
         direction.sub(position);
         direction.nor();
 
-        gizmos.setLineWidth(0.01f);
+        gizmos.setColor(Color.TEAL);
+        gizmos.setLineWidth(0.05f);
+        gizmos.addLine(position.x, position.y, targetPosX, targetPosY);
+
+        gizmos.setColor(Color.ORANGE);
+        gizmos.setLineWidth(0.1f);
         gizmos.addDirection(position.x, position.y, direction.x, direction.y, 0.5f);
     }
 }
