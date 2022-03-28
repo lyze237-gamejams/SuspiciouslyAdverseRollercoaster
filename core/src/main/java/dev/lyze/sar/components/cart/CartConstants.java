@@ -9,7 +9,7 @@ public class CartConstants {
     public float trackAcceleration = 100f;
     public float trackDeceleration = -100f;
 
-    public float trackMinSpeed = 5f;
+    public float trackMinSpeed = 4f;
 
-    public Vector2 jumpVelocity = new Vector2(0f, 20f);
+    public Vector2 jumpVelocity = new Vector2(10f, 50f);
 }

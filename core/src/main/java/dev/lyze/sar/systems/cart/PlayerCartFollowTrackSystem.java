@@ -5,7 +5,6 @@ import com.artemis.annotations.All;
 import com.artemis.annotations.Wire;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import dev.lyze.sar.components.TrackComponent;
@@ -26,25 +25,13 @@ public class PlayerCartFollowTrackSystem extends PlayerAbstractSystem {
     private ComponentMapper<TrackComponent> trackMapper;
     private ComponentMapper<CartFollowTrackComponent> playerFollowTrackMapper;
 
-    private float currentSpeed = 10f;
-
     @Override
     protected void process(int entityId, CartComponent player, CartConstants cartConstants, PositionComponent position, RotationComponent rotation, VelocityComponent velocity, GravityComponent gravity) {
         var follow = playerFollowTrackMapper.get(entityId);
         var trackToFollow = trackMapper.get(follow.getTrackId());
 
-        var verts = trackToFollow.getLine().getTransformedVertices();
-
-        var startPosX = position.getPosition().x;
-        var startPosY = position.getPosition().y;
-        var targetPosX = verts[follow.getSection() + 2];
-        var targetPosY = verts[follow.getSection() + 3];
-
-        calculateDirection(position.getPosition(), targetPosX, targetPosY);
-
-        if (Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
-            velocity.getVelocity().set(velocity.getVelocity().x + cartConstants.jumpVelocity.x, cartConstants.jumpVelocity.y);
-            velocity.clamp();
+        if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
+            velocity.getVelocity().set(cartConstants.jumpVelocity);
             position.getPosition().mulAdd(velocity.getVelocity(), world.getDelta());
 
             constants.getJumpCartSound().play(0.6f);
@@ -56,9 +43,18 @@ public class PlayerCartFollowTrackSystem extends PlayerAbstractSystem {
             return;
         }
 
+        var verts = trackToFollow.getLine().getTransformedVertices();
+
+        var startPosX = position.getPosition().x;
+        var startPosY = position.getPosition().y;
+        var targetPosX = verts[follow.getSection() + 2];
+        var targetPosY = verts[follow.getSection() + 3];
+
+        calculateDirection(position.getPosition(), targetPosX, targetPosY);
 
         velocity.clamp();
-        direction.scl(currentSpeed);
+        var speed = velocity.getVelocity().len();
+        direction.scl(speed);
 
         velocity.getVelocity().set(direction);
         velocity.clamp();
@@ -72,15 +68,18 @@ public class PlayerCartFollowTrackSystem extends PlayerAbstractSystem {
         if (angle < 0) {
             var multiplier = MathUtils.map(-90, 0, 0.2f, 0, angleDeg);
             var scale = cartConstants.trackAcceleration * multiplier;
-            currentSpeed += scale * world.getDelta();
-            velocity.getVelocity().nor().scl(currentSpeed);
+            var length = velocity.getVelocity().len();
+            velocity.getVelocity().nor().scl(length + scale * world.getDelta());
         }
         if (angle > 0) {
             var multiplier = MathUtils.map(0, 90, 0, 0.2f, angleDeg);
             var scale = cartConstants.trackDeceleration * multiplier;
-            currentSpeed += scale * world.getDelta();
-            currentSpeed = Math.max(currentSpeed, cartConstants.trackMinSpeed);
-            velocity.getVelocity().nor().scl(currentSpeed);
+            var length = velocity.getVelocity().len();
+            velocity.getVelocity().nor().scl(length + scale * world.getDelta());
+
+            if (velocity.getVelocity().len() < cartConstants.trackMinSpeed) {
+                velocity.getVelocity().nor().scl(cartConstants.trackMinSpeed);
+            }
         }
 
         var distance = Vector2.dst(startPosX, startPosY, targetPosX, targetPosY);
