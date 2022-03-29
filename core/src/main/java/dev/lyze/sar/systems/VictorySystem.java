@@ -6,6 +6,7 @@ import com.artemis.annotations.Wire;
 import com.artemis.systems.IteratingSystem;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
@@ -37,6 +38,9 @@ public class VictorySystem extends IteratingSystem {
     protected void process(int entityId) {
         var position = positionMapper.get(entityId).getPosition();
 
+        if (Gdx.input.isKeyPressed(Input.Keys.F10))
+            switchToNextLevel();
+
         if (!(time > 0) && !map.getVictoryRectangle().contains(position))
             return;
 
@@ -52,6 +56,10 @@ public class VictorySystem extends IteratingSystem {
         if (time < winTime)
             return;
 
+        switchToNextLevel();
+    }
+
+    private void switchToNextLevel() {
         if (constants.getLevelIndex() >= Constants.getLevels().length - 1) {
             ((Game) Gdx.app.getApplicationListener()).setScreen(new VictoryScreen(constants.getCharacter()));
         } else {

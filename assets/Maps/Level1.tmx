@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.5" tiledversion="1.7.2" orientation="orthogonal" renderorder="right-down" width="260" height="44" tilewidth="600" tileheight="600" infinite="0" nextlayerid="7" nextobjectid="117">
+<map version="1.5" tiledversion="1.7.2" orientation="orthogonal" renderorder="right-down" width="260" height="44" tilewidth="600" tileheight="600" infinite="0" nextlayerid="7" nextobjectid="118">
  <editorsettings>
   <export target="Test Maps/DevMap (original).tmx" format="tmx"/>
  </editorsettings>
@@ -128,7 +128,8 @@
    </properties>
    <point/>
   </object>
-  <object id="113" name="Batto" type="Batto" x="129750" y="21000">
+  <object id="116" name="Victory" type="Victory" x="132000" y="0" width="24000" height="26400"/>
+  <object id="117" name="Batto" type="Batto" x="129600" y="21600">
    <properties>
     <property name="Blue" type="int" value="255"/>
     <property name="Green" type="int" value="255"/>
@@ -139,7 +140,6 @@
    </properties>
    <point/>
   </object>
-  <object id="116" name="Victory" type="Victory" x="132000" y="0" width="24000" height="26400"/>
  </objectgroup>
  <objectgroup id="3" name="TrackCollisions">
   <object id="111" x="0" y="13650">

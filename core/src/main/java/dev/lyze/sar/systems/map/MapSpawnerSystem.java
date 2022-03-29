@@ -4,6 +4,7 @@ import com.aliasifkhan.hackLights.HackLight;
 import com.aliasifkhan.hackLights.HackLightEngine;
 import com.artemis.BaseSystem;
 import com.artemis.annotations.Wire;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.MapObject;
@@ -54,8 +55,10 @@ public class MapSpawnerSystem extends BaseSystem {
                     continue;
 
                 var objects = cell.getTile().getObjects();
-                if (objects.getCount() != 1)
-                    throw new IllegalArgumentException("Spikes cell " + x + "/" + y + " is wrong count: " + objects.getCount() + " != " + 1);
+                if (objects.getCount() != 1) {
+                    Gdx.app.log("Obstacles", "Cell " + x + "/" + y + " is wrong count: " + objects.getCount() + " != " + 1);
+                    continue;
+                }
 
                 var polygonMapObject= ((PolygonMapObject) objects.get(0));
                 var verts= Arrays.copyOf(polygonMapObject.getPolygon().getTransformedVertices(), polygonMapObject.getPolygon().getTransformedVertices().length);
@@ -87,7 +90,7 @@ public class MapSpawnerSystem extends BaseSystem {
                 var scale = properties.get("scale", float.class);
 
                 var light = new HackLight(constants.getLights().findRegion(region), color.r, color.g, color.b, color.a, scale);
-                light.setOriginBasedPosition(x + 0.5f, y + 0.5f);
+                light.setOriginBasedPosition(x + 0.4f, y + 0.8f);
                 hackLightEngine.addLight(light);
             }
         }

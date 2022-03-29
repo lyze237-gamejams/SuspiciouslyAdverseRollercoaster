@@ -37,7 +37,7 @@ public class Constants extends Component {
 
     @Getter private final Sound hitSound, jumpSound, jumpCartSound, thudSound, duckSound;
 
-    @Getter private static final String[] levels = new String[] { "Maps/Level1.tmx", "Maps/StraightAhead.tmx", "Maps/Zealot.tmx", "Maps/DevMap.tmx" };
+    @Getter private static final String[] levels = new String[] { "Maps/Level1.tmx", "Maps/StraightAhead.tmx", "Maps/DevMap.tmx", "Maps/Zealot.tmx", "Maps/Zealot_2.tmx", "Maps/Up_and_Down.tmx" };
     @Getter private int levelIndex;
 
     public Constants(CharacterEnum character, int levelIndex) {
